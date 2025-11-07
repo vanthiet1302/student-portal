@@ -12,8 +12,5 @@
 </head>
 <body>
 
-<jsp:include page="components/header.jsp"></jsp:include>\
-ákdf
-
 </body>
 </html>
