@@ -1,4 +1,4 @@
-package dev.nlu.portal.servlet;
+package dev.nlu.portal.bean;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

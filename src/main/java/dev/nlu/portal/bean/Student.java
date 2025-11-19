@@ -1,4 +1,4 @@
-package dev.nlu.portal.servlet;
+package dev.nlu.portal.bean;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 public class Student {
-    String id; //mssv
+    String id;
     String password;
     String name;
     Date dob;
