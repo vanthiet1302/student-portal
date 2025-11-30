@@ -17,4 +17,5 @@ public class Student {
 	Long userId;
 	Long studentId;
 	Long classId;
+
 }
