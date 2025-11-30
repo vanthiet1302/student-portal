@@ -1,20 +1,23 @@
 package dev.nlu.portal.bean;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Data
-public class Student {
-	Long userId;
+public class Grade {
+	Long gradeId;
 	Long studentId;
-	Long classId;
+	Long courseId;
+	String nienKhoa;
+	String departmentId;
+	
 }
