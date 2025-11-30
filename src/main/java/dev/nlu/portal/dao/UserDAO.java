@@ -1,5 +1,7 @@
 package dev.nlu.portal.dao;
 
-public class UserDAO {
+import dev.nlu.portal.bean.Student;
 
+public class UserDAO {
+	Student st = new Student();
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -13,17 +14,8 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 public class Student {
-	String id;
-	String password;
-	String name;
-	Date dob;
-	boolean sex;
-	String numberPhone;
-	String citizenId;
-	String email;
-	String pob;
-	String nation;
-	String religion;
-	String present;
-	String householdRegistration;
+	Long userId;
+	Long studentId;
+	Long classId;
+
 }

@@ -1,18 +1,21 @@
 package dev.nlu.portal.bean;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Data
-public class Course {// Khóa học/ Môn học
-    Long courseId;
-    String courseName;
-    String credits;
-    Long teacherId; // FK bảng teacher
+public class Teacher {
+	Long userId;
+	Long teacherId;
+	Long departmentId;
+	String academicRank;
 }
