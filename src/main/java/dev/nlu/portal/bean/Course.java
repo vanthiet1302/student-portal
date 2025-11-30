@@ -11,10 +11,10 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 public class Course {
-    String id;
-    String className;
-    String major;
-    String department;
-    String trainingLevel;
-    String schoolYear;
+	String id;
+	String className;
+	String major;
+	String department;
+	String trainingLevel;
+	String schoolYear;
 }

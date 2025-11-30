@@ -13,17 +13,17 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 public class Student {
-    String id;
-    String password;
-    String name;
-    Date dob;
-    boolean sex;
-    String numberPhone;
-    String citizenId;
-    String email;
-    String pob;
-    String nation;
-    String religion;
-    String present;
-    String householdRegistration;
+	String id;
+	String password;
+	String name;
+	Date dob;
+	boolean sex;
+	String numberPhone;
+	String citizenId;
+	String email;
+	String pob;
+	String nation;
+	String religion;
+	String present;
+	String householdRegistration;
 }
