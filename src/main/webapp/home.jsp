@@ -9,25 +9,25 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <html>
-<head>
-	<meta charset="UTF-8">
-    <title>NLU Portal</title>
-    <link rel="icon" type="image/png" href="/assets/logo.png">
-</head>
-<body>
-	<form action="login" method="post">
-		<label for="username">Tài khoản</label>
-		<br>
-		<input type="text" name="username">
-		<br>
-		<label for="password">Mật khẩu</label>
-		<br>
-		<input type="password" name="password">
-		<br>
-		<a href="">Quên mật khẩu?</a>
-		<br>
-		<input type="submit" value="Đăng nhập">
-	</form>
+    <head>
+        <meta charset="UTF-8">
+        <title>NLU Portal</title>
+        <link rel="icon" type="image/png" href="/assets/logo.png">
+    </head>
+    <body>
+        <form action="login" method="post">
+            <label for="username">Tài khoản</label>
+            <br>
+            <input type="text" name="username">
+            <br>
+            <label for="password">Mật khẩu</label>
+            <br>
+            <input type="password" name="password">
+            <br>
+            <a href="">Quên mật khẩu?</a>
+            <br>
+            <input type="submit" value="Đăng nhập">
+        </form>
 
-</body>
+    </body>
 </html>
