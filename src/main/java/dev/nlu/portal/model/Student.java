@@ -1,4 +1,4 @@
-package dev.nlu.portal.bean;
+package dev.nlu.portal.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,13 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
-public class Course {// Khóa học/ Môn học
-    Long courseId;
-    String courseName;
-    String credits;
-    Long teacherId; // FK bảng teacher
+public class Student extends User{
+    Long studentId;
+
 }

@@ -1,4 +1,4 @@
-package dev.nlu.portal.bean;
+package dev.nlu.portal.model;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -13,8 +13,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Department {
-	Long departmentId;
-	String name;
-	
+public class Teacher {
+
+    Long userId;
+    Long teacherId;
+    Long departmentId;
+    String academicRank;
 }
