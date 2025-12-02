@@ -6,6 +6,7 @@ package dev.nlu.portal.dao;
 
 import dev.nlu.portal.model.Student;
 import dev.nlu.portal.utils.DatabaseConnection;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
@@ -14,15 +15,15 @@ import java.util.Map;
  *
  * @author Admin
  */
-public class StudentDAO implements DAO<Student>{
+public class StudentDAO implements DAO<Student> {
     private Connection connection = DatabaseConnection.getInstance().getConnection();
-    
+
 
     @Override
     public int save(Student t) {
-       String sql = "INSERT INTO Students (name, email) VALUES (?, ?)";
-        
-        
+        String sql = "INSERT INTO Students (name, email) VALUES (?, ?)";
+
+        return 0;
     }
 
     @Override
@@ -44,5 +45,5 @@ public class StudentDAO implements DAO<Student>{
     public List<Student> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

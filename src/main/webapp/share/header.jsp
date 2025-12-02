@@ -9,7 +9,7 @@
 			<div class="hamburger">☰</div>
 		</div>
 		<div class="school-logo">
-			<img src="path/to/school/logo.png" alt="School Logo" />
+			<img src="assets/logo.png" alt="School Logo" />
 		</div>
 	</div>
 </header>
