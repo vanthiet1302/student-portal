@@ -14,7 +14,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class User {
-
     Long userId;
     String primaryEmail; // username
     String passwordHash;

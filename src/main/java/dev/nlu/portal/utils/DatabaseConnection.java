@@ -13,17 +13,21 @@ public class DatabaseConnection {
     private static volatile DatabaseConnection instance;
     private Connection connection;
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/mydatabase";
-    private static final String USER = "admin";
-    private static final String PASS = "admin";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/studentportal";
+    private static final String USER = "vthiet";
+    private static final String PASS = "";
 
     private DatabaseConnection() {
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection = DriverManager.getConnection(DB_URL, USER, PASS);
             System.out.println("Kết nối Database thành công!");
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Lỗi kết nối Database: \n" + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            System.err.println("Lỗi không tìm thấy Driver MySQL: \n" + e.getMessage());
         }
     }
 

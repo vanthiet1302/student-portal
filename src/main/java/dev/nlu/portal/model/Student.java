@@ -15,5 +15,4 @@ import java.util.Date;
 @Data
 public class Student extends User{
     Long studentId;
-
 }
