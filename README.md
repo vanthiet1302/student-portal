@@ -1,14 +1,36 @@
 ## 1. 💡 Phân tích Yêu cầu và Phạm vi Dự án (Requirements Analysis & Scoping)
 
-Đây là bước **quan trọng nhất** để định hình toàn bộ công việc.
+* **Chức năng Cốt lõi:** 
+  * Đăng nhập/Đăng xuất
+  * Xem thông tin cá nhân
+  * Xem điểm
+  * Xem thời khóa biểu
+  * Đăng ký môn học
+* **Đối tượng:** Sinh viên, Giảng viên, Quản trị viên.
+* **User stories:**
 
-* **Xác định Chức năng Cốt lõi:** Các tính năng **bắt buộc phải có** (Ví dụ: Đăng nhập/Đăng xuất, Xem thông tin cá nhân, Xem điểm, Đăng ký môn học).
-* **Xác định Đối tượng:** Sinh viên, Giảng viên (nếu có), Quản trị viên.
-* **Lên Danh sách Người dùng (User Stories/Use Cases):** Viết ra các kịch bản người dùng sẽ thực hiện.
-    * *Ví dụ:* "Là Sinh viên, tôi muốn xem điểm trung bình học kỳ gần nhất của mình."
-* **Phân chia Mô-đun/Tính năng:** Chia dự án thành các phần nhỏ, dễ quản lý.
-* **Phân công Vai trò:** Với 2 người, hãy phân công rõ ràng **ai sẽ làm Backend (Database, API, Logic)** và **ai sẽ làm Frontend (UI/UX, Code giao diện)**, hoặc linh hoạt hơn là **người chịu trách nhiệm chính về Database/Backend** và **người chịu trách nhiệm chính về Thiết kế/Frontend**.
+| STT | User Story |
+| :--- | :--- |
+| **S1** | Là một **Sinh viên**, tôi muốn **đăng nhập an toàn** bằng mã sinh viên và mật khẩu để **truy cập vào thông tin và chức năng cá nhân** của mình. |
+| **S2** | Là một **Sinh viên**, tôi muốn **xem thời khóa biểu chi tiết** của mình theo chế độ xem Tuần hoặc Tháng để **biết rõ lịch học, phòng học, và giảng viên** của mỗi môn. |
+| **S3** | Là một **Sinh viên**, tôi muốn **tra cứu bảng điểm tổng kết** của tất cả các kỳ học để **theo dõi chính xác kết quả học tập** và tính điểm trung bình tích lũy (GPA). |
+| **S4** | Là một **Sinh viên**, tôi muốn **đăng ký các học phần** cho kỳ học sắp tới để **chủ động xây dựng kế hoạch học tập** cá nhân và đảm bảo đủ tín chỉ. |
+| **S5** | Là một **Sinh viên**, tôi muốn **nhận và xem các thông báo tức thời** từ nhà trường/khoa để **không bỏ lỡ bất kỳ thông tin quan trọng** nào về học vụ, sự kiện, hoặc học bổng. |
+| **S6** | Là một **Sinh viên**, tôi muốn **cập nhật thông tin cá nhân** (như số điện thoại, email) một cách dễ dàng để **đảm bảo thông tin liên lạc** với nhà trường luôn được chính xác. |
+| **S7** | Là một **Sinh viên**, tôi muốn **tra cứu tình trạng học phí** của mình để **nắm rõ số tiền cần đóng** và tránh bị xử lý kỷ luật do chậm trễ. |
+| **T1** | Là một **Giảng viên**, tôi muốn **xem danh sách chi tiết sinh viên** của các lớp tôi đang giảng dạy để **quản lý sĩ số** và tiện cho việc điểm danh. |
+| **T2** | Là một **Giảng viên**, tôi muốn **nhập điểm thành phần và điểm cuối kỳ** cho sinh viên một cách trực quan để **hoàn tất việc đánh giá kết quả học tập** theo đúng thời hạn. |
+| **T3** | Là một **Giảng viên**, tôi muốn **tải lên tài liệu học tập** (slide, đề cương) cho một học phần cụ thể để **hỗ trợ sinh viên ôn tập và học tập** hiệu quả hơn. |
+| **A1** | Là một **Admin**, tôi muốn **quản lý (thêm, sửa, xóa) tài khoản và thông tin chi tiết của sinh viên** để **đảm bảo dữ liệu người dùng** luôn được cập nhật và chính xác. |
+| **A2** | Là một **Admin**, tôi muốn **tạo và đăng tải các thông báo chung hoặc riêng theo nhóm đối tượng** để **truyền tải thông tin** một cách nhanh chóng và có mục tiêu. |
+| **A3** | Là một **Admin**, tôi muốn **quản lý danh mục học phần và thời khóa biểu** của toàn trường để **tổ chức và sắp xếp kế hoạch đào tạo** cho từng học kỳ. |
 
+* **Phân chia Mô-đun/Tính năng:** 
+  * model
+  * service
+  * dao
+  * controller
+* **Phân công Chức năng:**
 ---
 
 ## 2. 🧱 Thiết kế Database (Database Design)
