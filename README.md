@@ -36,13 +36,10 @@
 
 ## 2. 🧱 Thiết kế Database (Database Design)
 
-Thiết kế cơ sở dữ liệu là **nền tảng** cho một cổng thông tin. Nó cần được làm sớm để định hình dữ liệu và các mối quan hệ.
+* **ERD Portal**
 
-* **Vẽ Sơ đồ Quan hệ Thực thể (ERD - Entity-Relationship Diagram):** Thiết kế các bảng (SinhVien, MonHoc, DiemSo, LopHocPhan, v.v.) và xác định mối quan hệ giữa chúng (một-một, một-nhiều, nhiều-nhiều).
-    * **
+![Database](http://www.plantuml.com/plantuml/png/jLTHRzn447w_Np6wXnOGGIhm59MgLvzxCKtkYkshH5-ghRsDjx6zr_KwD6qgqLQY4WY9qhw0GBHKg0XHWO2dd2eU7FL_-9ymNj_6MJUc2YbvEDapuvdvPcQ_sPpE914oJsAmtI5OF5q7FrA_B0MFfH5SO3JjzOwZc9KxVqk8ovrdCzXWvVnk3jcBnx1xlvm_K9zl5ezWetWE4IhlvH14nOyfNClBdSUzY8KK0YQ2cFQo3PREY209n2obScj6WGiPyIhA1__j3xyyyGwCLue7Qp0UlVYjd7_dmB3uPZo2O-2NyuTWhPJpdwqZHEZHL3Av1VsfPxjz81bCuMOFu2t8CogS49OXhWftykJvSwTEeM9f2NzcWYL4RDa9OJ5QR18HH4IWqJHbrtAg36SaopxX8bmXMTJOeE8A4vaSauGQqfWS80oOP3TeweHTGGIFgQ4xUsuPN1GgBSi6WMIRbSLbZaAIeZ3ab_4z99BsRZNmtScghU2xDNpbsSodLOEGPe5WCybusjZiTpcqpmzSVyqU-yhnq5vu3YcEYKpGhAkyQRiECnnUKqBDqYl74INXvCfmp_tKxA2gZKz94561iVPbwji3QsNHVd-HfQmDkr9ipuVkojjGHQaYesqtsigeILIPae24D661Iz8D0nZc6BVAmJFMNNThTN3nei9YhIx0134EOnSKfRHuIBk6x10W4dALYrPRIBZ9CYx-lHi0Yh8-fgJwdALoFoBFdmxr67ar93JFGzGVkJyAVJilAoOtRYW3cWeUnqrQwl3pTQGv0oKcB_FCxCTn-6Ww60Cor6SlizU5WGE-MtmDRmppBP2Y-1LaHBcYtTjm7Tdr9mbhosCbk0jnnTaHHywLR_QciBszjCHlWey1-t7ngD-8F2t2y2EazYVAmHTfj0md56m8YZyn53fLJsd4C62kE0Ezt48lszlWLbvGZN1ObTmVVGEEmRr3sqYdMWnFKeYBv_r6XPFOrlbAjNqJq0XLKhpulPp_W1tOY3XfXVESyGfSS8hFnx04g-Nys_CzTAWHwropgaQRhFWbtVEk0mU8zscDzLw2pe-qajxLAsdtg-BJ2TPYvz7aTMmWRthcGzkgfnoVzPpdbw_Ie6lEjRhx-6gJ0vQBe26JMJtNXpZc1jTCfgvdrsGpqMJ3Sv7HZeGDH4O8hnQZfKc_tOH14vf9QjADPb4yiQOY8TUzcZ8Qn1dw2lCMkGhEamvYdRgkOqrNfsiACBvgnBaGBCZZFEb2tUR5Gv6gv9B4bj6j0xEwDBJzWREganikicCTENNbhGXmJuFshswQsGzTNePR9PdbCPB_LdC5QL6ZSOeQmi03O3869CLVUB0hkUQKIMMH86i07kyl0vX5vSvJjF5DY_MA1Z7Z4Dbpgz_3ocXzLIJD7a74GAgxi154co2bgWpgK4UbaFSQ2jczW_lWNF4z7CCNfvpVMJk2vzQvlEJQ8yVptO7lJCRrMEnTx-WwowGWrJMYOsYDesmCXvAYdRc7pS6enSgeZaN5a4Ywk7fAbj2EjQaXZDp1i6QMaKuQrsv8_-ziSRq7DCkyW0kLBGrOGc9rRqz9_B9OSdcGEAOI8O-gZBkl1GUstzkRFRM6T-_ltgtMOhKqhKbRLstD9m7iCsg-7-arZcg62pzH3hgKHvtfz_LC-ol5GmHrfhZzMjRYUE8xPnshcU5Ai1Y8b4jsXGNTKtpWzJdWgKJlA9FqkgpdWgOXVUcAQbmL9H7hLBgl-8VBfIJiv3gZDFhAfl0edYhdpnXsuJJcaYVnFm00)
 
-[Image of a basic Entity-Relationship Diagram for a Student Management System]
-**
 * **Xác định Trường Dữ liệu:** Đảm bảo các trường cần thiết (ví dụ: `MaSV`, `HoTen`, `NgaySinh`, `DiaChi`, `DiemA`, `DiemB`, v.v.) được xác định đúng kiểu dữ liệu và ràng buộc.
 
 ---
