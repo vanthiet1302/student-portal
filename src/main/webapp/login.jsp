@@ -15,6 +15,7 @@
         <link rel="icon" type="image/png" href="/assets/logo.png">
     </head>
     <body>
+        <c:import url="/share/header.jsp"></c:import>
         <form action="login" method="post">
             <label for="username">Tài khoản</label>
             <br>
