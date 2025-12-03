@@ -25,6 +25,7 @@
 | **A2** | Là một **Admin**, tôi muốn **tạo và đăng tải các thông báo chung hoặc riêng theo nhóm đối tượng** để **truyền tải thông tin** một cách nhanh chóng và có mục tiêu. |
 | **A3** | Là một **Admin**, tôi muốn **quản lý danh mục học phần và thời khóa biểu** của toàn trường để **tổ chức và sắp xếp kế hoạch đào tạo** cho từng học kỳ. |
 
+
 * **Phân chia Mô-đun/Tính năng:** 
   * model
   * service
