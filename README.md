@@ -40,8 +40,79 @@
 
 ![Database](http://www.plantuml.com/plantuml/png/jLTHRzn447w_Np6wXnOGGIhm59MgLvzxCKtkYkshH5-ghRsDjx6zr_KwD6qgqLQY4WY9qhw0GBHKg0XHWO2dd2eU7FL_-9ymNj_6MJUc2YbvEDapuvdvPcQ_sPpE914oJsAmtI5OF5q7FrA_B0MFfH5SO3JjzOwZc9KxVqk8ovrdCzXWvVnk3jcBnx1xlvm_K9zl5ezWetWE4IhlvH14nOyfNClBdSUzY8KK0YQ2cFQo3PREY209n2obScj6WGiPyIhA1__j3xyyyGwCLue7Qp0UlVYjd7_dmB3uPZo2O-2NyuTWhPJpdwqZHEZHL3Av1VsfPxjz81bCuMOFu2t8CogS49OXhWftykJvSwTEeM9f2NzcWYL4RDa9OJ5QR18HH4IWqJHbrtAg36SaopxX8bmXMTJOeE8A4vaSauGQqfWS80oOP3TeweHTGGIFgQ4xUsuPN1GgBSi6WMIRbSLbZaAIeZ3ab_4z99BsRZNmtScghU2xDNpbsSodLOEGPe5WCybusjZiTpcqpmzSVyqU-yhnq5vu3YcEYKpGhAkyQRiECnnUKqBDqYl74INXvCfmp_tKxA2gZKz94561iVPbwji3QsNHVd-HfQmDkr9ipuVkojjGHQaYesqtsigeILIPae24D661Iz8D0nZc6BVAmJFMNNThTN3nei9YhIx0134EOnSKfRHuIBk6x10W4dALYrPRIBZ9CYx-lHi0Yh8-fgJwdALoFoBFdmxr67ar93JFGzGVkJyAVJilAoOtRYW3cWeUnqrQwl3pTQGv0oKcB_FCxCTn-6Ww60Cor6SlizU5WGE-MtmDRmppBP2Y-1LaHBcYtTjm7Tdr9mbhosCbk0jnnTaHHywLR_QciBszjCHlWey1-t7ngD-8F2t2y2EazYVAmHTfj0md56m8YZyn53fLJsd4C62kE0Ezt48lszlWLbvGZN1ObTmVVGEEmRr3sqYdMWnFKeYBv_r6XPFOrlbAjNqJq0XLKhpulPp_W1tOY3XfXVESyGfSS8hFnx04g-Nys_CzTAWHwropgaQRhFWbtVEk0mU8zscDzLw2pe-qajxLAsdtg-BJ2TPYvz7aTMmWRthcGzkgfnoVzPpdbw_Ie6lEjRhx-6gJ0vQBe26JMJtNXpZc1jTCfgvdrsGpqMJ3Sv7HZeGDH4O8hnQZfKc_tOH14vf9QjADPb4yiQOY8TUzcZ8Qn1dw2lCMkGhEamvYdRgkOqrNfsiACBvgnBaGBCZZFEb2tUR5Gv6gv9B4bj6j0xEwDBJzWREganikicCTENNbhGXmJuFshswQsGzTNePR9PdbCPB_LdC5QL6ZSOeQmi03O3869CLVUB0hkUQKIMMH86i07kyl0vX5vSvJjF5DY_MA1Z7Z4Dbpgz_3ocXzLIJD7a74GAgxi154co2bgWpgK4UbaFSQ2jczW_lWNF4z7CCNfvpVMJk2vzQvlEJQ8yVptO7lJCRrMEnTx-WwowGWrJMYOsYDesmCXvAYdRc7pS6enSgeZaN5a4Ywk7fAbj2EjQaXZDp1i6QMaKuQrsv8_-ziSRq7DCkyW0kLBGrOGc9rRqz9_B9OSdcGEAOI8O-gZBkl1GUstzkRFRM6T-_ltgtMOhKqhKbRLstD9m7iCsg-7-arZcg62pzH3hgKHvtfz_LC-ol5GmHrfhZzMjRYUE8xPnshcU5Ai1Y8b4jsXGNTKtpWzJdWgKJlA9FqkgpdWgOXVUcAQbmL9H7hLBgl-8VBfIJiv3gZDFhAfl0edYhdpnXsuJJcaYVnFm00)
 
-* **Xác định Trường Dữ liệu:** Đảm bảo các trường cần thiết (ví dụ: `MaSV`, `HoTen`, `NgaySinh`, `DiaChi`, `DiemA`, `DiemB`, v.v.) được xác định đúng kiểu dữ liệu và ràng buộc.
+* **Trường Dữ liệu:**
 
+**NGƯỜI DÙNG**  
+**(User: userId long, primaryEmail varchar, passwordHash varchar, firstName varchar, lastName varchar, phoneNumber varchar, citizenId varchar, nation varchar, religion varchar, pob varchar, nationality varchar, secondaryEmail varchar, address varchar, role varchar, isMale boolean, isActive boolean, dob date, createAt datetime, updateAt datetime)**  
+**Mô tả:** Mỗi người dùng trong hệ thống (sinh viên, giảng viên, admin) đều có thông tin chung: mã người dùng duy nhất (userId), email chính dùng đăng nhập (primaryEmail), họ tên, số điện thoại, căn cước công dân, dân tộc, tôn giáo, nơi sinh, quốc tịch, địa chỉ, giới tính, trạng thái hoạt động, ngày sinh, thời gian tạo và cập nhật.
+
+**VAI TRÒ**  
+**(Role: roleName varchar)**  
+**Mô tả:** Bảng lưu các vai trò trong hệ thống: ADMIN (quản trị viên), LECTURER (giảng viên), STUDENT (sinh viên). Mỗi người dùng chỉ có một vai trò duy nhất.
+
+**KHOA**  
+**(Department: departmentId long, name varchar, establishDate date, phone varchar, email varchar, headOfDepartmentUserId long)**  
+**Mô tả:** Mỗi khoa có mã khoa duy nhất (departmentId), tên khoa, ngày thành lập, số điện thoại, email liên hệ và trưởng khoa (headOfDepartmentUserId) là một giảng viên (FK → User.userId).
+
+**GIẢNG VIÊN**  
+**(Teacher: teacherId long, userId long, departmentId long, academicRank varchar, title varchar, position varchar, startDate date)**  
+**Mô tả:** Mỗi giảng viên có mã giảng viên (teacherId), liên kết với một người dùng (userId → User.userId), thuộc một khoa (departmentId → Department.departmentId), học hàm (GS, PGS), học vị (TS, ThS), chức vụ (Trưởng bộ môn, Phó trưởng khoa…), ngày bắt đầu công tác.
+
+**SINH VIÊN**  
+**(Student: studentId long, userId long, classId long, enrollYear int, program varchar, status varchar)**  
+**Mô tả:** Mỗi sinh viên có mã sinh viên (studentId), liên kết với một người dùng (userId → User.userId), thuộc một lớp (classId → Clazz.classId), năm nhập học, chương trình đào tạo (chính quy, chất lượng cao, tiên tiến…), trạng thái (đang học, bảo lưu, thôi học…).
+
+**LỚP HỌC**  
+**(Clazz: classId long, classCode varchar, departmentId long, major varchar, advisorUserId long, startYear int, expectedGradYear int)**  
+**Mô tả:** Mỗi lớp hành chính có mã lớp duy nhất (classId), mã lớp (VD: D21CQCN01), thuộc khoa (departmentId), ngành học, chủ nhiệm lớp (advisorUserId → User.userId là giảng viên), năm bắt đầu và dự kiến tốt nghiệp.
+
+**MÔN HỌC**  
+**(Subject: subjectId long, subjectCode varchar, subjectName varchar, credits int, theoryHours int, practiceHours int, departmentId long, isCompulsory boolean)**  
+**Mô tả:** Mỗi môn học có mã môn (subjectId), mã môn học (VD: INT1234), tên môn, số tín chỉ, số giờ lý thuyết/thực hành, thuộc khoa quản lý (departmentId), bắt buộc hay tự chọn.
+
+**HỌC PHẦN** (Lớp môn học mở trong một học kỳ)  
+**(Course: courseId long, subjectId long, teacherId long, semester varchar, academicYear varchar, maxStudents int, currentStudents int, schedule varchar, room varchar, status varchar)**  
+**Mô tả:** Một học phần là một lớp môn học cụ thể được mở trong một học kỳ: liên kết với môn học (subjectId → Subject), giảng viên dạy (teacherId → Teacher), học kỳ (HK1, HK2, Hè), năm học (2024-2025), số lượng SV tối đa, số SV hiện tại, lịch học, phòng học, trạng thái (đang mở, đã đóng…).
+
+**ĐĂNG KÝ HỌC PHẦN**  
+**(Course_Registration: registrationId long, courseId long, studentId long, registerDate datetime, status varchar, note varchar)**  
+**Mô tả:** Bảng trung gian quản lý việc sinh viên đăng ký học phần: mỗi bản ghi là một lần đăng ký, liên kết học phần (courseId) và sinh viên (studentId), ngày đăng ký, trạng thái (đã đăng ký, đã hủy, chờ duyệt…).
+
+**ĐIỂM**  
+**(Grade: gradeId long, courseId long, studentId long, processScore decimal, finalScore decimal, totalScore decimal, letterGrade varchar, gpaScore decimal, note varchar)**  
+**Mô tả:** Bảng lưu điểm của sinh viên theo từng học phần: điểm quá trình, điểm thi, điểm tổng (thang 10), điểm chữ (A, B+, …), điểm hệ 4, ghi chú (thi lại, cải thiện…).
+
+**CHƯƠNG TRÌNH ĐÀO TẠO**  
+**(Curriculum: curriculumId long, major varchar, departmentId long, totalCredits int, startYear int, endYear int)**  
+**Mô tả:** Mỗi chương trình đào tạo của một ngành (ví dụ: CNTT 2021-2025), tổng số tín chỉ bắt buộc, thuộc khoa nào, áp dụng từ năm nào đến năm nào.
+
+**CHI TIẾT CHƯƠNG TRÌNH ĐÀO TẠO**  
+**(Curriculum_Detail: id long, curriculumId long, subjectId long, semester int, isCompulsory boolean)**  
+**Mô tả:** Quy định môn học nào thuộc học kỳ nào trong chương trình đào tạo, bắt buộc hay tự chọn.
+
+**THÔNG BÁO**  
+**(Notification: notificationId long, title varchar, content text, senderUserId long, targetRole varchar, createAt datetime, isRead boolean)**  
+**Mô tả:** Hệ thống thông báo: gửi từ người dùng nào, dành cho vai trò nào (toàn bộ sinh viên, giảng viên khoa X…), có đọc chưa.
+
+**QUAN HỆ:**
+
+**One to one:**  
+- User → Student 
+- User → Teacher
+
+**One to many:**  
+- Department → Teacher (một khoa có nhiều giảng viên)  
+- Department → Clazz (một khoa quản lý nhiều lớp)  
+- Department → Subject (một khoa quản lý nhiều môn học)  
+- Teacher → Course (một giảng viên dạy nhiều học phần)  
+- Clazz → Student (một lớp có nhiều sinh viên)  
+- Subject → Course (một môn học có thể mở nhiều học phần qua các kỳ)  
+- Course → Course_Registration (một học phần có nhiều sinh viên đăng ký)  
+- Student → Course_Registration (một sinh viên đăng ký nhiều học phần)  
+- Student → Grade (một sinh viên có nhiều bản ghi điểm)  
+- Course → Grade (một học phần có nhiều điểm của các sinh viên)  
+- Curriculum → Curriculum_Detail (một CTĐT có nhiều môn học theo kỳ)  
+- User → Notification (một người gửi nhiều thông báo)
 ---
 
 ## 3. 🎨 Thiết kế Giao diện Người dùng & Prototype (UI/UX Design & Figma)
