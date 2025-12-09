@@ -1,4 +1,4 @@
-package dev.nlu.portal.bean;
+package dev.nlu.portal.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,9 +13,6 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
-public class Student {
-	Long userId;
-	Long studentId;
-	Long classId;
-
+public class Student extends User{
+    Long studentId;
 }

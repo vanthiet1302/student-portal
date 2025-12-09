@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/home.jsp">
+    <Resource
+            name="jdbc/StudentPortalDB"
+            auth="Container"
+            type="javax.sql.DataSource"
+            factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+
+            driverClassName="com.mysql.cj.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/studentportal"
+            username="vthiet"
+            password=""
+            maxTotal="20" maxIdle="10" minIdle="5" maxWaitMillis="10000"
+    />
+
+</Context>

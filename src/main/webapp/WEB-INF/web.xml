@@ -5,7 +5,7 @@
 	version="6.0">
 	<display-name>Student Portal</display-name>
 	<welcome-file-list>
-		<welcome-file>home.jsp</welcome-file>
+		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
 	
 	<servlet>

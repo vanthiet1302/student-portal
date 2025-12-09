@@ -1,4 +1,4 @@
-package dev.nlu.portal.bean;
+package dev.nlu.portal.model;
 
 import java.time.LocalDateTime;
 import java.util.Date;
