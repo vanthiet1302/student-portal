@@ -1,34 +1,48 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Admin
-  Date: 11/7/2025
-  Time: 1:12 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>NLU Portal</title>
-        <link rel="icon" type="image/png" href="/assets/logo.png">
-    </head>
-    <body>
-        <c:import url="/share/header.jsp"></c:import>
-        <form action="login" method="post">
-            <label for="username">Tài khoản</label>
-            <br>
-            <input type="text" name="username">
-            <br>
-            <label for="password">Mật khẩu</label>
-            <br>
-            <input type="password" name="password">
-            <br>
-            <a href="">Quên mật khẩu?</a>
-            <br>
-            <input type="submit" value="Đăng nhập">
-        </form>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" content="width=device-width, initial-scale=1.0" />
+    <title>Cổng thông tin sinh viên - NLU</title>
+    <link rel="stylesheet" href="css/loginstyle.css" />
+  </head>
+  <body>
+    <div class="screen-box">
+      <div class="layout">
+        <!-- bên trái: hình thiên lý-->
+        <div class="left-side">
+          <img src="AQ1.png" class="bg-img" alt="" />
+        </div>
 
-    </body>
+        <!-- BÊN PHẢI: FORM LOGIN -->
+        <div class="right-side">
+          <img src="logo.png" class="logo" alt="" />
+
+          <div class="login-box">
+            <div class="input-group">
+              <span class="icon">👤</span>
+              <input type="text" placeholder="MSSV" inputmode="numeric" />
+            </div>
+
+            <div class="input-group">
+              <span class="icon">🔒</span>
+              <input type="password" placeholder="Password" />
+            </div>
+
+            <a href="#" class="forgot">Quên mật khẩu ?</a>
+
+            <button class="btn login">Đăng nhập</button>
+            <button class="btn notify">🔔 Xem thông báo - tin tức</button>
+          </div>
+        </div>
+      </div>
+      <!-- FOOTER -->
+      <footer class="footered">
+        <div class="footer-run">
+          TRƯỜNG ĐẠI HỌC NÔNG LÂM THÀNH PHỐ HỒ CHÍ MINH
+        </div>
+      </footer>
+    </div>
+  </body>
 </html>
