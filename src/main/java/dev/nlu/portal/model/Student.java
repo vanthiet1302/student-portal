@@ -14,5 +14,7 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 public class Student extends User{
-    Long studentId;
+    int id;
+    String name;
+    int age;
 }

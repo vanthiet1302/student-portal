@@ -6,7 +6,7 @@
 	<display-name>Student Portal</display-name>
 
 	<welcome-file-list>
-		<welcome-file>login.jsp</welcome-file>
+		<welcome-file>hello-servlet.jsp</welcome-file>
 	</welcome-file-list>
 
 	<resource-ref>
