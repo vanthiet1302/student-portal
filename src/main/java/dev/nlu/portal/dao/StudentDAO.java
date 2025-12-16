@@ -5,9 +5,10 @@
 package dev.nlu.portal.dao;
 
 import dev.nlu.portal.model.Student;
-import dev.nlu.portal.utils.DatabaseConnection;
+import dev.nlu.portal.utils.DBUtil;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,10 @@ import java.util.Map;
  * @author Admin
  */
 public class StudentDAO implements DAO<Student> {
-    private Connection connection = DatabaseConnection.getInstance().getConnection();
+    private Connection connection = DBUtil.getConnection();
+
+    public StudentDAO() throws SQLException {
+    }
 
 
     @Override

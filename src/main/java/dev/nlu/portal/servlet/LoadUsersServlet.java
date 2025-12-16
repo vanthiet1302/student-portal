@@ -1,7 +1,6 @@
 package dev.nlu.portal.servlet;
 
-import dev.nlu.portal.utils.DatabaseConnection;
-import jakarta.servlet.RequestDispatcher;
+import dev.nlu.portal.utils.DBUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,16 +10,19 @@ import jakarta.servlet.http.HttpSession;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/loadUsers"})
 public class LoadUsersServlet extends HttpServlet {
-    private Connection connection = DatabaseConnection.getInstance().getConnection();
+    private Connection connection = DBUtil.getConnection();
+
+    public LoadUsersServlet() throws SQLException {
+    }
 
     @SneakyThrows
     @Override
