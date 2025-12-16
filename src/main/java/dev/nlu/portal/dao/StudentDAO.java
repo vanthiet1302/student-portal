@@ -8,7 +8,10 @@ import dev.nlu.portal.model.Student;
 import dev.nlu.portal.utils.DBUtil;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +20,9 @@ import java.util.Map;
  * @author Admin
  */
 public class StudentDAO implements DAO<Student> {
-    private Connection connection = DBUtil.getConnection();
+    private Connection connection;
 
-    public StudentDAO() throws SQLException {
+    public StudentDAO() {
     }
 
 
@@ -47,7 +50,22 @@ public class StudentDAO implements DAO<Student> {
 
     @Override
     public List<Student> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Student> result = new ArrayList<>();
+        try {
+            connection = DBUtil.getConnection();
+            try (PreparedStatement ps = connection.prepareStatement("select * from student_mock");) {
+                try (ResultSet rs = ps.executeQuery();) {
+                    while (rs.next()) {
+                        result.add(new Student(rs.getInt("id"), rs.getString("name"), rs.getInt("age")));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi mở Connection: " + e.getMessage());
+            e.printStackTrace();
+        }
+        DBUtil.close(connection);
+        return result;
     }
 
 }
