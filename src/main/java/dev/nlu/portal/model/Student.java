@@ -13,8 +13,25 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
-public class Student extends User{
-    int id;
-    String name;
-    int age;
+public class Student{
+    String id;
+    String username;
+    String primaryEmail; // username
+    String hashPassword;
+    String firstName;
+    String lastName;
+    Date dob;
+    boolean isMale;
+    String status;
+    String phone;
+    String citizenId;
+    String nation; // Dân tộc
+    String religion; // Tôn giáo
+    String pob; // Place of birth
+    String nationality; // Quốc tịch
+    String address;
+    LocalDateTime createAt;
+    LocalDateTime updateAt;
+    String classId;
+    String avatarUrl;
 }

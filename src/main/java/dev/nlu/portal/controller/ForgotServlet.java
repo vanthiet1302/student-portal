@@ -1,4 +1,4 @@
-package dev.nlu.portal.servlet;
+package dev.nlu.portal.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
