@@ -25,13 +25,13 @@ public class RegisterServlet extends HttpServlet {
 
         if (!password.equals(confirmPassword)) {
             req.setAttribute("error", "Mật khẩu xác nhận không khớp");
-            req.getRequestDispatcher("register.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/auth/register.jsp").forward(req, resp);
             return;
         }
 
         if (studentService.existsByUsername(username)) {
             req.setAttribute("error", "Mã số sinh viên đã tồn tại, chuyển sang trang đăng nhập");
-            req.getRequestDispatcher("register.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/auth/register.jsp").forward(req, resp);
             return;
         }
 
@@ -43,7 +43,7 @@ public class RegisterServlet extends HttpServlet {
         student.setFirstname(firstname);
         student.setLastname(lastname);
         studentService.save(student);
-        resp.sendRedirect("login.jsp");
+        resp.sendRedirect(req.getContextPath() + "/login");
     }
 
     @Override
