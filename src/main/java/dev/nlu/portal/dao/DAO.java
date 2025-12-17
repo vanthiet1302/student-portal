@@ -7,7 +7,7 @@ public interface DAO<T> {
 
     public int save(T t);
 
-    public int update(String id, Map<String, Object> updates);
+    public int update(T t);
 
     public int delete(T t);
 

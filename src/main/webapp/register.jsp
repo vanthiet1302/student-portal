@@ -15,56 +15,21 @@
 </head>
 <body>
     <h2>Đăng ký thông tin sinh viên</h2>
-    <form action="register" method="post" enctype="multipart/form-data">
-        <!-- Account -->
+    <form action="register" method="post">
         <h3>Thông tin tài khoản</h3>
-        <input type="text" name="username" placeholder="Username" required />
-
-        <input type="email" name="primaryEmail" placeholder="Email" required />
-
-        <input type="password" name="password" placeholder="Mật khẩu" required />
-        <input type="password" name="confirmPassword" placeholder="Xác nhận mật khẩu" required />
-
-        <!-- Personal info -->
-        <h3>Thông tin cá nhân</h3>
-        <input type="text" name="firstName" placeholder="Họ" />
-        <input type="text" name="lastName" placeholder="Tên" />
-
-        <label>Ngày sinh</label>
-        <input type="date" name="dob" />
-
-        <label>Giới tính</label>
-        <select name="isMale">
-            <option value="true">Nam</option>
-            <option value="false">Nữ</option>
-        </select>
-
-        <input type="text" name="phone" placeholder="Số điện thoại" />
-        <input type="text" name="citizenId" placeholder="CCCD/CMND" />
-
-        <!-- Other info -->
-        <h3>Thông tin khác</h3>
-        <input type="text" name="nation" placeholder="Dân tộc" />
-        <input type="text" name="religion" placeholder="Tôn giáo" />
-        <input type="text" name="pob" placeholder="Nơi sinh" />
-        <input type="text" name="nationality" placeholder="Quốc tịch" />
-
-        <textarea name="address" placeholder="Địa chỉ"></textarea>
-
-        <input type="text" name="classId" placeholder="Mã lớp" />
-
-        <!-- Avatar -->
-        <label>Ảnh đại diện</label>
-        <input type="file" name="avatar" accept="image/*" />
-
-        <!-- Status (ẩn) -->
-        <input type="hidden" name="status" value="ACTIVE" />
-
+        Mã số sinh viên: <input type="text" name="username" placeholder="Mã số sinh viên" required />
+        <br>
+        Địa chỉ email: <input type="email" name="primaryEmail" placeholder="Email" required />
+        <br>
+        Họ: <input type="text" name="firstname" placeholder="Họ" required />
+        <br>
+        Tên: <input type="text" name="lastname" placeholder="Tên" required />
+        <br>
+        Mật khẩu: <input type="password" name="password" placeholder="Mật khẩu" required />
+        <br>
+        Nhập lại mật khẩu: <input type="password" name="confirmPassword" placeholder="Xác nhận mật khẩu" required />
+        <br>
         <button type="submit">Đăng ký</button>
     </form>
-
-
-</form>
-
 </body>
 </html>

@@ -1,12 +1,15 @@
 package dev.nlu.portal.service;
 
-import java.util.List;
-import java.util.Map;
+import dev.nlu.portal.model.Student;
 
-public interface Service<T> {
+import java.util.List;
+
+public interface IService<T> {
     public int save(T t);
 
-    public int update(String id, Map<String, Object> updates);
+    public int update(T t);
+
+    int update(Student student);
 
     public int delete(T t);
 
