@@ -18,8 +18,8 @@ public class Student{
     String username;
     String primaryEmail; // username
     String hashPassword;
-    String firstName;
-    String lastName;
+    String firstname;
+    String lastname;
     Date dob;
     boolean isMale;
     String status;
