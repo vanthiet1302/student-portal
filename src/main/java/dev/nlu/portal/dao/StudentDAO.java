@@ -74,8 +74,8 @@ public class StudentDAO implements DAO<Student> {
                         student.setId(rs.getString("id"));
                         student.setUsername(rs.getString("username"));
                         student.setPrimaryEmail(rs.getString("primary_email"));
-                        student.setFirstname(rs.getString("firstname"));
-                        student.setLastname(rs.getString("lastname"));
+                        student.setFirstname(rs.getString("first_name"));
+                        student.setLastname(rs.getString("last_name"));
                         student.setHashPassword(rs.getString("hash_password"));
                         return student;
                     }

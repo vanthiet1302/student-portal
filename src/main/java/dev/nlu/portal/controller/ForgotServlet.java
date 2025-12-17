@@ -14,7 +14,7 @@ public class ForgotServlet extends HttpServlet {
         if (gmail == null) {
             System.out.println("xin hay nhap gmail");
         } else {
-            response.sendRedirect("code.jsp");
+            response.sendRedirect("/WEB-INF/auth/code.jsp");
         }
     }
 }

@@ -15,7 +15,7 @@ public class StudentService implements IService<Student>, IAuthService {
         if (storedHashedPassword == null) {
             return false;
         }
-
+        System.out.println("Stored hashed password: " + storedHashedPassword);
         return PasswordUtil.checkPassword(plainPassword, storedHashedPassword);
     }
 
@@ -55,5 +55,9 @@ public class StudentService implements IService<Student>, IAuthService {
     @Override
     public List<Student> findAll() {
         return studentDAO.findAll();
+    }
+
+    public boolean checkPassword(String username, String password) {
+        return authenticate(username, password);
     }
 }

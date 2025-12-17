@@ -35,7 +35,7 @@ public class LoadAllUserServlet extends HttpServlet {
         List<Student> lstStudent = studentDAO.findAll();
         HttpSession session = req.getSession(true);
         session.setAttribute("allStudent", lstStudent);
-        RequestDispatcher rd = req.getServletContext().getRequestDispatcher("/loadAllUser.jsp");
+        RequestDispatcher rd = req.getServletContext().getRequestDispatcher("/load-users.jsp");
         rd.forward(req,resp);
     }
 }

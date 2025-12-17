@@ -15,9 +15,9 @@ public class CodeServlet extends HttpServlet {
         String textCode = "12345";
         if (code == textCode) {
 
-            response.sendRedirect("loginagain.jsp");
+            response.sendRedirect("/WEB-INF/auth/login-again.jsp");
         } else {
-            request.getRequestDispatcher("code.jsp").forward(request,response);
+            request.getRequestDispatcher("/WEB-INF/auth/code.jsp").forward(request,response);
         }
     }
 }
