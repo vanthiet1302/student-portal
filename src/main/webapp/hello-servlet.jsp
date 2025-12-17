@@ -11,6 +11,9 @@
 <form action="loadAllUser" method="get">
     <input type="submit" value="Load User">
 </form>
+<form action="loadCourse" method="get">
+    <input type="submit" value="Load Course">
+</form>
 
 </body>
 </html>

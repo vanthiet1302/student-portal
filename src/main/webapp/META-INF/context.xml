@@ -9,5 +9,5 @@
               username="vthiet"
               password=""
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/studentportaldb?useUnicode=true&amp;characterEncoding=UTF-8"/>
+              url="jdbc:mysql://localhost:3306/portal?useUnicode=true&amp;characterEncoding=UTF-8"/>
 </Context>
