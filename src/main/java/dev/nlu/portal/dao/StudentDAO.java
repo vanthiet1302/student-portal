@@ -27,7 +27,7 @@ public class StudentDAO implements DAO<Student> {
     }
 
     @Override
-    public Student find(String id) {
+    public Student find(String username) {
         return null;
     }
 
