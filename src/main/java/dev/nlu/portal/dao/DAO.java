@@ -1,7 +1,6 @@
 package dev.nlu.portal.dao;
 
 import java.util.List;
-import java.util.Map;
 
 public interface DAO<T> {
 
@@ -11,7 +10,7 @@ public interface DAO<T> {
 
     public int delete(T t);
 
-    public T find(String id);
+    public T find(String username);
 
     public List<T> findAll();
     
