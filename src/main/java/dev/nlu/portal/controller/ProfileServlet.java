@@ -18,11 +18,9 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
         Student freshStudent = ser.find((String) req.getSession().getAttribute("username"));
-
         req.setAttribute("student", freshStudent);
-
         req.getRequestDispatcher("profile.jsp").forward(req, resp);
+
     }
 }

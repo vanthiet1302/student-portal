@@ -20,17 +20,15 @@ public class StudentDAO implements DAO<Student> {
     public int update(Student student) {
         int rowsUpdated = 0;
         String sql = "UPDATE students SET " +
-                "username = ?, primary_email = ?, first_name = ?, last_name = ?, hash_password = ?, " +
+                "primary_email = ?, first_name = ?, last_name = ?, hash_password = ?, " +
                 "dob = ?, is_male = ?, status = ?, phone = ?, citizen_id = ?, nation = ?, religion = ?, " +
                 "pob = ?, nationality = ?, address = ?, created_at = ?, updated_at = ?, class_id = ?, avatar_url = ? " +
-                "WHERE id = ?";
+                "WHERE username = ?";
 
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             int idx = 1;
-
-            ps.setString(idx++, student.getUsername());
             ps.setString(idx++, student.getPrimaryEmail());
             ps.setString(idx++, student.getFirstname());
             ps.setString(idx++, student.getLastname());
@@ -55,8 +53,7 @@ public class StudentDAO implements DAO<Student> {
 
             ps.setString(idx++, student.getClassId());
             ps.setString(idx++, student.getAvatarUrl());
-
-            ps.setString(idx++, student.getId()); // WHERE id
+            ps.setString(idx++, student.getUsername());
 
             rowsUpdated = ps.executeUpdate();
 

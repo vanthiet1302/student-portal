@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <html>
 <head>
     <title>Thông tin sinh viên</title>
@@ -6,7 +8,6 @@
 <body>
 
 <h2>THÔNG TIN SINH VIÊN</h2>
-<div action="profile" method="get">
 <c:if test="${not empty student}">
 
     <p><b>Username (MSSV):</b> ${student.username}</p>
@@ -43,7 +44,9 @@
 
 <br>
 <br><br>
-<a href="home">⬅ Quay lại trang chủ</a>
-</div>
+<form action="edit" method="get">
+    <input type="hidden" name="username" value="${student.username}">
+    <button type="submit">Sửa đổi toàn bộ thông tin</button>
+</form>
 </body>
 </html>
