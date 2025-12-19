@@ -14,7 +14,7 @@ public class User {
     private String username;
     private String passwordHash;
     private Role role;
-    private boolean enabled = true;
+    private boolean enabled = true; // Trạng thái
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -12,12 +12,12 @@ import java.io.IOException;
 
 @WebServlet("/student/profile")
 public class ProfileServlet extends HttpServlet {
-    StudentServiceImpl ser = new StudentServiceImpl();
+    StudentServiceImpl service = new StudentServiceImpl();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Student freshStudent = ser.find((String) req.getSession().getAttribute("username"));
+        Student freshStudent = service.findById((Long) req.getSession().getAttribute("userId"));
 
         req.setAttribute("student", freshStudent);
 
