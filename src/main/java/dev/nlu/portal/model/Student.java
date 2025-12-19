@@ -30,8 +30,8 @@ public class Student{
     String pob; // Place of birth
     String nationality; // Quốc tịch
     String address;
-    LocalDateTime createAt;
-    LocalDateTime updateAt;
+    LocalDateTime createAt = LocalDateTime.now();
+    LocalDateTime updateAt= LocalDateTime.now();
     String classId;
     String avatarUrl;
 }
