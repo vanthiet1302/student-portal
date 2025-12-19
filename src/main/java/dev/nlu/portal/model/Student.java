@@ -1,5 +1,6 @@
 package dev.nlu.portal.model;
 
+import dev.nlu.portal.service.UserServiceImpl;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,29 +10,30 @@ import lombok.experimental.FieldDefaults;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@Data
-public class Student{
-    String id;
-    String username;
-    String primaryEmail; // username
-    String hashPassword;
-    String firstname;
-    String lastname;
-    Date dob;
-    boolean isMale;
-    String status;
-    String phone;
-    String citizenId;
-    String nation; // Dân tộc
-    String religion; // Tôn giáo
-    String pob; // Place of birth
-    String nationality; // Quốc tịch
-    String address;
-    LocalDateTime createAt = LocalDateTime.now();
-    LocalDateTime updateAt= LocalDateTime.now();
-    String classId;
-    String avatarUrl;
+public class Student {
+    private Long id;
+    private Long userId;                // FK đến users.id
+    private String studentCode;         // Mã sinh viên
+    private String fullName;
+    private String email;
+    private String phone;
+    private LocalDate dateOfBirth;
+    private Gender gender;
+    private String address;
+    private String major;               // Ngành học
+    private String className;           // Lớp hành chính (K65CLC...)
+
+    public User getUser() {
+        UserServiceImpl userService = new UserServiceImpl();
+        return userService.findById(userId);
+    }
 }

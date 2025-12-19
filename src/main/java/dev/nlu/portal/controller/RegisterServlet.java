@@ -1,7 +1,7 @@
 package dev.nlu.portal.controller;
 
 import dev.nlu.portal.model.Student;
-import dev.nlu.portal.service.StudentService;
+import dev.nlu.portal.service.StudentServiceImpl;
 import dev.nlu.portal.utils.PasswordUtil;
 import dev.nlu.portal.utils.UUIDUtil;
 import jakarta.servlet.ServletException;
@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RegisterServlet extends HttpServlet {
-    StudentService studentService = new StudentService();
+    StudentServiceImpl studentServiceImpl = new StudentServiceImpl();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,7 +29,7 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        if (studentService.existsByUsername(username)) {
+        if (studentServiceImpl.existsByUsername(username)) {
             req.setAttribute("error", "Mã số sinh viên đã tồn tại, chuyển sang trang đăng nhập");
             req.getRequestDispatcher("/WEB-INF/auth/register.jsp").forward(req, resp);
             return;
@@ -42,7 +42,7 @@ public class RegisterServlet extends HttpServlet {
         student.setHashPassword(PasswordUtil.hashPassword(password));
         student.setFirstname(firstname);
         student.setLastname(lastname);
-        studentService.save(student);
+        studentServiceImpl.save(student);
         resp.sendRedirect(req.getContextPath() + "/login");
     }
 

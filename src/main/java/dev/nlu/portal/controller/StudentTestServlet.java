@@ -1,6 +1,5 @@
 package dev.nlu.portal.controller;
 
-import dev.nlu.portal.dao.StudentDAO;
 import dev.nlu.portal.model.Student;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
