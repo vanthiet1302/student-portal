@@ -21,16 +21,16 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Student {
     private Long id;
-    private Long userId;                // FK đến users.id
-    private String studentCode;         // Mã sinh viên
+    private Long userId;
+    private String studentCode;
     private String fullName;
     private String email;
     private String phone;
     private LocalDate dateOfBirth;
     private Gender gender;
     private String address;
-    private String major;               // Ngành học
-    private String className;           // Lớp hành chính (K65CLC...)
+    private String major; // Ngành học
+    private String className; // DH23DTA
 
     public User getUser() {
         UserServiceImpl userService = new UserServiceImpl();
