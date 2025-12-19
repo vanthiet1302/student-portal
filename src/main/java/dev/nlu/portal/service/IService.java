@@ -5,15 +5,15 @@ import dev.nlu.portal.model.Student;
 import java.util.List;
 
 public interface IService<T> {
-    public int save(T t);
+    public void save(T t);
 
-    public int update(T t);
+    public void update(T t);
 
-    int update(Student student);
+    public void delete(Long id);
 
-    public int delete(T t);
-
-    public T find(String id);
+    public T findById(Long id);
 
     public List<T> findAll();
+
+    T login(Long id, String password);
 }

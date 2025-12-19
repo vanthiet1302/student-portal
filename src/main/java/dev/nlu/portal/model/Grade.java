@@ -9,15 +9,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Grade {
-
-    Long gradeId;
-    Long studentId;
-    Long courseId;
-    String nienKhoa;
-    String departmentId;
+    private Long id;
+    private Long registrationId;
+    private Double midtermScore;
+    private Double finalScore;
+    private Double overallScore;
+    private String letterGrade;  // A, B+, C...
 }

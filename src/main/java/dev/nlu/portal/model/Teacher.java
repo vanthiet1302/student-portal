@@ -9,13 +9,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Teacher {
-    Long userId;
-    Long teacherId;
-    Long departmentId;
-    String academicRank;
+    private Long id;
+    private Long userId;
+    private String teacherCode;
+    private String fullName;
+    private String email;
+    private String phone;
+    private String department;  // Khoa/Bộ môn
+    private Degree degree;
 }

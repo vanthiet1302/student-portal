@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -8,6 +10,9 @@
 </head>
 <body>
     <h2>Đăng nhập</h2>
+    <c:if test="${not empty error}">
+        <p style="color: red;">${error}</p>
+    </c:if>
     <form action="login" method="post">
         <label for="username">Mã số sinh viên:</label>
         <input type="text" id="username" name="username" required/>
