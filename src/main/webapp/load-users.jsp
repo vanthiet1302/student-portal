@@ -15,6 +15,10 @@
 </head>
 <body>
     <h1>Load User thành công!</h1>
+    <h2>Xin chào ${sessionScope.user.username}</h2>
+
+    <a href="profile">Xem thông tin sinh viên</a><br>
+    <a href="logout">Đăng xuất</a>
     <c:set var="students" value="${sessionScope.allStudent}"></c:set>
     <table border="1">
         <tr>

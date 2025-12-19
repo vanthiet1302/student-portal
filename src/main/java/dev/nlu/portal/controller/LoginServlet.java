@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import dev.nlu.portal.service.StudentService;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,12 +23,13 @@ public class LoginServlet extends HttpServlet {
             boolean checkPassword = studentService.checkPassword(username, password);
             if (checkPassword) {
                 resp.setContentType("text/html;charset=utf-8");
-                PrintWriter write = resp.getWriter();
-                write.println("<h2>Đăng nhập thành công</h2>");
-                write.println("<a href='load-users.jsp'>Đi đến trang danh sách sinh viên</a>");
+
+                req.getSession(true).setAttribute("username",username);
+                RequestDispatcher rd = req.getRequestDispatcher("/profile");
+                rd.forward(req, resp);
             } else {
                 req.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng");
-               req.getRequestDispatcher("/WEB-INF/auth/login.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/auth/login.jsp").forward(req, resp);
 
             }
         } else {
