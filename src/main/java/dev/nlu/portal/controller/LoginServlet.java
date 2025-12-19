@@ -24,10 +24,11 @@ public class LoginServlet extends HttpServlet {
                 resp.setContentType("text/html;charset=utf-8");
                 PrintWriter write = resp.getWriter();
                 write.println("<h2>Đăng nhập thành công</h2>");
-                write.println("<a href='load-users'>Đi đến trang danh sách sinh viên</a>");
+                write.println("<a href='load-users.jsp'>Đi đến trang danh sách sinh viên</a>");
             } else {
                 req.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng");
-                req.getRequestDispatcher("/WEB-INF/auth/login.jsp").forward(req, resp);
+               req.getRequestDispatcher("/WEB-INF/auth/login.jsp").forward(req, resp);
+
             }
         } else {
             req.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng");
