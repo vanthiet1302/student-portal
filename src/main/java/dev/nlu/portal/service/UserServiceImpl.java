@@ -49,4 +49,14 @@ public class UserServiceImpl implements IService<User> {
         }
         return null;
     }
+
+    public User findByUsername(String username) {
+        List<User> users = dao.findAll();
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
 }
