@@ -62,26 +62,32 @@ public class UserDAOImpl implements DAO<User> {
 
     @Override
     public void save(User user) {
-        String sql = "INSERT INTO users (username, password_hash, role, enabled) VALUES (?, ?, ?, ?)";
-        try  {
+        String sql = "INSERT INTO users (username, password_hash, role, enabled, created_at, updated_at) " +
+                "VALUES (?, ?, ?, TRUE, NOW(), NOW())";
+        try {
             conn = DBUtil.getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, user.getUsername());
                 ps.setString(2, user.getPasswordHash());
                 ps.setString(3, user.getRole().name());
-                ps.setBoolean(4, user.isEnabled());
-                ps.executeUpdate();
-                ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    user.setId(rs.getLong(1));
+
+                int affectedRows = ps.executeUpdate();
+
+                if (affectedRows == 0) {
+                    throw new SQLException("Creating user failed, no rows affected.");
+                }
+
+                // LẤY GENERATED ID VÀ SET VÀO OBJECT USER
+                try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        user.setId(generatedKeys.getLong(1));
+                    } else {
+                        throw new SQLException("Creating user failed, no ID obtained.");
+                    }
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                DBUtil.close(conn);
-            }
+            throw new RuntimeException("Error saving user", e);
         }
     }
 

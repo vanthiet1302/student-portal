@@ -1,10 +1,7 @@
 package dev.nlu.portal.model;
 
 import dev.nlu.portal.service.UserServiceImpl;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
@@ -17,11 +14,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
     private Long id;
-    private Long userId;
+    private Long userId; // Khoá
     private String studentCode;
     private String fullName;
     private String email;
