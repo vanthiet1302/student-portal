@@ -18,11 +18,11 @@
         <button type="submit">Đăng nhập</button>
         <p>
             Quên mật khẩu?
-            <a href="auth/forgot-password.jsp">Khôi phục mật khẩu</a>
+            <a href="forgot-password">Khôi phục mật khẩu</a>
         </p>
         <p>
             Chưa có tài khoản?
-            <a href="register.jsp">Đăng ký tài khoản sinh viên</a>
+            <a href="register">Đăng ký tài khoản sinh viên</a>
         </p>
     </form>
 </body>

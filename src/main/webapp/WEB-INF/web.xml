@@ -6,7 +6,7 @@
 	<display-name>Student Portal</display-name>
 
 	<welcome-file-list>
-		<welcome-file>/WEB-INF/auth/register.jsp</welcome-file>
+		<welcome-file>/WEB-INF/auth/login.jsp</welcome-file>
 	</welcome-file-list>
 
 	<resource-ref>
@@ -34,5 +34,13 @@
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
 
+<!--<servlet>-->
+<!--    <servlet-name>LoadProfile</servlet-name>-->
+<!--    <servlet-class>dev.nlu.portal.controller.LoginServlet</servlet-class>-->
+<!--</servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>LoadProfile</servlet-name>-->
+<!--        <url-pattern>/profile</url-pattern>-->
+<!--    </servlet-mapping>-->
 
 </web-app>

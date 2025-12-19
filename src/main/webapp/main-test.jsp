@@ -14,6 +14,5 @@
 <form action="loadCourse" method="get">
     <input type="submit" value="Load Course">
 </form>
-
 </body>
 </html>
