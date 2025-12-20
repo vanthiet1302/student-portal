@@ -34,16 +34,93 @@
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <!-- Admin Controllers -->
+    <servlet>
+        <servlet-name>AdminHomeServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.admin.HomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminHomeServlet</servlet-name>
+        <url-pattern>/admin/home</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AdminProfileServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.admin.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminProfileServlet</servlet-name>
+        <url-pattern>/admin/profile</url-pattern>
+    </servlet-mapping>
+
+    <!-- Student Controllers -->
+    <servlet>
+        <servlet-name>StudentHomeServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.student.HomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentHomeServlet</servlet-name>
+        <url-pattern>/student/home</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>StudentProfileServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.student.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentProfileServlet</servlet-name>
+        <url-pattern>/student/profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StudentScheduleServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.student.ScheduleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentScheduleServlet</servlet-name>
+        <url-pattern>/student/schedule</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StudentGradesServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.student.GradesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentGradesServlet</servlet-name>
+        <url-pattern>/student/grades</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StudentCoursesServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.student.CoursesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentCoursesServlet</servlet-name>
+        <url-pattern>/student/courses</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StudentRegisterCourseServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.student.RegisterCourseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentRegisterCourseServlet</servlet-name>
+        <url-pattern>/student/register-course</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>dev.nlu.portal.filter.AuthFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
-        <url-pattern>/admin/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>/student/*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 </web-app>
