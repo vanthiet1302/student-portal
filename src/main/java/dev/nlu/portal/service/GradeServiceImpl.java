@@ -1,13 +1,13 @@
 package dev.nlu.portal.service;
 
-import dev.nlu.portal.dao.DAO;
 import dev.nlu.portal.dao.GradeDAOImpl;
+import dev.nlu.portal.dto.GradeItemDTO;
 import dev.nlu.portal.model.Grade;
 
 import java.util.List;
 
 public class GradeServiceImpl implements IService<Grade> {
-    private final DAO<Grade> dao;
+    private final GradeDAOImpl dao;
 
     public GradeServiceImpl() {
         this.dao = new GradeDAOImpl();
@@ -41,5 +41,9 @@ public class GradeServiceImpl implements IService<Grade> {
     @Override
     public Grade login(Long id, String password) {
         return null; // Not applicable
+    }
+
+    public List<GradeItemDTO> getStudentGradeItems(Long studentId) {
+        return dao.findItemsByStudent(studentId);
     }
 }

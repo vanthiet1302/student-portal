@@ -43,6 +43,80 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
+    <!-- Forgot/Reset Password -->
+    <servlet>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.ForgotPasswordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <url-pattern>/forgot-password</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/reset-password</url-pattern>
+    </servlet-mapping>
+
+    <!-- API Controllers for CRUD testing -->
+    <servlet>
+        <servlet-name>StudentApiServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.api.StudentApiServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentApiServlet</servlet-name>
+        <url-pattern>/api/students</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TeacherApiServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.api.TeacherApiServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TeacherApiServlet</servlet-name>
+        <url-pattern>/api/teachers</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CourseApiServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.api.CourseApiServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CourseApiServlet</servlet-name>
+        <url-pattern>/api/courses</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SemesterApiServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.api.SemesterApiServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SemesterApiServlet</servlet-name>
+        <url-pattern>/api/semesters</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ClassApiServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.api.ClassApiServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClassApiServlet</servlet-name>
+        <url-pattern>/api/classes</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AnnouncementApiServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.api.AnnouncementApiServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AnnouncementApiServlet</servlet-name>
+        <url-pattern>/api/announcements</url-pattern>
+    </servlet-mapping>
+
     <!-- Admin Controllers -->
     <servlet>
         <servlet-name>AdminHomeServlet</servlet-name>

@@ -1,5 +1,6 @@
 package dev.nlu.portal.dao;
 
+import dev.nlu.portal.dto.GradeItemDTO;
 import dev.nlu.portal.model.Grade;
 import dev.nlu.portal.utils.DBUtil;
 
@@ -145,5 +146,80 @@ public class GradeDAOImpl implements DAO<Grade> {
     private Double getNullableDouble(ResultSet rs, String column) throws SQLException {
         double v = rs.getDouble(column);
         return rs.wasNull() ? null : v;
+    }
+
+    /**
+     * Trả về danh sách điểm theo sinh viên, bao gồm thông tin môn học, tín chỉ và học kỳ.
+     */
+    public List<GradeItemDTO> findItemsByStudent(Long studentId) {
+        String sql = "SELECT g.midterm_score, g.final_score, g.overall_score, g.letter_grade, " +
+                "cou.name AS course_name, cou.credits AS credits, " +
+                "s.name AS semester_name, s.semester_code AS semester_code " +
+                "FROM grades g " +
+                "JOIN class_registrations cr ON g.registration_id = cr.id " +
+                "JOIN classes c ON cr.class_id = c.id " +
+                "JOIN courses cou ON c.course_id = cou.id " +
+                "JOIN semesters s ON c.semester_id = s.id " +
+                "WHERE cr.student_id = ? " +
+                "ORDER BY s.start_date DESC, cou.name ASC";
+
+        List<GradeItemDTO> items = new ArrayList<>();
+        try {
+            conn = DBUtil.getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setLong(1, studentId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Double mid = getNullableDouble(rs, "midterm_score");
+                        Double fin = getNullableDouble(rs, "final_score");
+                        Double total = getNullableDouble(rs, "overall_score");
+                        if (total == null) {
+                            // nếu chưa có tổng kết trong DB, tính theo 40/60 và làm tròn 2 chữ số
+                            if (mid != null || fin != null) {
+                                double m = mid != null ? mid : 0.0;
+                                double f = fin != null ? fin : 0.0;
+                                total = Math.round((m * 0.4 + f * 0.6) * 100.0) / 100.0;
+                            }
+                        }
+                        String letter = rs.getString("letter_grade");
+                        String rank = resolveRank(total, letter);
+                        String term = rs.getString("semester_name");
+                        if (term == null || term.isEmpty()) {
+                            term = rs.getString("semester_code");
+                        }
+
+                        GradeItemDTO dto = new GradeItemDTO(
+                                rs.getString("course_name"),
+                                rs.getInt("credits"),
+                                mid,
+                                fin,
+                                total,
+                                rank,
+                                term
+                        );
+                        items.add(dto);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                DBUtil.close(conn);
+            }
+        }
+        return items;
+    }
+
+    private String resolveRank(Double total, String letter) {
+        if (letter != null && !letter.isEmpty()) {
+            // ưu tiên chữ cái nếu có
+            return letter;
+        }
+        if (total == null) return "";
+        if (total >= 8.5) return "Giỏi";
+        if (total >= 7.0) return "Khá";
+        if (total >= 5.5) return "Trung bình";
+        return "Yếu";
     }
 }

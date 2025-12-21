@@ -50,4 +50,8 @@ public class StudentServiceImpl implements IService<Student>, IAuthService {
         }
         return null;
     }
+
+    public Student findByEmail(String email) {
+        return dao.findByEmail(email);
+    }
 }

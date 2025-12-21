@@ -22,9 +22,12 @@ public class AuthFilter implements Filter {
         if (uri.equals(contextPath + "/login") ||
             uri.equals(contextPath + "/register") ||
             uri.equals(contextPath + "/logout") ||
+            uri.equals(contextPath + "/forgot-password") ||
+            uri.equals(contextPath + "/reset-password") ||
                 uri.startsWith(contextPath + "/assets/") ||
                 uri.startsWith(contextPath + "/css/") ||
                 uri.startsWith(contextPath + "/js/") ||
+                uri.startsWith(contextPath + "/api/") ||
                 uri.matches(".*\\.(css|js|png|jpg|jpeg|gif|ico)$")) {
             chain.doFilter(request, response);
             return;

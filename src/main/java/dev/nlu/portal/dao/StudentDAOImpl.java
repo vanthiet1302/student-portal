@@ -148,4 +148,26 @@ public class StudentDAOImpl implements DAO<Student> {
         student.setClassName(rs.getString("class_name"));
         return student;
     }
+
+    // Custom finder
+    public Student findByEmail(String email) {
+        String sql = "SELECT * FROM students WHERE email = ?";
+        try {
+            conn = DBUtil.getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, email);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return mapRowToStudent(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                DBUtil.close(conn);
+            }
+        }
+        return null;
+    }
 }
