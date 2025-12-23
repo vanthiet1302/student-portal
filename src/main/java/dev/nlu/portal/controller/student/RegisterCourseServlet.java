@@ -43,25 +43,27 @@ public class RegisterCourseServlet extends HttpServlet {
                 return;
             }
 
-            // Check if student already registered for this class
-            String checkSql = "SELECT id FROM class_registrations WHERE student_id = ? AND class_id = ? AND status = 'REGISTERED'";
-            // For now, proceed with simple registration (ideally use a DAO method to check)
-            
-            // Increment current_students if not at max
-            if (courseClass.getCurrentStudents() < courseClass.getMaxStudents()) {
-                ClassRegistration reg = new ClassRegistration();
-                reg.setStudentId(studentId);
-                reg.setClassId(classId);
-                reg.setRegisteredAt(LocalDateTime.now());
-                classRegDAO.save(reg);
-                
-                // Increment current_students
-                courseClass.setCurrentStudents(courseClass.getCurrentStudents() + 1);
-                classDAO.update(courseClass);
-                
-                session.setAttribute("success", "Đăng ký môn học thành công!");
+            // Check if student already registered for this class via DAO
+            ClassRegistration existingReg = classRegDAO.findByStudentIdAndClassId(studentId, classId);
+            if (existingReg != null && "REGISTERED".equals(existingReg.getStatus())) {
+                session.setAttribute("error", "Bạn đã đăng ký lớp học này rồi.");
             } else {
-                session.setAttribute("error", "Lớp học đã đầy. Không thể đăng ký.");
+                // Increment current_students if not at max
+                if (courseClass.getCurrentStudents() < courseClass.getMaxStudents()) {
+                    ClassRegistration reg = new ClassRegistration();
+                    reg.setStudentId(studentId);
+                    reg.setClassId(classId);
+                    reg.setRegisteredAt(LocalDateTime.now());
+                    classRegDAO.save(reg);
+
+                    // Increment current_students
+                    courseClass.setCurrentStudents(courseClass.getCurrentStudents() + 1);
+                    classDAO.update(courseClass);
+
+                    session.setAttribute("success", "Đăng ký môn học thành công!");
+                } else {
+                    session.setAttribute("error", "Lớp học đã đầy. Không thể đăng ký.");
+                }
             }
         } catch (NumberFormatException e) {
             session.setAttribute("error", "ID lớp học không hợp lệ.");
