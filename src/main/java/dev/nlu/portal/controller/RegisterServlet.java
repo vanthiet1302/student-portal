@@ -84,4 +84,9 @@ public class RegisterServlet extends HttpServlet {
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/auth/register.jsp");
         rd.forward(req, resp);
     }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/auth/register.jsp").forward(req, resp);
+    }
 }

@@ -2,9 +2,6 @@ package dev.nlu.portal.utils;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-/**
- * Utility class for secure password hashing and checking using BCrypt.
- */
 public class PasswordUtil {
     private static final int COST_FACTOR = 10;
 
