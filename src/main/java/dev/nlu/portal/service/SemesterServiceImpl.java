@@ -1,7 +1,6 @@
 package dev.nlu.portal.service;
 
 import dev.nlu.portal.dao.DAO;
-import dev.nlu.portal.dao.SemesterDAOImpl;
 import dev.nlu.portal.model.Semester;
 
 import java.util.List;

@@ -1,11 +1,6 @@
 package dev.nlu.portal.model;
 
-import dev.nlu.portal.service.UserServiceImpl;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,20 +13,20 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
-    private Long id;
-    private Long userId; // Khoá
-    private String studentCode;
-    private String fullName;
-    private String email;
-    private String phone;
-    private LocalDate dateOfBirth;
-    private Gender gender;
-    private String address;
-    private String major; // Ngành học
-    private String className; // DH23DTA
-
-    public User getUser() {
-        UserServiceImpl userService = new UserServiceImpl();
-        return userService.findById(userId);
-    }
+    private Long id;              // ID của bảng students
+    private User user;            // Đối tượng User (chứa username, password, role...)
+    
+    private String studentCode;   // Mã SV
+    private String fullName;      // Tên sinh viên
+    private LocalDate birthday;   // Ngày sinh
+    private String gender;        // Giới tính
+    private String status;        // Trạng thái (Đang học,...)
+    private String phoneNumber;   // Số điện thoại
+    private String identityCard;  // Số CMND/CCCD
+    private String ethnicity;     // Dân tộc
+    private String religion;      // Tôn giáo
+    private String birthPlace;    // Nơi sinh
+    private String nationality;   // Quốc tịch
+    private String emailPersonal; // Email 2
+    private String address;       // Địa chỉ
 }

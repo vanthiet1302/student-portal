@@ -1,6 +1,5 @@
 package dev.nlu.portal.service;
 
-import dev.nlu.portal.dao.ClassRegistrationDAOImpl;
 import dev.nlu.portal.dao.DAO;
 import dev.nlu.portal.model.ClassRegistration;
 

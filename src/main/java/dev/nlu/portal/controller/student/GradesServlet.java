@@ -1,6 +1,6 @@
 package dev.nlu.portal.controller.student;
 
-import dev.nlu.portal.dto.GradeItemDTO;
+import dev.nlu.portal.model.dto.GradeItemDTO;
 import dev.nlu.portal.model.Student;
 import dev.nlu.portal.service.GradeServiceImpl;
 import jakarta.servlet.RequestDispatcher;

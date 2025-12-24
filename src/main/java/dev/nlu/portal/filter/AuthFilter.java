@@ -45,7 +45,8 @@ public class AuthFilter implements Filter {
 
         if (path.startsWith("/admin/")) {
             if (user.getRole() != Role.ADMIN) {
-                resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập trang này!");
+                resp.sendError(HttpServletResponse.SC_FORBIDDEN,
+                        "Bạn không có quyền truy cập trang này!");
                 return;
             }
             chain.doFilter(request, response);
@@ -54,7 +55,8 @@ public class AuthFilter implements Filter {
 
         if (path.startsWith("/student/")) {
             if (user.getRole() != Role.STUDENT) {
-                resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập trang này!");
+                resp.sendError(HttpServletResponse.SC_FORBIDDEN,
+                        "Bạn không có quyền truy cập trang này!");
                 return;
             }
             chain.doFilter(request, response);

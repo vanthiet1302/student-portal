@@ -1,4 +1,4 @@
-package dev.nlu.portal.dto;
+package dev.nlu.portal.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

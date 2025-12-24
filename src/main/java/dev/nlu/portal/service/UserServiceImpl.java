@@ -1,7 +1,7 @@
 package dev.nlu.portal.service;
 
 import dev.nlu.portal.dao.DAO;
-import dev.nlu.portal.dao.UserDAOImpl;
+import dev.nlu.portal.dao.UserDao;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.utils.PasswordUtil;
 
@@ -11,7 +11,7 @@ public class UserServiceImpl implements IService<User> {
     DAO<User> dao;
 
     public UserServiceImpl() {
-        this.dao = new UserDAOImpl();
+        this.dao = new UserDao();
     }
 
     @Override

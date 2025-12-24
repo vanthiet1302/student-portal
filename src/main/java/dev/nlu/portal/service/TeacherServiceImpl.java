@@ -1,7 +1,7 @@
 package dev.nlu.portal.service;
 
 import dev.nlu.portal.dao.DAO;
-import dev.nlu.portal.dao.TeacherDAOImpl;
+import dev.nlu.portal.dao.TeacherDao;
 import dev.nlu.portal.model.Teacher;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.utils.PasswordUtil;
@@ -12,7 +12,7 @@ public class TeacherServiceImpl implements IService<Teacher> {
     private final DAO<Teacher> dao;
 
     public TeacherServiceImpl() {
-        this.dao = new TeacherDAOImpl();
+        this.dao = new TeacherDao();
     }
 
     @Override

@@ -134,6 +134,14 @@
         <servlet-name>AdminProfileServlet</servlet-name>
         <url-pattern>/admin/profile</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>addTeacherServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.admin.addTeacherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addTeacherServlet</servlet-name>
+        <url-pattern>/admin/teachers</url-pattern>
+    </servlet-mapping>
 
     <!-- Student Controllers -->
     <servlet>

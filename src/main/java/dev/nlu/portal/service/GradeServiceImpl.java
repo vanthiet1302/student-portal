@@ -1,7 +1,6 @@
 package dev.nlu.portal.service;
 
-import dev.nlu.portal.dao.GradeDAOImpl;
-import dev.nlu.portal.dto.GradeItemDTO;
+import dev.nlu.portal.model.dto.GradeItemDTO;
 import dev.nlu.portal.model.Grade;
 
 import java.util.List;

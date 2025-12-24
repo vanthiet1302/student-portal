@@ -1,8 +1,5 @@
 package dev.nlu.portal.controller.student;
 
-import dev.nlu.portal.dao.ClassDAOImpl;
-import dev.nlu.portal.dao.ClassRegistrationDAOImpl;
-import dev.nlu.portal.dao.CourseDAOImpl;
 import dev.nlu.portal.model.Class;
 import dev.nlu.portal.model.ClassRegistration;
 import dev.nlu.portal.model.User;

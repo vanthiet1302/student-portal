@@ -1,6 +1,5 @@
 package dev.nlu.portal.service;
 
-import dev.nlu.portal.dao.StudentDAOImpl;
 import dev.nlu.portal.model.Student;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.utils.PasswordUtil;

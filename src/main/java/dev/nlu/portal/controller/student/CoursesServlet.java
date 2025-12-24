@@ -1,19 +1,14 @@
 package dev.nlu.portal.controller.student;
 
-import dev.nlu.portal.dao.ClassDAOImpl;
-import dev.nlu.portal.dao.CourseDAOImpl;
 import dev.nlu.portal.model.Class;
 import dev.nlu.portal.model.Course;
-import dev.nlu.portal.model.User;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

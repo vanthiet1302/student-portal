@@ -1,5 +1,7 @@
-package dev.nlu.portal.model;
+package dev.nlu.portal.model.dto;
 
+import dev.nlu.portal.model.Degree;
+import dev.nlu.portal.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +13,17 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class TeacherDTO {
     private Long id;
     private String username;
-    private String passwordHashed;
     private Role role;
     private boolean enabled = true; // Trạng thái
+    private String teacherCode;
+    private String fullName;
+    private String email;
+    private String phone;
+    private String department;  // Khoa/Bộ môn
+    private Degree degree;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

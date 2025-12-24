@@ -1,12 +1,16 @@
 package dev.nlu.portal.dao;
 
-import java.util.List;
+import java.sql.Connection;
 import java.util.List;
 
 public interface DAO<T> {
-    T findById(Long id);               // Tìm theo ID
-    List<T> findAll();                  // Lấy tất cả
-    void save(T entity);                // Thêm mới
-    void update(T entity);              // Cập nhật
-    void delete(Long id);               // Xóa theo ID
+	T findById(Long id);
+
+	List<T> findAll();
+
+	boolean save(T t, Connection conn);
+
+	boolean update(T t, Connection conn);
+
+	boolean delete(Long id, Connection conn);
 }
