@@ -1,62 +1,80 @@
 package dev.nlu.portal.service;
 
-import dev.nlu.portal.dao.DAO;
-import dev.nlu.portal.dao.UserDao;
-import dev.nlu.portal.model.User;
-import dev.nlu.portal.utils.PasswordUtil;
-
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
-public class UserServiceImpl implements IService<User> {
-    DAO<User> dao;
+import dev.nlu.portal.dao.UserDao;
+import dev.nlu.portal.exception.BusinessException;
+import dev.nlu.portal.model.User;
+import dev.nlu.portal.utils.DBUtil;
+import dev.nlu.portal.utils.PasswordUtil;
 
-    public UserServiceImpl() {
-        this.dao = new UserDao();
-    }
-
-    @Override
-    public void save(User user) {
-        dao.save(user);
-    }
-
-    @Override
-    public void update(User user) {
-        dao.update(user);
-    }
-
-    @Override
-    public void delete(Long id) {
-        dao.delete(id);
-    }
-
-    @Override
-    public User findById(Long id) {
-        return dao.findById(id);
-    }
-
-    @Override
-    public List<User> findAll() {
-        return dao.findAll();
-    }
-
-    @Override
-    public User login(Long id, String password) {
-        User user = dao.findById(id);
-        if (user != null) {
-            if (PasswordUtil.checkPassword(password, user.getPasswordHash())) {
-                return user;
-            }
-        }
-        return null;
-    }
+public class UserServiceImpl implements ICrudService<User> {
+	private UserDao dao = new UserDao();
+	
+	public User login(String username, String password) {
+		User result = findByUsername(username);
+		if (result != null) {
+			if (PasswordUtil.checkPassword(password, result.getPasswordHashed()));
+		}
+		return null;
+	}
 
     public User findByUsername(String username) {
-        List<User> users = dao.findAll();
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
-        }
-        return null;
+        return dao.findByUsername(username);
     }
+
+	@Override
+	public User findById(Long id) {
+		return dao.findById(id);
+	}
+
+	@Override
+	public List<User> findAll() {
+		return dao.findAll();
+	}
+
+	@Override
+	public boolean create(User user) {
+		try (Connection conn = DBUtil.getConnection()) {
+			return createWithTransaction(user, conn);
+		} catch (SQLException e) {
+			throw new BusinessException("", e);
+		}
+	}
+
+	@Override
+	public boolean update(User user) {
+		try (Connection conn = DBUtil.getConnection()) {
+			return updateWithTransaction(user, conn);
+		} catch (SQLException e) {
+			throw new BusinessException("", e);
+		}
+	}
+
+	@Override
+	public boolean delete(Long id) {
+		try (Connection conn = DBUtil.getConnection()) {
+			return deleteWithTransaction(id, conn);
+		} catch (SQLException e) {
+			throw new BusinessException("", e);
+		}
+	}
+
+	@Override
+	public boolean createWithTransaction(User user, Connection conn) {
+		return dao.save(user, conn);
+	}
+
+	@Override
+	public boolean updateWithTransaction(User user, Connection conn) {
+		return dao.update(user, conn);
+	}
+
+	@Override
+	public boolean deleteWithTransaction(Long userId, Connection conn) {
+		return dao.delete(userId, conn);
+	}
+
 }

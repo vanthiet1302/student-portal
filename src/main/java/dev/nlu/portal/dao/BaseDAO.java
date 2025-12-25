@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import dev.nlu.portal.model.Lecturer;
-
 public abstract class BaseDAO {
     protected int executeUpdate(Connection conn, String sql, Object... params) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -15,11 +13,11 @@ public abstract class BaseDAO {
             return ps.executeUpdate();
         }
     }
-    
+
     protected Long executeInsert(Connection conn, String sql, Object... params) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             setParameters(ps, params);
-            
+
             int affectedRows = ps.executeUpdate();
             if (affectedRows > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {

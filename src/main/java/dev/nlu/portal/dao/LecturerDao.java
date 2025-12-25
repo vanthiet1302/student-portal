@@ -1,117 +1,84 @@
 package dev.nlu.portal.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import dev.nlu.portal.exception.DAOException;
 import dev.nlu.portal.model.Lecturer;
 import dev.nlu.portal.model.Role;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.utils.DBUtil;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
 
 	@Override
 	public boolean save(Lecturer lecturer, Connection conn) {
-	    StringBuilder sql = new StringBuilder("INSERT INTO lecturers (");
-	    sql.append("id, user_id, full_name, birth_year, gender, identity_card, ");
-	    sql.append("academic_rank, degree, specialization, position, department, ");
-	    sql.append("work_agency, agency_address, phone_fixed, fax, email_work, ");
-	    sql.append("email_personal, phone_mobile, bank_account_number, bank_name, bank_branch");
-	    sql.append(") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		StringBuilder sql = new StringBuilder("INSERT INTO lecturers (");
+		sql.append("user_id, full_name, birth_year, gender, identity_card, ");
+		sql.append("academic_rank, degree, specialization, position, department, ");
+		sql.append("work_agency, agency_address, phone_fixed, fax, email_work, ");
+		sql.append("email_personal, phone_mobile, bank_account_number, bank_name, bank_branch");
+		sql.append(") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-	    Long id = null;
-	    try {
-	        id = executeInsert(conn, sql.toString(),
-	            lecturer.getId(),
-	            lecturer.getUser() != null ? lecturer.getUser().getId() : null,
-	            lecturer.getFullName(),
-	            lecturer.getBirthYear(),
-	            lecturer.getGender(),
-	            lecturer.getIdentityCard(),
-	            lecturer.getAcademicRank(),
-	            lecturer.getDegree(),
-	            lecturer.getSpecialization(),
-	            lecturer.getPosition(),
-	            lecturer.getDepartment(),
-	            lecturer.getWorkAgency(),
-	            lecturer.getAgencyAddress(),
-	            lecturer.getPhoneFixed(),
-	            lecturer.getFax(),
-	            lecturer.getEmailWork(),
-	            lecturer.getEmailPersonal(),
-	            lecturer.getPhoneMobile(),
-	            lecturer.getBankAccountNumber(),
-	            lecturer.getBankName(),
-	            lecturer.getBankBranch()
-	        );
+		Long id = null;
+		try {
+			id = executeInsert(conn, sql.toString(), lecturer.getUser() != null ? lecturer.getUser().getId() : null,
+					lecturer.getFullName(), lecturer.getBirthYear(), lecturer.getGender(), lecturer.getIdentityCard(),
+					lecturer.getAcademicRank(), lecturer.getDegree(), lecturer.getSpecialization(),
+					lecturer.getPosition(), lecturer.getDepartment(), lecturer.getWorkAgency(),
+					lecturer.getAgencyAddress(), lecturer.getPhoneFixed(), lecturer.getFax(), lecturer.getEmailWork(),
+					lecturer.getEmailPersonal(), lecturer.getPhoneMobile(), lecturer.getBankAccountNumber(),
+					lecturer.getBankName(), lecturer.getBankBranch());
 
-	        if (id != null) {
-	            lecturer.setId(id);
-	        }
-	    } catch (SQLException e) {
-	    	System.err.println("Bug -> save: " + e.getMessage());
-	        e.printStackTrace();
-	        return false; 
-	    }
+			if (id != null) {
+				lecturer.setId(id);
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Failed to save Lecturer", e);
+		}
 
-	    return id != null;
+		return id != null;
 	}
 
 	@Override
 	public boolean update(Lecturer lecturer, Connection conn) {
-	    StringBuilder sql = new StringBuilder("UPDATE lecturers SET ");
-	    sql.append("user_id = ?, full_name = ?, birth_year = ?, gender = ?, identity_card = ?, ");
-	    sql.append("academic_rank = ?, degree = ?, specialization = ?, position = ?, department = ?, ");
-	    sql.append("work_agency = ?, agency_address = ?, phone_fixed = ?, fax = ?, email_work = ?, ");
-	    sql.append("email_personal = ?, phone_mobile = ?, bank_account_number = ?, bank_name = ?, bank_branch = ? ");
-	    sql.append("WHERE id = ?");
+		StringBuilder sql = new StringBuilder("UPDATE lecturers SET ");
+		sql.append("user_id = ?, full_name = ?, birth_year = ?, gender = ?, identity_card = ?, ");
+		sql.append("academic_rank = ?, degree = ?, specialization = ?, position = ?, department = ?, ");
+		sql.append("work_agency = ?, agency_address = ?, phone_fixed = ?, fax = ?, email_work = ?, ");
+		sql.append("email_personal = ?, phone_mobile = ?, bank_account_number = ?, bank_name = ?, bank_branch = ? ");
+		sql.append("WHERE id = ?");
 
-	    try {
-	        int affectedRows = executeUpdate(conn, sql.toString(),
-	            lecturer.getUser() != null ? lecturer.getUser().getId() : null,
-	            lecturer.getFullName(),
-	            lecturer.getBirthYear(),
-	            lecturer.getGender(),
-	            lecturer.getIdentityCard(),
-	            lecturer.getAcademicRank(),
-	            lecturer.getDegree(),
-	            lecturer.getSpecialization(),
-	            lecturer.getPosition(),
-	            lecturer.getDepartment(),
-	            lecturer.getWorkAgency(),
-	            lecturer.getAgencyAddress(),
-	            lecturer.getPhoneFixed(),
-	            lecturer.getFax(),
-	            lecturer.getEmailWork(),
-	            lecturer.getEmailPersonal(),
-	            lecturer.getPhoneMobile(),
-	            lecturer.getBankAccountNumber(),
-	            lecturer.getBankName(),
-	            lecturer.getBankBranch(),
-	            lecturer.getId()
-	        );
+		try {
+			int affectedRows = executeUpdate(conn, sql.toString(),
+					lecturer.getUser() != null ? lecturer.getUser().getId() : null, lecturer.getFullName(),
+					lecturer.getBirthYear(), lecturer.getGender(), lecturer.getIdentityCard(),
+					lecturer.getAcademicRank(), lecturer.getDegree(), lecturer.getSpecialization(),
+					lecturer.getPosition(), lecturer.getDepartment(), lecturer.getWorkAgency(),
+					lecturer.getAgencyAddress(), lecturer.getPhoneFixed(), lecturer.getFax(), lecturer.getEmailWork(),
+					lecturer.getEmailPersonal(), lecturer.getPhoneMobile(), lecturer.getBankAccountNumber(),
+					lecturer.getBankName(), lecturer.getBankBranch(), lecturer.getId());
 
-	        return affectedRows > 0;
-	    } catch (SQLException e) {
-	    	System.err.println("Bug -> update: " + e.getMessage());
-	        e.printStackTrace();
-	        return false;
-	    }
+			return affectedRows > 0;
+		} catch (SQLException e) {
+			throw new DAOException("Failed to update Lecturer", e);
+		}
 	}
 
 	@Override
 	public boolean delete(Long id, Connection conn) {
-	    String sql = "DELETE FROM lecturers WHERE id = ?";
+		String sql = "DELETE FROM lecturers WHERE id = ?";
 
-	    try {
-	        int affectedRows = executeUpdate(conn, sql, id);
-	        return affectedRows > 0;
-	    } catch (SQLException e) {
-	    	System.err.println("Bug -> delete: " + e.getMessage());
-	        e.printStackTrace();
-	        return false;
-	    }
+		try {
+			int affectedRows = executeUpdate(conn, sql, id);
+			return affectedRows > 0;
+		} catch (SQLException e) {
+			throw new DAOException("Failed to delete Lecturer", e);
+		}
 	}
 
 	@Override
@@ -125,8 +92,8 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
 					return mapResultSetToLecturer(rs);
 				}
 			}
-		} catch (SQLException ex) {
-			System.err.println("Bug -> findById: " + ex.getMessage());
+		} catch (SQLException e) {
+			throw new DAOException("Failed to find Lecturer by id", e);
 		}
 		return null;
 	}
@@ -141,31 +108,28 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
 					return mapResultSetToLecturer(rs);
 				}
 			}
-		} catch (SQLException ex) {
-			System.err.println("Bug -> findByUsername: " + ex.getMessage());
-			ex.printStackTrace();
+		} catch (SQLException e) {
+			throw new DAOException("Failed to find Lecturer by username", e);
 		}
 		return null;
 	}
 
 	@Override
 	public List<Lecturer> findAll() {
-	    String sql = "SELECT l.*, u.username, u.role, u.enabled " + 
-	                 "FROM lecturers l " +
-	                 "JOIN users u ON l.user_id = u.id";
-	    
-	    List<Lecturer> result = new ArrayList<>();
-	    try (Connection conn = DBUtil.getConnection();
-	         PreparedStatement ps = conn.prepareStatement(sql);
-	         ResultSet rs = ps.executeQuery()) {
-	        while (rs.next()) {
-	            result.add(mapResultSetToLecturer(rs));
-	        }
-	    } catch (SQLException ex) {
-	        System.err.println("Bug -> findAll: " + ex.getMessage());
-	        ex.printStackTrace();
-	    }
-	    return result;
+		String sql = "SELECT l.*, u.username, u.role, u.enabled " + "FROM lecturers l "
+				+ "JOIN users u ON l.user_id = u.id";
+
+		List<Lecturer> result = new ArrayList<>();
+		try (Connection conn = DBUtil.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery()) {
+			while (rs.next()) {
+				result.add(mapResultSetToLecturer(rs));
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Failed to find all Lecturer", e);
+		}
+		return result;
 	}
 
 	private Lecturer mapResultSetToLecturer(ResultSet rs) throws SQLException {
@@ -182,15 +146,12 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
 				.bankAccountNumber(rs.getString("bank_account_number")).bankName(rs.getString("bank_name"))
 				.bankBranch(rs.getString("bank_branch")).build();
 	}
-	
+
 	private User mapRowToUser(ResultSet rs) throws SQLException {
-	    String role = rs.getString("role");
-	    return User.builder()
-	            .id(rs.getLong("user_id"))
-	            .username(rs.getString("username"))
-	            .role(Role.valueOf(role))
-	            .enabled(rs.getBoolean("enabled"))
-	            .build();
+		String role = rs.getString("role");
+		return User.builder().id(rs.getLong("user_id")).username(rs.getString("username"))
+                .passwordHashed(rs.getString("password_hash"))
+				.role(Role.valueOf(role.toUpperCase())).enabled(rs.getBoolean("enabled")).build();
 	}
 
 }

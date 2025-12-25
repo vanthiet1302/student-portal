@@ -1,14 +1,16 @@
 package dev.nlu.portal.dao;
 
-import dev.nlu.portal.model.Role;
-import dev.nlu.portal.model.User;
-import dev.nlu.portal.utils.DBUtil;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.tags.shaded.org.apache.regexp.recompile;
+import dev.nlu.portal.exception.DAOException;
+import dev.nlu.portal.model.Role;
+import dev.nlu.portal.model.User;
+import dev.nlu.portal.utils.DBUtil;
 
 public class UserDao extends BaseDAO implements DAO<User> {
 
@@ -16,7 +18,6 @@ public class UserDao extends BaseDAO implements DAO<User> {
 	public boolean save(User user, Connection conn) {
 		String sql = "INSERT INTO users (username, password_hash, role, enabled, created_at, updated_at) "
 				+ "VALUES (?, ?, ?, ?, NOW(), NOW())";
-
 		try {
 			Long id = executeInsert(conn, sql, user.getUsername(), user.getPasswordHashed(),
 					user.getRole() != null ? user.getRole().name() : null, user.isEnabled());
@@ -91,16 +92,18 @@ public class UserDao extends BaseDAO implements DAO<User> {
 	}
 
 	public User findByUsername(String username) {
+		System.out.println("DEBUG: Finding user with username: [" + username + "]");
 		String sql = "select * from users where username = ?";
-		try (Connection conn = DBUtil.getConnection();
-				PreparedStatement ps = conn.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery();) {
-			if (rs.next()) {
-				return mapRowToUser(rs);
-			}
+		try (Connection conn = DBUtil.getConnection(); PreparedStatement ps = conn.prepareStatement(sql);
+		) {
+			ps.setString(1, username);
+			try (ResultSet rs = ps.executeQuery()) {
+		        if (rs.next()) {
+		            return mapRowToUser(rs);
+		        }
+		    }
 		} catch (SQLException e) {
-			System.err.println("Bug -> findByUsername User: " + e.getMessage());
-			e.printStackTrace();
+			throw new DAOException("UserDAO: findByUserName ", e);
 		}
 
 		return null;
@@ -108,6 +111,7 @@ public class UserDao extends BaseDAO implements DAO<User> {
 
 	private User mapRowToUser(ResultSet rs) throws SQLException {
 		return User.builder().id(rs.getLong("id")).username(rs.getString("username"))
+                .passwordHashed(rs.getString("password_hash"))
 				.role(rs.getString("role") != null ? Role.valueOf(rs.getString("role")) : null)
 				.enabled(rs.getBoolean("enabled")).createdAt(rs.getTimestamp("created_at").toLocalDateTime())
 				.updatedAt(rs.getTimestamp("updated_at").toLocalDateTime()).build();

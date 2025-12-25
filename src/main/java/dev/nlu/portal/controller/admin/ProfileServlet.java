@@ -1,11 +1,11 @@
 package dev.nlu.portal.controller.admin;
 
+import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 public class ProfileServlet extends HttpServlet {
     @Override
@@ -13,7 +13,8 @@ public class ProfileServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/admin/profile.jsp").forward(req, resp);
     }
 
-    protected  void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @Override
+	protected  void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
 }

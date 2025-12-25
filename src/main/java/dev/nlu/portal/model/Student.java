@@ -1,12 +1,11 @@
 package dev.nlu.portal.model;
 
-import lombok.*;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -15,7 +14,7 @@ import java.time.LocalDate;
 public class Student {
     private Long id;              // ID của bảng students
     private User user;            // Đối tượng User (chứa username, password, role...)
-    
+
     private String studentCode;   // Mã SV
     private String fullName;      // Tên sinh viên
     private LocalDate birthday;   // Ngày sinh

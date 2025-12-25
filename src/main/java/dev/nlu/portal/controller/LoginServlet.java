@@ -1,18 +1,20 @@
 package dev.nlu.portal.controller;
 
-import dev.nlu.portal.model.Student;
+import java.io.IOException;
+
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.service.StudentServiceImpl;
 import dev.nlu.portal.service.UserServiceImpl;
 import dev.nlu.portal.utils.PasswordUtil;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-
+@WebServlet(urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
     UserServiceImpl userService = new UserServiceImpl();
     StudentServiceImpl studentService = new StudentServiceImpl();
@@ -23,8 +25,9 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         User user = userService.findByUsername(username);
+
         if (user != null) {
-            if (PasswordUtil.checkPassword(password, user.getPasswordHash())) {
+            if (PasswordUtil.checkPassword(password, user.getPasswordHashed())) {
                 req.getSession().setAttribute("user", user);
                 String role = user.getRole().toString().toLowerCase();
                 switch (role) {
@@ -32,11 +35,11 @@ public class LoginServlet extends HttpServlet {
                         resp.sendRedirect(req.getContextPath() + "/admin/home");
                         break;
                     case "student":
-                        req.getSession().setAttribute("student", studentService.findById(user.getId()));
+//                        req.getSession().setAttribute("student", studentService.findById(user.getId()));
                         resp.sendRedirect(req.getContextPath() + "/student/home");
                         break;
-                    case "teacher":
-                        resp.sendRedirect(req.getContextPath() + "/teacher/home");
+                    case "lecturer":
+                        resp.sendRedirect(req.getContextPath() + "/lecturer/home");
                         break;
                     default:
                         req.setAttribute("error", "Vai trò người dùng không hợp lệ!");
@@ -54,7 +57,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/auth/login.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/share/login.jsp");
         rd.forward(req, resp);
     }
 }
