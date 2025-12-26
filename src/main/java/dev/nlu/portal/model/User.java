@@ -1,22 +1,23 @@
 package dev.nlu.portal.model;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
     private Long id;
     private String username;
-    private String passwordHash;
+    private String passwordHashed;
     private Role role;
-    private boolean enabled = true; // Trạng thái
+    @Builder.Default
+    private boolean enabled = true;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -1,200 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
-         version="6.0">
-    <display-name>Student Portal</display-name>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+	version="6.0">
+	<display-name>Student Portal</display-name>
 
-    <welcome-file-list>
-        <welcome-file>/WEB-INF/auth/register.jsp</welcome-file>
-    </welcome-file-list>
+	<welcome-file-list>
+		<welcome-file>/WEB-INF/views/share/login.jsp</welcome-file>
+	</welcome-file-list>
 
-    <resource-ref>
-        <description>Database Connection Pool</description>
-        <res-ref-name>jdbc/mysql</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-    </resource-ref>
+	<resource-ref>
+		<description>Database Connection Pool</description>
+		<res-ref-name>jdbc/mysql</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
 
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
+	<!-- Forgot/Reset Password -->
 
-    <servlet>
-        <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.RegisterServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>RegisterServlet</servlet-name>
-        <url-pattern>/register</url-pattern>
-    </servlet-mapping>
+	<!-- Admin Controllers -->
 
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
+	<!-- Student Controllers -->
 
-    <!-- Forgot/Reset Password -->
-    <servlet>
-        <servlet-name>ForgotPasswordServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.ForgotPasswordServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ForgotPasswordServlet</servlet-name>
-        <url-pattern>/forgot-password</url-pattern>
-    </servlet-mapping>
 
-    <servlet>
-        <servlet-name>ResetPasswordServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.ResetPasswordServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ResetPasswordServlet</servlet-name>
-        <url-pattern>/reset-password</url-pattern>
-    </servlet-mapping>
-
-    <!-- API Controllers for CRUD testing -->
-    <servlet>
-        <servlet-name>StudentApiServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.api.StudentApiServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StudentApiServlet</servlet-name>
-        <url-pattern>/api/students</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>TeacherApiServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.api.TeacherApiServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>TeacherApiServlet</servlet-name>
-        <url-pattern>/api/teachers</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>CourseApiServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.api.CourseApiServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CourseApiServlet</servlet-name>
-        <url-pattern>/api/courses</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>SemesterApiServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.api.SemesterApiServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SemesterApiServlet</servlet-name>
-        <url-pattern>/api/semesters</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ClassApiServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.api.ClassApiServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ClassApiServlet</servlet-name>
-        <url-pattern>/api/classes</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>AnnouncementApiServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.api.AnnouncementApiServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AnnouncementApiServlet</servlet-name>
-        <url-pattern>/api/announcements</url-pattern>
-    </servlet-mapping>
-
-    <!-- Admin Controllers -->
-    <servlet>
-        <servlet-name>AdminHomeServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.admin.HomeServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AdminHomeServlet</servlet-name>
-        <url-pattern>/admin/home</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>AdminProfileServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.admin.ProfileServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AdminProfileServlet</servlet-name>
-        <url-pattern>/admin/profile</url-pattern>
-    </servlet-mapping>
-
-    <!-- Student Controllers -->
-    <servlet>
-        <servlet-name>StudentHomeServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.student.HomeServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StudentHomeServlet</servlet-name>
-        <url-pattern>/student/home</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>StudentProfileServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.student.ProfileServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StudentProfileServlet</servlet-name>
-        <url-pattern>/student/profile</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>StudentScheduleServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.student.ScheduleServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StudentScheduleServlet</servlet-name>
-        <url-pattern>/student/schedule</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>StudentGradesServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.student.GradesServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StudentGradesServlet</servlet-name>
-        <url-pattern>/student/grades</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>StudentCoursesServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.student.CoursesServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StudentCoursesServlet</servlet-name>
-        <url-pattern>/student/courses</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>StudentRegisterCourseServlet</servlet-name>
-        <servlet-class>dev.nlu.portal.controller.student.RegisterCourseServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StudentRegisterCourseServlet</servlet-name>
-        <url-pattern>/student/register-course</url-pattern>
-    </servlet-mapping>
-
-    <filter>
-        <filter-name>AuthFilter</filter-name>
-        <filter-class>dev.nlu.portal.filter.AuthFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+	<!-- Filter -->
+	<filter>
+		<filter-name>AuthFilter</filter-name>
+		<filter-class>dev.nlu.portal.filter.AuthFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AuthFilter</filter-name>
+		<url-pattern>/admin/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>AuthFilter</filter-name>
+		<url-pattern>/lecturer/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>AuthFilter</filter-name>
+		<url-pattern>/student/*</url-pattern>
+	</filter-mapping>
 </web-app>
