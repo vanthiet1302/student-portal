@@ -6,6 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 public class AdminDashboardController implements Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return "";
+        return "/WEB-INF/views/admin/dashboard.jsp";
     }
 }

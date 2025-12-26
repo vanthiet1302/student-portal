@@ -16,7 +16,9 @@ public class UserServiceImpl implements ICrudService<User> {
 	public User login(String username, String password) {
 		User result = findByUsername(username);
 		if (result != null) {
-			if (PasswordUtil.checkPassword(password, result.getPasswordHashed()));
+			if (PasswordUtil.checkPassword(password, result.getPasswordHashed())) {
+				return result;
+			}
 		}
 		return null;
 	}

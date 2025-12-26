@@ -16,12 +16,6 @@
 		</div>
 	</c:if>
 
-	<c:if test="${not empty success}">
-		<div class="alert success">
-			<c:out value="${success}" />
-		</div>
-	</c:if>
-
 	<form action="login" method="post">
 		<p>Tên đăng nhập</p>
 		<input type='text' name='username' placeholder='Nhập tên đăng nhập'

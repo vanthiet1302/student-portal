@@ -83,7 +83,7 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
 
 	@Override
 	public Lecturer findById(Long lecturerId) {
-		String sql = "SELECT l.*, u.username, u.role, u.enabled " + "FROM lecturers l "
+		String sql = "SELECT l.*, u.* " + "FROM lecturers l "
 				+ "JOIN users u ON l.user_id = u.id " + "WHERE l.id = ?";
 		try (Connection conn = DBUtil.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setLong(1, lecturerId);
@@ -99,7 +99,7 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
 	}
 
 	public Lecturer findByUsername(String username) {
-		String sql = "SELECT l.*, u.username, u.role, u.enabled " + "FROM lecturers l "
+		String sql = "SELECT l.*, u.* " + "FROM lecturers l "
 				+ "JOIN users u ON l.user_id = u.id " + "WHERE u.username = ?";
 		try (Connection conn = DBUtil.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, username);
@@ -116,7 +116,7 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
 
 	@Override
 	public List<Lecturer> findAll() {
-		String sql = "SELECT l.*, u.username, u.role, u.enabled " + "FROM lecturers l "
+		String sql = "SELECT l.*, u.* " + "FROM lecturers l "
 				+ "JOIN users u ON l.user_id = u.id";
 
 		List<Lecturer> result = new ArrayList<>();

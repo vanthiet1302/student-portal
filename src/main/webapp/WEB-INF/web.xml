@@ -19,14 +19,6 @@
 	<!-- Forgot/Reset Password -->
 
 	<!-- Admin Controllers -->
-	<servlet>
-		<servlet-name>AdminHomeServlet</servlet-name>
-		<servlet-class>dev.nlu.portal.controller.admin.HomeServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AdminHomeServlet</servlet-name>
-		<url-pattern>/admin/home</url-pattern>
-	</servlet-mapping>
 
 	<!-- Student Controllers -->
 
