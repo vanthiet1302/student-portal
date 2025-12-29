@@ -43,6 +43,14 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AdminStudentServlet</servlet-name>
+        <servlet-class>dev.nlu.portal.controller.admin.AdminStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminStudentServlet</servlet-name>
+        <url-pattern>/admin/students</url-pattern>
+    </servlet-mapping>
     <!-- Forgot/Reset Password -->
     <servlet>
         <servlet-name>ForgotPasswordServlet</servlet-name>

@@ -32,6 +32,27 @@ public class ClassRegistrationDAOImpl implements DAO<ClassRegistration> {
         }
         return null;
     }
+    public ClassRegistration findByStudentIdAndClassId ( long  studentId, long classId){
+        String sql= "SELECT * FORM class_registrations WHERE student_id = ? AND class_id = ? ";
+        try {
+            conn = DBUtil.getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setLong(1, studentId);
+                ps.setLong(2, classId);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return mapRowToClassRegistration(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                DBUtil.close(conn);
+            }
+        }
+        return null;
+    }
 
     @Override
     public List<ClassRegistration> findAll() {
