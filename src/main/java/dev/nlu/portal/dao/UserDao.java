@@ -1,119 +1,126 @@
 package dev.nlu.portal.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import dev.nlu.portal.exception.DAOException;
 import dev.nlu.portal.model.Role;
 import dev.nlu.portal.model.User;
-import dev.nlu.portal.utils.DBUtil;
+import dev.nlu.portal.utils.DatabaseUtils;
 
-public class UserDao extends BaseDAO implements DAO<User> {
-
-	@Override
-	public boolean save(User user, Connection conn) {
-		String sql = "INSERT INTO users (username, password_hash, role, enabled, created_at, updated_at) "
-				+ "VALUES (?, ?, ?, ?, NOW(), NOW())";
-		try {
-			Long id = executeInsert(conn, sql, user.getUsername(), user.getPasswordHashed(),
-					user.getRole() != null ? user.getRole().name() : null, user.isEnabled());
-
-			if (id != null) {
-				user.setId(id);
-				return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	// NOte để chỉnh lại update bằng username
-	@Override
-	public boolean update(User user, Connection conn) {
-		String sql = "UPDATE users SET username = ?, password_hash = ?, role = ?, enabled = ?, updated_at = NOW() WHERE id = ?";
-		try {
-			int rows = executeUpdate(conn, sql, user.getUsername(), user.getPasswordHashed(),
-					user.getRole() != null ? user.getRole().name() : null, user.isEnabled(), user.getId());
-			return rows > 0;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
+public class UserDAO extends BaseDAO implements DAO<User> {
 
 	@Override
-	public boolean delete(Long id, Connection conn) {
-		String sql = "DELETE FROM users WHERE id = ?";
-		try {
-			return executeUpdate(conn, sql, id) > 0;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
+	public User findById(String id) {
+		String sql = "SELECT * FROM Users WHERE id = ?";
+		try (Connection conn = DatabaseUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-	@Override
-	public User findById(Long id) {
-		String sql = "SELECT * FROM users WHERE id = ?";
-		try (Connection conn = DBUtil.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, id);
 
-			ps.setLong(1, id);
-
-			try (ResultSet rs = ps.executeQuery()) {
+			try (ResultSet rs = ps.executeQuery();) {
 				if (rs.next()) {
-					return mapRowToUser(rs);
+					return mapResultSetToUser(rs);
 				}
 			}
 		} catch (SQLException e) {
-			System.err.println("Bug -> findById User: " + e.getMessage());
+			throw new DAOException("Find by Id User failed: " + e.getMessage(), e);
+		}
+		return null;
+	}
+	
+	public User findByUsername(String username) {
+		String sql = "SELECT * FROM Users WHERE username = ?";
+		try (Connection conn = DatabaseUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+			ps.setString(1, username);
+
+			try (ResultSet rs = ps.executeQuery();) {
+				if (rs.next()) {
+					return mapResultSetToUser(rs);
+				}
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Find by Username User failed: " + e.getMessage(), e);
 		}
 		return null;
 	}
 
 	@Override
 	public List<User> findAll() {
-		String sql = "SELECT * FROM users";
-		List<User> result = new ArrayList<>();
-		try (Connection conn = DBUtil.getConnection();
+		List<User> users = new ArrayList<>();
+		String sql = "SELECT * FROM Users";
+		try (Connection conn = DatabaseUtils.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery()) {
+
 			while (rs.next()) {
-				result.add(mapRowToUser(rs));
+				users.add(mapResultSetToUser(rs));
 			}
 		} catch (SQLException e) {
-			System.err.println("Bug -> findAll User: " + e.getMessage());
+			throw new DAOException("Find all User failed: " + e.getMessage(), e);
 		}
-		return result;
+		return users;
 	}
 
-	public User findByUsername(String username) {
-		System.out.println("DEBUG: Finding user with username: [" + username + "]");
-		String sql = "select * from users where username = ?";
-		try (Connection conn = DBUtil.getConnection(); PreparedStatement ps = conn.prepareStatement(sql);
-		) {
-			ps.setString(1, username);
-			try (ResultSet rs = ps.executeQuery()) {
-		        if (rs.next()) {
-		            return mapRowToUser(rs);
-		        }
-		    }
+	@Override
+	public boolean insert(User user, Connection conn) {
+		String sql = "INSERT INTO users (username, hashedPassword, primaryEmail, personEmail, role, enabled, avatarUrl, avatarId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+			String id = executeInsert(conn, sql, user.getUsername(), user.getHashedPassword(), 
+					user.getPrimaryEmail(),
+					user.getPersonEmail(), user.getRole().name(), user.isEnabled(), user.getAvatarUrl(),
+					user.getAvatarId());
+			if (id != null ) {
+				user.setId(id);
+				return true;
+			} else {
+				return false;
+			}
 		} catch (SQLException e) {
-			throw new DAOException("UserDAO: findByUserName ", e);
+			throw new DAOException("Insert User failed: " + e.getMessage(), e);
 		}
-
-		return null;
 	}
 
-	private User mapRowToUser(ResultSet rs) throws SQLException {
-		return User.builder().id(rs.getLong("id")).username(rs.getString("username"))
-                .passwordHashed(rs.getString("password_hash"))
-				.role(rs.getString("role") != null ? Role.valueOf(rs.getString("role")) : null)
-				.enabled(rs.getBoolean("enabled")).createdAt(rs.getTimestamp("created_at").toLocalDateTime())
-				.updatedAt(rs.getTimestamp("updated_at").toLocalDateTime()).build();
+	@Override
+	public boolean update(User user, Connection conn) {
+		String sql = "UPDATE users SET username=?, hashedPassword=?, primaryEmail=?, personEmail=?, role=?, enabled=?, avatarUrl=?, avatarId=?, updatedAt=? WHERE id=?";
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, user.getUsername());
+			ps.setString(2, user.getHashedPassword());
+			ps.setString(3, user.getPrimaryEmail());
+			ps.setString(4, user.getPersonEmail());
+			ps.setString(5, user.getRole().name());
+			ps.setBoolean(6, user.isEnabled());
+			ps.setString(7, user.getAvatarUrl());
+			ps.setString(8, user.getAvatarId());
+			ps.setTimestamp(9, Timestamp.valueOf(user.getUpdatedAt()));
+			ps.setString(10, user.getId());
+
+			return ps.executeUpdate() > 0;
+		} catch (SQLException e) {
+			throw new DAOException("Update User failed: " + e.getMessage(), e);
+		}
+	}
+
+	@Override
+	public boolean delete(String id, Connection conn) {
+		String sql = "DELETE FROM users WHERE id = ?";
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, id);
+			return ps.executeUpdate() > 0;
+		} catch (SQLException e) {
+			throw new DAOException("Delete User failed: " + e.getMessage(), e);
+		}
+	}
+
+	private User mapResultSetToUser(ResultSet rs) throws SQLException {
+		return User.builder().id(rs.getString("id")).username(rs.getString("username"))
+				.hashedPassword(rs.getString("hashedPassword")).primaryEmail(rs.getString("primaryEmail"))
+				.personEmail(rs.getString("personEmail")).role(Role.valueOf(rs.getString("role")))
+				.enabled(rs.getBoolean("enabled")).avatarUrl(rs.getString("avatarUrl"))
+				.avatarId(rs.getString("avatarId")).createdAt(rs.getTimestamp("createdAt").toLocalDateTime())
+				.updatedAt(rs.getTimestamp("updatedAt").toLocalDateTime()).build();
 	}
 }

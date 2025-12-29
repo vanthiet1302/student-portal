@@ -3,12 +3,9 @@ package dev.nlu.portal.controller;
 import java.io.IOException;
 
 import dev.nlu.portal.model.User;
-import dev.nlu.portal.service.StudentServiceImpl;
-import dev.nlu.portal.service.UserServiceImpl;
-import dev.nlu.portal.utils.PasswordUtil;
-import jakarta.servlet.RequestDispatcher;
+import dev.nlu.portal.service.StudentService;
+import dev.nlu.portal.service.UserService;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,8 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
-	UserServiceImpl userService = new UserServiceImpl();
-	StudentServiceImpl studentService = new StudentServiceImpl();
+	UserService userService = new UserService();
+	StudentService studentService = new StudentService();
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -4,13 +4,13 @@ import java.sql.Connection;
 import java.util.List;
 
 public interface DAO<T> {
-	T findById(Long id);
+	T findById(String id);
 
-	List<T> findAll();
+    List<T> findAll();
 
-	boolean save(T t, Connection conn);
+    boolean insert(T t, Connection conn);
 
 	boolean update(T t, Connection conn);
 
-	boolean delete(Long id, Connection conn);
+	boolean delete(String id, Connection conn);
 }

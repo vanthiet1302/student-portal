@@ -8,69 +8,109 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Thêm giảng viên</title>
-    <base href="${pageContext.request.contextPath}/">
+    <title>Thêm Giảng Viên</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .form-container { width: 800px; margin: auto; border: 1px solid #ccc; padding: 20px; }
+        .section-title { background: #f0f0f0; padding: 10px; font-weight: bold; margin-top: 20px; border-left: 5px solid #007bff; }
+        table { width: 100%; border-collapse: collapse; }
+        td { padding: 8px; vertical-align: top; }
+        .label { width: 25%; font-weight: bold; }
+        input[type="text"], input[type="number"], input[type="email"], select { width: 100%; padding: 5px; }
+        .btn-group { margin-top: 20px; text-align: right; }
+        .btn-save { padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        .btn-reset { padding: 10px 20px; background-color: #6c757d; color: white; border: none; cursor: pointer; }
+    </style>
 </head>
 <body>
-<h2>Thêm Giảng Viên Mới</h2>
 
-<form action="admin/addLecturer" method="POST">
+<div class="form-container">
+    <h2 style="text-align: center;">BIỂU MẪU THÊM GIẢNG VIÊN</h2>
 
-    <fieldset>
-        <legend>Tài khoản hệ thống</legend>
-        Tên đăng nhập: <input type="text" name="username" required><br>
-        <%--        Mật khẩu mặc định là năm sinh * 2 + @: 20052005@--%>
-<%--        Mật khẩu: <input type="password" name="password" required><br>--%>
-    </fieldset>
+    <form action="${pageContext.request.contextPath}/admin/addLecturer" method="POST">
 
-    <br>
+        <div class="section-title">1. THÔNG TIN CÁ NHÂN</div>
+        <input type="text" name="username">
+        <table>
+            <tr>
+                <td class="label">Họ và tên:</td>
+                <td colspan="3"><input type="text" name="fullName" required></td>
+            </tr>
+            <tr>
+                <td class="label">Năm sinh:</td>
+                <td><input type="number" name="birthYear"></td>
+                <td class="label">Giới tính:</td>
+                <td>
+                    <select name="gender">
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Số CMND/CCCD:</td>
+                <td><input type="text" name="identityCard"></td>
+                <td class="label">Chuyên môn:</td>
+                <td><input type="text" name="specialization"></td>
+            </tr>
+        </table>
 
-    <fieldset>
-        <legend>Thông tin cá nhân</legend>
-        Họ và tên: <input type="text" name="fullName" required><br>
-        Năm sinh: <input type="number" name="birthYear" required><br>
-        Giới tính:
-        <input type="radio" name="gender" value="Nam"> Nam
-        <input type="radio" name="gender" value="Nữ"> Nữ<br>
-        CMND/CCCD: <input type="text" name="identityCard" required><br>
-    </fieldset>
+        <div class="section-title">2. HỌC HÀM, HỌC VỊ & CÔNG TÁC</div>
+        <table>
+            <tr>
+                <td class="label">Học hàm:</td>
+                <td><input type="text" name="academicRank"></td>
+                <td class="label">Học vị:</td>
+                <td><input type="text" name="degree"></td>
+            </tr>
+            <tr>
+                <td class="label">Chức vụ:</td>
+                <td><input type="text" name="position"></td>
+                <td class="label">Khoa/Phòng:</td>
+                <td><input type="text" name="department"></td>
+            </tr>
+            <tr>
+                <td class="label">Cơ quan:</td>
+                <td><input type="text" name="workAgency"></td>
+                <td class="label">Địa chỉ cơ quan:</td>
+                <td><input type="text" name="agencyAddress"></td>
+            </tr>
+        </table>
 
-    <br>
+        <div class="section-title">3. LIÊN LẠC & TÀI KHOẢN</div>
+        <table>
+            <tr>
+                <td class="label">Email công việc:</td>
+                <td><input type="email" name="emailWork"></td>
+                <td class="label">Email cá nhân:</td>
+                <td><input type="email" name="emailPersonal"></td>
+            </tr>
+            <tr>
+                <td class="label">SĐT di động:</td>
+                <td><input type="text" name="phoneMobile"></td>
+                <td class="label">SĐT bàn:</td>
+                <td><input type="text" name="phoneFixed"></td>
+            </tr>
+            <tr>
+                <td class="label">Số Fax:</td>
+                <td><input type="text" name="fax"></td>
+                <td class="label">Số tài khoản:</td>
+                <td><input type="text" name="bankAccountNumber"></td>
+            </tr>
+            <tr>
+                <td class="label">Ngân hàng:</td>
+                <td><input type="text" name="bankName"></td>
+                <td class="label">Chi nhánh:</td>
+                <td><input type="text" name="bankBranch"></td>
+            </tr>
+        </table>
 
-    <fieldset>
-        <legend>Học thuật & Công tác</legend>
-        Học hàm: <input type="text" name="academicRank" placeholder="GS, PGS..."><br>
-        Học vị: <input type="text" name="degree" placeholder="Thạc sĩ, Tiến sĩ..."><br>
-        Chuyên ngành: <input type="text" name="specialization"><br>
-        Chức vụ: <input type="text" name="position"><br>
-        Khoa/Phòng: <input type="text" name="department" required><br>
-        Cơ quan công tác: <input type="text" name="workAgency"><br>
-        Địa chỉ cơ quan: <input type="text" name="agencyAddress"><br>
-        SĐT cố định: <input type="text" name="phoneFixed"><br>
-        Fax: <input type="text" name="fax"><br>
-    </fieldset>
+        <div class="btn-group">
+            <button type="reset" class="btn-reset">Nhập lại</button>
+            <button type="submit" class="btn-save">Lưu giảng viên</button>
+        </div>
+    </form>
+</div>
 
-    <br>
-
-    <fieldset>
-        <legend>Liên lạc</legend>
-        Email cơ quan: <input type="email" name="emailWork"><br>
-        Email cá nhân: <input type="email" name="emailPersonal"><br>
-        SĐT di động: <input type="text" name="phoneMobile"><br>
-    </fieldset>
-
-    <br>
-
-    <fieldset>
-        <legend>Tài khoản ngân hàng</legend>
-        Số tài khoản: <input type="text" name="bankAccountNumber"><br>
-        Tên ngân hàng: <input type="text" name="bankName"><br>
-        Chi nhánh: <input type="text" name="bankBranch"><br>
-    </fieldset>
-
-    <br>
-    <button type="submit">Lưu Giảng Viên</button>
-    <button type="reset">Hủy bỏ</button>
-</form>
 </body>
 </html>

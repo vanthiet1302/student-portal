@@ -1,16 +1,17 @@
-package dev.nlu.portal.controller.command;
+package dev.nlu.portal.command.adminCommand;
 
+import dev.nlu.portal.command.Command;
 import dev.nlu.portal.model.Lecturer;
-import dev.nlu.portal.service.LecturerServiceImpl;
+import dev.nlu.portal.service.LecturerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class AdminDetailLecturerController implements Command{
-    LecturerServiceImpl lecturerService = new LecturerServiceImpl();
+public class AdminDetailLecturerCommand implements Command{
+    LecturerService lecturerService = new LecturerService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Long id = Long.parseLong(request.getParameter("id"));
+        String id = request.getParameter("id");
         Lecturer lecturer = lecturerService.findById(id);
         request.getSession().setAttribute("lecturer", lecturer);
 

@@ -1,6 +1,11 @@
 package dev.nlu.portal.controller;
 
-import dev.nlu.portal.controller.command.*;
+import dev.nlu.portal.command.*;
+import dev.nlu.portal.command.adminCommand.AdminAddLecturerCommand;
+import dev.nlu.portal.command.adminCommand.AdminDashboardCommand;
+import dev.nlu.portal.command.adminCommand.AdminDetailLecturerCommand;
+import dev.nlu.portal.command.adminCommand.AdminLecturersCommand;
+import dev.nlu.portal.command.adminCommand.AdminStudentsCommand;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,16 +23,19 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-    	getRoutes.put("/admin/dashboard", new AdminDashboardController());
-    	getRoutes.put("/lecturer/dashboard", new AdminDashboardController());
-    	getRoutes.put("/student/dashboard", new AdminDashboardController());
+    	getRoutes.put("/admin/dashboard", new AdminDashboardCommand());
         // Admin
-        getRoutes.put("/admin/lecturers", new AdminLecturersController());
-        getRoutes.put("/admin/addLecturer", new AdminAddLecturerController());
-        getRoutes.put("/admin/detailLecturer", new AdminDetailLecturerController());
-        getRoutes.put("/admin/students", new AdminStudentsController());
+        getRoutes.put("/admin/lecturers", new AdminLecturersCommand());
+        getRoutes.put("/admin/addLecturer", new AdminAddLecturerCommand());
+        getRoutes.put("/admin/detailLecturer", new AdminDetailLecturerCommand());
+        getRoutes.put("/admin/students", new AdminStudentsCommand());
 
-        postRoutes.put("/admin/addLecturer", new AdminAddLecturerController());
+        postRoutes.put("/admin/addLecturer", new AdminAddLecturerCommand());
+
+
+
+        getRoutes.put("/lecturer/dashboard", new AdminDashboardCommand());
+        getRoutes.put("/student/dashboard", new AdminDashboardCommand());
     }
 
     @Override
@@ -54,7 +62,6 @@ public class DispatcherServlet extends HttpServlet {
 
         try {
             String view = command.execute(req, resp);
-
             if (view.startsWith("redirect:")) {
                 resp.sendRedirect(req.getContextPath() + view.substring(9));
             } else {

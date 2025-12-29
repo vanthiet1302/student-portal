@@ -7,14 +7,13 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class DBUtil {
-    private static final String JNDI_NAME = "java:comp/env/jdbc/mysql";
+public class DatabaseUtils {
+    private static final String JNDI_NAME = "java:comp/env/sqlserver";
     private static DataSource dataSource;
 
     static {
         try {
              dataSource = (DataSource) new InitialContext().lookup(JNDI_NAME);
-
         } catch (NamingException e) {
             System.err.println("Lỗi tra cứu JNDI DataSource: " + e.getMessage());
             e.printStackTrace();

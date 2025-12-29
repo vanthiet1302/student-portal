@@ -1,14 +1,13 @@
-package dev.nlu.portal.controller.command;
+package dev.nlu.portal.command.adminCommand;
 
+import dev.nlu.portal.command.Command;
 import dev.nlu.portal.service.ICrudService;
-import dev.nlu.portal.service.LecturerServiceImpl;
+import dev.nlu.portal.service.LecturerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.List;
-
-public class AdminLecturersController implements Command{
-    ICrudService service = new LecturerServiceImpl();
+public class AdminLecturersCommand implements Command{
+    ICrudService service = new LecturerService();
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -18,5 +17,4 @@ public class AdminLecturersController implements Command{
 
 		return "/WEB-INF/views/admin/lecturers.jsp";
 	}
-
 }
