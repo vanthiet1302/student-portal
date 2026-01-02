@@ -1,13 +1,13 @@
 <Context>
-    <Resource name="jdbc/mysql"
+    <Resource name="sqlserver"
               auth="Container"
               type="javax.sql.DataSource"
               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
               maxActive="100"
               maxIdle="30"
               maxWait="10000"
-              username="vthiet"
-              password=""
-              driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/student_portal?useUnicode=true&amp;characterEncoding=UTF-8"/>
+              username="ef"
+              password="ef@123"
+              driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+              url="jdbc:sqlserver://localhost:1433;databaseName=TEST_PORTAL;encrypt=true;trustServerCertificate=true;"/>
 </Context>

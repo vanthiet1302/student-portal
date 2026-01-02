@@ -12,12 +12,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    private Long id;
+    private String id;
+    private String hashedPassword;
     private String username;
-    private String passwordHashed;
-    private Role role;
+    private String primaryEmail;
+    private String personEmail;
     @Builder.Default
     private boolean enabled = true;
+    private Role role;
+    private String avatarUrl;
+    private String avatarId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String authProvider;
 }

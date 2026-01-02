@@ -1,0 +1,44 @@
+/* Navbar fixed */
+.navbar.fixed-top {
+    height: 56px;
+}
+
+/* Body padding for fixed navbar */
+body {
+    padding-top: 56px;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 240px;
+    height: calc(100vh - 56px);
+    background-color: #f8f9fa;
+    overflow-y: auto;
+    transition: width 0.3s ease;
+    z-index: 1000;
+}
+
+/* Sidebar collapsed */
+.sidebar.collapsed {
+    width: 60px;
+}
+
+/* Main content */
+.main-content {
+    margin-left: 240px;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Main full when sidebar collapsed */
+.main-content.full {
+    margin-left: 60px;
+}
+
+/* Hide text when collapsed */
+.sidebar.collapsed .nav-link span {
+    display: none;
+}

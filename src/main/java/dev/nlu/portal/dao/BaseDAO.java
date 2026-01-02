@@ -14,7 +14,7 @@ public abstract class BaseDAO {
         }
     }
 
-    protected Long executeInsert(Connection conn, String sql, Object... params) throws SQLException {
+    protected String executeInsert(Connection conn, String sql, Object... params) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             setParameters(ps, params);
 
@@ -22,7 +22,7 @@ public abstract class BaseDAO {
             if (affectedRows > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
-                        return rs.getLong(1);
+                        return rs.getString(1);
                     }
                 }
             }
