@@ -25,6 +25,10 @@ public class UserService implements ICrudService<User> {
 		return dao.findByUsername(username);
 	}
 
+	public User findByEmail(String email) {
+		return dao.findByEmail(email);
+	}
+
 	@Override
 	public User findById(String id) {
 		return dao.findById(id);

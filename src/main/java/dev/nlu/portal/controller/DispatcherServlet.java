@@ -1,11 +1,11 @@
 package dev.nlu.portal.controller;
 
-import dev.nlu.portal.command.*;
-import dev.nlu.portal.command.adminCommand.AdminAddLecturerCommand;
-import dev.nlu.portal.command.adminCommand.AdminDashboardCommand;
-import dev.nlu.portal.command.adminCommand.AdminDetailLecturerCommand;
-import dev.nlu.portal.command.adminCommand.AdminLecturersCommand;
-import dev.nlu.portal.command.adminCommand.AdminStudentsCommand;
+import dev.nlu.portal.controller.command.Command;
+import dev.nlu.portal.controller.command.admin.AdminAddLecturerCommand;
+import dev.nlu.portal.controller.command.admin.AdminDashboardCommand;
+import dev.nlu.portal.controller.command.admin.AdminDetailLecturerCommand;
+import dev.nlu.portal.controller.command.admin.AdminLecturersCommand;
+import dev.nlu.portal.controller.command.admin.AdminStudentsCommand;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

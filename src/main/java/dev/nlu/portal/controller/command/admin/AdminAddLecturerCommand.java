@@ -1,12 +1,11 @@
-package dev.nlu.portal.command.adminCommand;
+package dev.nlu.portal.controller.command.admin;
 
-import dev.nlu.portal.command.Command;
+import dev.nlu.portal.controller.command.Command;
 import dev.nlu.portal.model.Lecturer;
 import dev.nlu.portal.model.Role;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.service.LecturerService;
 import dev.nlu.portal.service.UserService;
-import dev.nlu.portal.utils.PasswordUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -48,8 +47,6 @@ public class AdminAddLecturerCommand implements Command {
                     .agencyAddress(request.getParameter("agencyAddress"))
                     .phoneFixed(request.getParameter("phoneFixed"))
                     .fax(request.getParameter("fax"))
-                    .emailWork(request.getParameter("emailWork"))
-                    .emailPersonal(request.getParameter("emailPersonal"))
                     .phoneMobile(request.getParameter("phoneMobile"))
                     .bankAccountNumber(request.getParameter("bankAccountNumber"))
                     .bankName(request.getParameter("bankName"))

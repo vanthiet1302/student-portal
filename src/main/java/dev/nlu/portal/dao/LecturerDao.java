@@ -39,8 +39,7 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
                 list.add(mapResultSetToLecturer(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DAOException("Find all Lecturer failed.", e);
+            throw new DAOException("Find all Lecturer failed: " + e.getMessage() , e);
         }
         return list;
     }
@@ -49,8 +48,8 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
     public boolean insert(Lecturer t, Connection conn) {
         String sql = "INSERT INTO Lecturers (userId, fullName, birthYear, gender, identityCard, academicRank, degree, " +
                 "specialization, position, department, workAgency, agencyAddress, phoneFixed, fax, " +
-                "emailWork, emailPersonal, phoneMobile, bankAccountNumber, bankName, bankBranch) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "phoneMobile, bankAccountNumber, bankName, bankBranch) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             String id = executeInsert(conn, sql,
                     t.getUserId(),
@@ -67,8 +66,6 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
                     t.getAgencyAddress(),
                     t.getPhoneFixed(),
                     t.getFax(),
-                    t.getEmailWork(),
-                    t.getEmailPersonal(),
                     t.getPhoneMobile(),
                     t.getBankAccountNumber(),
                     t.getBankName(),
@@ -89,7 +86,7 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
     public boolean update(Lecturer t, Connection conn) {
         String sql = "UPDATE Lecturers SET fullName = ?, birthYear = ?, gender = ?, identityCard = ?, " +
                 "academicRank = ?, degree = ?, specialization = ?, position = ?, department = ?, " +
-                "workAgency = ?, agencyAddress = ?, phoneFixed = ?, fax = ?, emailWork = ?, " +
+                "phoneFixed = ?, fax = ?, emailWork = ?, " +
                 "emailPersonal = ?, phoneMobile = ?, bankAccountNumber = ?, bankName = ?, bankBranch = ? " +
                 "WHERE userId = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -106,14 +103,12 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
             ps.setNString(11, t.getAgencyAddress());
             ps.setString(12, t.getPhoneFixed());
             ps.setString(13, t.getFax());
-            ps.setString(14, t.getEmailWork());
-            ps.setString(15, t.getEmailPersonal());
-            ps.setString(16, t.getPhoneMobile());
-            ps.setString(17, t.getBankAccountNumber());
-            ps.setNString(18, t.getBankName());
-            ps.setNString(19, t.getBankBranch());
+            ps.setString(14, t.getPhoneMobile());
+            ps.setString(15, t.getBankAccountNumber());
+            ps.setNString(16, t.getBankName());
+            ps.setNString(17, t.getBankBranch());
 
-            ps.setString(20, t.getUserId());
+            ps.setString(18, t.getUserId());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -128,7 +123,6 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
             ps.setString(1, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DAOException("Delete Lecturer failed: " + e.getMessage(), e);
         }
     }
@@ -137,7 +131,7 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
         return Lecturer.builder()
                 .userId(rs.getString("userId"))
                 .fullName(rs.getNString("fullName"))
-                .birthYear(rs.getObject("birthYear", Integer.class))
+                .birthYear(rs.getInt("birthYear"))
                 .gender(rs.getNString("gender"))
                 .identityCard(rs.getString("identityCard"))
                 .academicRank(rs.getNString("academicRank"))
@@ -149,8 +143,6 @@ public class LecturerDao extends BaseDAO implements DAO<Lecturer> {
                 .agencyAddress(rs.getNString("agencyAddress"))
                 .phoneFixed(rs.getString("phoneFixed"))
                 .fax(rs.getString("fax"))
-                .emailWork(rs.getString("emailWork"))
-                .emailPersonal(rs.getString("emailPersonal"))
                 .phoneMobile(rs.getString("phoneMobile"))
                 .bankAccountNumber(rs.getString("bankAccountNumber"))
                 .bankName(rs.getNString("bankName"))

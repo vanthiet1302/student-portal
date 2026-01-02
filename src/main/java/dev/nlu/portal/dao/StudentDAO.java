@@ -34,11 +34,10 @@ public class StudentDAO extends BaseDAO implements DAO<Student> {
     @Override
     public List<Student> findAll() {
         List<Student> list = new ArrayList<>();
-        String sql = "SELECT s.*, u.* FROM students s " + "JOIN users u ON s.user_id = u.id";
+        String sql = "SELECT * FROM students s " + "JOIN users u ON s.userId = u.id";
         try (Connection conn = DatabaseUtils.getConnection(); 
         		PreparedStatement ps = conn.prepareStatement(sql);
         		ResultSet rs = ps.executeQuery()) {
-        	
             while (rs.next()) {
                 list.add(mapResultSetToStudent(rs));
             }
@@ -51,14 +50,15 @@ public class StudentDAO extends BaseDAO implements DAO<Student> {
 	@Override
 	public boolean insert(Student student, Connection conn) {
 		try {
-			String sql = "INSERT INTO Students (" + "userId, firstName, lastName, "
+			String sql = "INSERT INTO Students ("
+                    + "userId, firstName, lastName, "
 					+ "dob, pob, gender, status, phoneNumber, citizenId, nation, " 
-					+ "religion, nationality, address"
-					+ ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "religion, nationality, address, classId"
+					+ ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			return executeUpdate(conn, sql, student.getUserId(), student.getFirstName(), student.getLastName(),
 					student.getDob(), student.getPob(), student.getGender(), student.getStatus(), student.getPhoneNumber()
 					, student.getCitizenId(), student.getNation(), student.getReligion(), student.getNationality()
-					, student.getAddress()) > 0;
+					, student.getAddress(), student.getClassId()) > 0;
 		} catch (SQLException e) {
 			throw new DAOException("Insert Student failed: " + e.getMessage(), e);
 		}
@@ -70,15 +70,17 @@ public class StudentDAO extends BaseDAO implements DAO<Student> {
 	            "firstName = ?, " +
 	            "lastName = ?, dob = ?, gender = ?, status = ?, phoneNumber = ?, " +
 	            "citizenId = ?, nation = ?, religion = ?, pob = ?, " +
-	            "nationality = ?, address = ?" +
+	            "nationality = ?, address = ?, classId = ?" +
 	            "WHERE userId = ?";
 	    try {
-	        int rows = executeUpdate(conn, sql, 
-	            s.getFirstName(),
-	            s.getLastName(), s.getDob(), s.getGender(), s.getStatus(), s.getPhoneNumber(),
-	            s.getCitizenId(), s.getNation(), s.getReligion(), s.getPob(),
-	            s.getNationality(), s.getAddress(),
-	            s.getUserId());
+	        int rows = executeUpdate(conn, sql,
+                    s.getFirstName(), s.getLastName(),
+                    s.getDob(), s.getGender(),
+                    s.getStatus(), s.getPhoneNumber(),
+                    s.getCitizenId(), s.getNation(),
+                    s.getReligion(), s.getPob(),
+                    s.getNationality(), s.getAddress(),
+                    s.getClassId() ,s.getUserId());
 	        return rows > 0;
 	    } catch (SQLException e) {
 	        throw new DAOException("Update Student failed: " + e.getMessage(), e);
@@ -96,7 +98,7 @@ public class StudentDAO extends BaseDAO implements DAO<Student> {
         }
     }
 
-    public User mapResultSetToUser(ResultSet rs) throws SQLException {
+    private User mapResultSetToUser(ResultSet rs) throws SQLException {
         return User.builder()
                 .id(rs.getString("id"))
                 .username(rs.getString("username"))
@@ -107,6 +109,7 @@ public class StudentDAO extends BaseDAO implements DAO<Student> {
                 .enabled(rs.getBoolean("enabled"))
                 .avatarUrl(rs.getString("avatarUrl"))
                 .avatarId(rs.getString("avatarId"))
+                .authProvider(rs.getString("authProvider"))
                 .createdAt(rs.getTimestamp("createdAt").toLocalDateTime())
                 .updatedAt(rs.getTimestamp("updatedAt").toLocalDateTime())
                 .build();
@@ -116,7 +119,7 @@ public class StudentDAO extends BaseDAO implements DAO<Student> {
         User user = mapResultSetToUser(rs);
 
         return Student.builder()
-                .userId(rs.getString("id"))
+                .userId(rs.getString("userId"))
                 .user(user)
                 .lastName(rs.getString("lastName"))
                 .firstName(rs.getString("firstName"))
@@ -130,6 +133,7 @@ public class StudentDAO extends BaseDAO implements DAO<Student> {
                 .nationality(rs.getString("nationality"))
                 .religion(rs.getString("religion"))
                 .address(rs.getString("address"))
+                .classId(rs.getString("classId"))
                 .build();
     }
 }

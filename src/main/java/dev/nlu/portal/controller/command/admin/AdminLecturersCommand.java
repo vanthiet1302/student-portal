@@ -1,6 +1,6 @@
-package dev.nlu.portal.command.adminCommand;
+package dev.nlu.portal.controller.command.admin;
 
-import dev.nlu.portal.command.Command;
+import dev.nlu.portal.controller.command.Command;
 import dev.nlu.portal.service.ICrudService;
 import dev.nlu.portal.service.LecturerService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +15,9 @@ public class AdminLecturersCommand implements Command{
         var lecturers = service.findAll();
         session.setAttribute("lecturers", lecturers);
 
-		return "/WEB-INF/views/admin/lecturers.jsp";
+        request.setAttribute("contentPage", "/WEB-INF/views/pages/admin/lecturer/list.jsp");
+        request.setAttribute("pageTitle", "Lecturers");
+
+        return "/WEB-INF/views/layout/layout.jsp";
 	}
 }

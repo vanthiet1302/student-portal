@@ -13,15 +13,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User {
     private String id;
-    private String username;
     private String hashedPassword;
+    private String username;
     private String primaryEmail;
     private String personEmail;
-    private Role role;
     @Builder.Default
     private boolean enabled = true;
+    private Role role;
     private String avatarUrl;
     private String avatarId;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt; 
+    private LocalDateTime updatedAt;
+    private String authProvider;
 }

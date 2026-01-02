@@ -14,10 +14,9 @@ public class UserDAO extends BaseDAO implements DAO<User> {
 	@Override
 	public User findById(String id) {
 		String sql = "SELECT * FROM Users WHERE id = ?";
-		try (Connection conn = DatabaseUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
+		try (Connection conn = DatabaseUtils.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, id);
-
 			try (ResultSet rs = ps.executeQuery();) {
 				if (rs.next()) {
 					return mapResultSetToUser(rs);
@@ -31,10 +30,9 @@ public class UserDAO extends BaseDAO implements DAO<User> {
 	
 	public User findByUsername(String username) {
 		String sql = "SELECT * FROM Users WHERE username = ?";
-		try (Connection conn = DatabaseUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
+		try (Connection conn = DatabaseUtils.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, username);
-
 			try (ResultSet rs = ps.executeQuery();) {
 				if (rs.next()) {
 					return mapResultSetToUser(rs);
@@ -46,6 +44,23 @@ public class UserDAO extends BaseDAO implements DAO<User> {
 		return null;
 	}
 
+	public User findByEmail(String email) {
+		String sql = "SELECT * FROM Users WHERE primaryEmail = ? OR personEmail = ?";
+		try (Connection conn = DatabaseUtils.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, email);
+			ps.setString(2, email);
+			try (ResultSet rs = ps.executeQuery();) {
+				if (rs.next()) {
+					return mapResultSetToUser(rs);
+				}
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Find by Email User failed: " + e.getMessage(), e);
+		}
+		return null;
+	}
+
 	@Override
 	public List<User> findAll() {
 		List<User> users = new ArrayList<>();
@@ -53,7 +68,6 @@ public class UserDAO extends BaseDAO implements DAO<User> {
 		try (Connection conn = DatabaseUtils.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery()) {
-
 			while (rs.next()) {
 				users.add(mapResultSetToUser(rs));
 			}
@@ -67,11 +81,10 @@ public class UserDAO extends BaseDAO implements DAO<User> {
 	public boolean insert(User user, Connection conn) {
 		String sql = "INSERT INTO users (username, hashedPassword, primaryEmail, personEmail, role, enabled, avatarUrl, avatarId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
 			String id = executeInsert(conn, sql, user.getUsername(), user.getHashedPassword(), 
-					user.getPrimaryEmail(),
-					user.getPersonEmail(), user.getRole().name(), user.isEnabled(), user.getAvatarUrl(),
-					user.getAvatarId());
+					user.getPrimaryEmail(), user.getPersonEmail(),
+                    user.getRole().name(), user.isEnabled(),
+                    user.getAvatarUrl(), user.getAvatarId());
 			if (id != null ) {
 				user.setId(id);
 				return true;
@@ -85,7 +98,7 @@ public class UserDAO extends BaseDAO implements DAO<User> {
 
 	@Override
 	public boolean update(User user, Connection conn) {
-		String sql = "UPDATE users SET username=?, hashedPassword=?, primaryEmail=?, personEmail=?, role=?, enabled=?, avatarUrl=?, avatarId=?, updatedAt=? WHERE id=?";
+		String sql = "UPDATE users SET username=?, hashedPassword=?, primaryEmail=?, personEmail=?, role=?, enabled=?, avatarUrl=?, avatarId=? WHERE id=?";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, user.getUsername());
 			ps.setString(2, user.getHashedPassword());
@@ -95,8 +108,7 @@ public class UserDAO extends BaseDAO implements DAO<User> {
 			ps.setBoolean(6, user.isEnabled());
 			ps.setString(7, user.getAvatarUrl());
 			ps.setString(8, user.getAvatarId());
-			ps.setTimestamp(9, Timestamp.valueOf(user.getUpdatedAt()));
-			ps.setString(10, user.getId());
+			ps.setString(9, user.getId());
 
 			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
@@ -116,11 +128,19 @@ public class UserDAO extends BaseDAO implements DAO<User> {
 	}
 
 	private User mapResultSetToUser(ResultSet rs) throws SQLException {
-		return User.builder().id(rs.getString("id")).username(rs.getString("username"))
-				.hashedPassword(rs.getString("hashedPassword")).primaryEmail(rs.getString("primaryEmail"))
-				.personEmail(rs.getString("personEmail")).role(Role.valueOf(rs.getString("role")))
-				.enabled(rs.getBoolean("enabled")).avatarUrl(rs.getString("avatarUrl"))
-				.avatarId(rs.getString("avatarId")).createdAt(rs.getTimestamp("createdAt").toLocalDateTime())
-				.updatedAt(rs.getTimestamp("updatedAt").toLocalDateTime()).build();
+		return User.builder()
+                .id(rs.getString("id"))
+                .username(rs.getString("username"))
+				.hashedPassword(rs.getString("hashedPassword"))
+                .primaryEmail(rs.getString("primaryEmail"))
+				.personEmail(rs.getString("personEmail"))
+                .role(Role.valueOf(rs.getString("role")))
+				.enabled(rs.getBoolean("enabled"))
+                .avatarUrl(rs.getString("avatarUrl"))
+				.avatarId(rs.getString("avatarId"))
+                .createdAt(rs.getTimestamp("createdAt").toLocalDateTime())
+				.updatedAt(rs.getTimestamp("updatedAt").toLocalDateTime())
+                .authProvider(rs.getString("authProvider"))
+                .build();
 	}
 }

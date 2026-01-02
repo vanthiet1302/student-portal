@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Lecturer {
-    private String userId; // pk + fk
+    private String userId;
     private User user;
 
-    private String fullName;      // Họ và tên
-    private Integer birthYear;    // Năm sinh
-    private String gender;        // Giới tính
-    private String identityCard;  // CMND/CCCD
+    private String fullName;
+    private Integer birthYear;
+    private String gender;
+    private String identityCard;
 
     private String academicRank;  // Học hàm (GS, PGS...)
     private String degree;        // Học vị (Thạc sĩ, Tiến sĩ...)
@@ -29,8 +29,6 @@ public class Lecturer {
     private String phoneFixed;    // Điện thoại cố định (đơn vị)
     private String fax;
 
-    private String emailWork;     // Email trường/cơ quan
-    private String emailPersonal; // Email cá nhân
     private String phoneMobile;   // Di động
 
     private String bankAccountNumber; // Số tài khoản

@@ -9,5 +9,5 @@
               username="ef"
               password="ef@123"
               driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-              url="jdbc:sqlserver://localhost:1433;databaseName=StudentPortal;encrypt=true;trustServerCertificate=true;"/>
+              url="jdbc:sqlserver://localhost:1433;databaseName=TEST_PORTAL;encrypt=true;trustServerCertificate=true;"/>
 </Context>

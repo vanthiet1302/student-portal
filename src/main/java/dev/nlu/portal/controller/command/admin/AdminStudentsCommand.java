@@ -1,6 +1,6 @@
-package dev.nlu.portal.command.adminCommand;
+package dev.nlu.portal.controller.command.admin;
 
-import dev.nlu.portal.command.Command;
+import dev.nlu.portal.controller.command.Command;
 import dev.nlu.portal.model.Student;
 import dev.nlu.portal.service.StudentService;
 import jakarta.servlet.http.HttpServletRequest;

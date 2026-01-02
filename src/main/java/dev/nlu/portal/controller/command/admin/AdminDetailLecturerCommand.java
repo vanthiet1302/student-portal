@@ -1,12 +1,12 @@
-package dev.nlu.portal.command.adminCommand;
+package dev.nlu.portal.controller.command.admin;
 
-import dev.nlu.portal.command.Command;
+import dev.nlu.portal.controller.command.Command;
 import dev.nlu.portal.model.Lecturer;
 import dev.nlu.portal.service.LecturerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class AdminDetailLecturerCommand implements Command{
+public class AdminDetailLecturerCommand implements Command {
     LecturerService lecturerService = new LecturerService();
 
     @Override

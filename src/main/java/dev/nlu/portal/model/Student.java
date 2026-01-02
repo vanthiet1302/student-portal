@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
-    private String userId; // Cũng chính là User.Id
+    private String userId;
     private User user;
     private String lastName;
     private String firstName;
@@ -27,4 +27,5 @@ public class Student {
     private String religion; // Tôn giáo
     private String nationality; // Quốc tịch
     private String address; // Địa chỉ
+    private String classId;
 }
