@@ -26,11 +26,11 @@ public class DispatcherServlet extends HttpServlet {
     	getRoutes.put("/admin/dashboard", new AdminDashboardCommand());
         // Admin
         getRoutes.put("/admin/lecturers", new AdminLecturersCommand());
-        getRoutes.put("/admin/addLecturer", new AdminAddLecturerCommand());
+        getRoutes.put("/admin/lecturers/add", new AdminAddLecturerCommand());
         getRoutes.put("/admin/detailLecturer", new AdminDetailLecturerCommand());
         getRoutes.put("/admin/students", new AdminStudentsCommand());
 
-        postRoutes.put("/admin/addLecturer", new AdminAddLecturerCommand());
+        postRoutes.put("/admin/lecturers/add", new AdminAddLecturerCommand());
 
 
 

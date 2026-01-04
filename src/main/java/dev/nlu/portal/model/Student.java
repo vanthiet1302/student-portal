@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 public class Student {
     private String userId;
     private User user;
-    private String lastName;
-    private String firstName;
     private LocalDate dob;
     private String pob;
     private String gender;

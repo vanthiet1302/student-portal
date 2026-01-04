@@ -9,82 +9,100 @@ import dev.nlu.portal.dao.UserDAO;
 import dev.nlu.portal.exception.BusinessException;
 import dev.nlu.portal.model.Role;
 import dev.nlu.portal.model.Student;
+import dev.nlu.portal.model.User;
 import dev.nlu.portal.utils.DatabaseUtils;
 
-public class StudentService implements ICrudService<Student> {
-    private final StudentDAO studentDao = new StudentDAO();
-    private final UserDAO userDao = new UserDAO();
+public class StudentService implements ICrudService<Student, String> {
 
-    @Override
-    public Student findById(String userId) {
-        return studentDao.findById(userId);
-    }
+	private final StudentDAO studentDao = new StudentDAO();
+	private final UserDAO userDao = new UserDAO();
 
-    @Override
-    public List<Student> findAll() {
-        return studentDao.findAll();
-    }
+	@Override
+	public Student getById(String userId) {
+		try (Connection conn = DatabaseUtils.getConnection()) {
 
-    @Override
-    public boolean insert(Student student) {
-        return executeTransaction((conn)
-        		-> insertWithTransaction(student, conn), "Insert Student failed.");
-    }
+			Student student = studentDao.findById(userId, conn)
+					.orElseThrow(() -> new BusinessException("Student not found"));
 
-    @Override
-    public boolean update(Student student) {
-        return executeTransaction((conn) 
-        		-> updateWithTransaction(student, conn), "Update Student failed.");
-    }
+			User user = userDao.findById(userId, conn).orElseThrow(
+					() -> new BusinessException("User not found"));
 
-    @Override
-    public boolean delete(String userId) {
-        return executeTransaction((conn) 
-        		-> deleteWithTransaction(userId, conn), "Delete Student failed.");
-    }
+			student.setUser(user);
+			return student;
 
-    @Override
-    public boolean insertWithTransaction(Student student, Connection conn){
-    	if (student.getUser() == null) return false;
-        boolean userSaved = userDao.insert(student.getUser(), conn);
-        if (userSaved) {
-            student.setUserId(student.getUser().getId());
-            return studentDao.insert(student, conn);
-        }
-        return false;
-    }
+		} catch (SQLException e) {
+			throw new BusinessException("Get student failed", e);
+		}
+	}
 
-    @Override
-    public boolean updateWithTransaction(Student student, Connection conn){
-    	if (student.getUser() == null) return false;
-        boolean userUpdated = userDao.update(student.getUser(), conn);
-        boolean studentUpdated = studentDao.update(student, conn);
-        return userUpdated || studentUpdated;
-    }
+	@Override
+	public List<Student> getAll() {
+		try (Connection conn = DatabaseUtils.getConnection()) {
+			return studentDao.findAll(conn);
+		} catch (SQLException e) {
+			throw new BusinessException("Get all students failed", e);
+		}
+	}
 
-    @Override
-    public boolean deleteWithTransaction(String userId, Connection conn){
-        return userDao.delete(userId, conn);
-    }
+	@Override
+	public Student create(Student student) {
+		if (student.getUser() == null) {
+			throw new BusinessException("Student must have User");
+		}
 
-    private boolean executeTransaction(TransactionAction action, String errorMessage) {
-        try (Connection conn = DatabaseUtils.getConnection()) {
-            conn.setAutoCommit(false);
-            try {
-                boolean result = action.execute(conn);
-                if (result) {
-                    conn.commit();
-                    return true;
-                } else {
-                    conn.rollback();
-                    return false;
-                }
-            } catch (Exception e) {
-                conn.rollback();
-                throw new BusinessException(errorMessage, e);
-            }
-        } catch (SQLException e) {
-            throw new BusinessException("Error DAOs: " + e.getMessage(), e);
-        }
-    }
+		return executeTransaction(conn -> {
+
+			User user = student.getUser();
+			user.setRole(Role.STUDENT);
+
+			userDao.insert(user, conn);
+
+			student.setUserId(user.getId());
+			studentDao.insert(student, conn);
+
+			return student;
+
+		}, "Create Student failed");
+	}
+
+	@Override
+	public void update(Student student) {
+		if (student.getUser() == null) {
+			throw new BusinessException("Student must have User");
+		}
+
+		executeTransaction(conn -> {
+
+			userDao.update(student.getUser(), conn);
+			studentDao.update(student, conn);
+
+			return null;
+
+		}, "Update Student failed");
+	}
+
+	@Override
+	public void delete(String userId) {
+		executeTransaction(conn -> {
+			userDao.delete(userId, conn);
+			return null;
+
+		}, "Delete Student failed");
+	}
+
+	private <T> T executeTransaction(TransactionCallback<T> action, String errorMessage) {
+		try (Connection conn = DatabaseUtils.getConnection()) {
+			conn.setAutoCommit(false);
+			try {
+				T result = action.execute(conn);
+				conn.commit();
+				return result;
+			} catch (Exception e) {
+				conn.rollback();
+				throw new BusinessException(errorMessage, e);
+			}
+		} catch (SQLException e) {
+			throw new BusinessException("Database error", e);
+		}
+	}
 }

@@ -10,7 +10,7 @@ public class PasswordUtils {
     	return BCrypt.hashpw(password, salt);
     }
 
-    public static boolean checkpw(String password, String hashed) {
+    public static boolean verify(String password, String hashed) {
         return BCrypt.checkpw(password, hashed);
     }
 }

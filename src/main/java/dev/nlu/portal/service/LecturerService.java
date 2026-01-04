@@ -4,86 +4,129 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import dev.nlu.portal.dao.LecturerDao;
+import dev.nlu.portal.dao.LecturerDAO;
 import dev.nlu.portal.dao.UserDAO;
 import dev.nlu.portal.exception.BusinessException;
 import dev.nlu.portal.model.Lecturer;
+import dev.nlu.portal.model.Role;
+import dev.nlu.portal.model.User;
 import dev.nlu.portal.utils.DatabaseUtils;
 
-public class LecturerService implements ICrudService<Lecturer> {
-    private final LecturerDao lecturerDao = new LecturerDao();
+public class LecturerService implements ICrudService<Lecturer, String> {
+
+    private final LecturerDAO lecturerDao = new LecturerDAO();
     private final UserDAO userDao = new UserDAO();
 
-    @Override
-    public Lecturer findById(String userId) {
-        return lecturerDao.findById(userId);
-    }
+    /* =========================
+       READ
+       ========================= */
 
     @Override
-    public List<Lecturer> findAll() {
-        return lecturerDao.findAll();
-    }
+    public Lecturer getById(String userId) {
+        try (Connection conn = DatabaseUtils.getConnection()) {
 
-    @Override
-    public boolean insert(Lecturer lecturer) {
-        return executeTransaction((conn) 
-        		-> insertWithTransaction(lecturer, conn), "Insert Lecturer failed.");
-    }
+            Lecturer lecturer = lecturerDao.findById(userId, conn)
+                .orElseThrow(() ->
+                    new BusinessException("Lecturer not found"));
 
-    @Override
-    public boolean update(Lecturer lecturer) {
-        return executeTransaction((conn) 
-        		-> updateWithTransaction(lecturer, conn), "Update Lecturer failed.");
-    }
+            User user = userDao.findById(userId, conn)
+                .orElseThrow(() ->
+                    new BusinessException("User not found"));
 
-    @Override
-    public boolean delete(String userId) {
-        return executeTransaction((conn) 
-        		-> deleteWithTransaction(userId, conn), "Delete Lecturer failed.");
-    }
+            lecturer.setUser(user);
+            return lecturer;
 
-    @Override
-    public boolean insertWithTransaction(Lecturer lecturer, Connection conn) {
-    	if (lecturer.getUser() == null) return false;
-        boolean userSaved = userDao.insert(lecturer.getUser(), conn);
-        if (userSaved) {
-            lecturer.setUserId(lecturer.getUser().getId());
-            return lecturerDao.insert(lecturer, conn);
+        } catch (SQLException e) {
+            throw new BusinessException("Get lecturer failed", e);
         }
-        return false;
     }
 
     @Override
-    public boolean updateWithTransaction(Lecturer lecturer, Connection conn) {
-    	if (lecturer.getUser() == null) return false;
-        boolean userUpdated = userDao.update(lecturer.getUser(), conn);
-        boolean lecturerUpdated = lecturerDao.update(lecturer, conn);
-        return userUpdated || lecturerUpdated;
+    public List<Lecturer> getAll() {
+        try (Connection conn = DatabaseUtils.getConnection()) {
+            return lecturerDao.findAll(conn);
+        } catch (SQLException e) {
+            throw new BusinessException("Get all lecturers failed", e);
+        }
+    }
+
+    public List<Lecturer> getAllPaginated(int page, int pageSize) {
+        try (Connection conn = DatabaseUtils.getConnection()) {
+            return lecturerDao.findAllPaginated(page, pageSize, conn);
+        } catch (SQLException e) {
+            throw new BusinessException("Get lecturers paginated failed", e);
+        }
+    }
+
+    public int countAll() {
+        try (Connection conn = DatabaseUtils.getConnection()) {
+            return lecturerDao.countAll(conn);
+        } catch (SQLException e) {
+            throw new BusinessException("Count lecturers failed", e);
+        }
     }
 
     @Override
-    public boolean deleteWithTransaction(String userId, Connection conn) {
-        return userDao.delete(userId, conn);
+    public Lecturer create(Lecturer lecturer) {
+        if (lecturer.getUser() == null) {
+            throw new BusinessException("Lecturer must have User");
+        }
+
+        return executeTransaction(conn -> {
+
+            User user = lecturer.getUser();
+            user.setRole(Role.LECTURER);
+
+            userDao.insert(user, conn);
+
+            lecturer.setUserId(user.getId());
+            lecturerDao.insert(lecturer, conn);
+
+            return lecturer;
+
+        }, "Create Lecturer failed");
     }
 
-    private boolean executeTransaction(TransactionAction action, String errorMessage) {
+    @Override
+    public void update(Lecturer lecturer) {
+        if (lecturer.getUser() == null) {
+            throw new BusinessException("Lecturer must have User");
+        }
+
+        executeTransaction(conn -> {
+
+            userDao.update(lecturer.getUser(), conn);
+            lecturerDao.update(lecturer, conn);
+
+            return null;
+
+        }, "Update Lecturer failed");
+    }
+
+    @Override
+    public void delete(String userId) {
+        executeTransaction(conn -> {
+            userDao.delete(userId, conn);
+            return null;
+
+        }, "Delete Lecturer failed");
+    }
+    private <T> T executeTransaction(
+            TransactionCallback<T> action,
+            String errorMessage
+    ) {
         try (Connection conn = DatabaseUtils.getConnection()) {
             conn.setAutoCommit(false);
             try {
-                boolean result = action.execute(conn);
-                if (result) {
-                    conn.commit();
-                    return true;
-                } else {
-                    conn.rollback();
-                    return false;
-                }
+                T result = action.execute(conn);
+                conn.commit();
+                return result;
             } catch (Exception e) {
                 conn.rollback();
                 throw new BusinessException(errorMessage, e);
             }
         } catch (SQLException e) {
-            throw new BusinessException("Error DAOs: " + e.getMessage(), e);
+            throw new BusinessException("Database error", e);
         }
     }
 }

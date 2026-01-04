@@ -14,7 +14,7 @@ public class AdminStudentsCommand implements Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         var sesstion = request.getSession(false);
-        List<Student> students = studentService.findAll();
+        List<Student> students = studentService.getAll();
         sesstion.setAttribute("studenst", students);
 
         return "/WEB-INF/views/admin/students.jsp";

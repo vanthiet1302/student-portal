@@ -12,7 +12,7 @@ public class AdminDetailLecturerCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String id = request.getParameter("id");
-        Lecturer lecturer = lecturerService.findById(id);
+        Lecturer lecturer = lecturerService.getById(id);
         request.getSession().setAttribute("lecturer", lecturer);
 
         return "/WEB-INF/views/admin/detailLecturer.jsp";

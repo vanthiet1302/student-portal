@@ -10,86 +10,113 @@ import dev.nlu.portal.model.User;
 import dev.nlu.portal.utils.DatabaseUtils;
 import dev.nlu.portal.utils.PasswordUtils;
 
-public class UserService implements ICrudService<User> {
-	private final UserDAO dao = new UserDAO();
+public class UserService implements ICrudService<User, String>{
 
-	public User login(String username, String password) {
-		User user = findByUsername(username);
-		if (user != null && user.isEnabled() && PasswordUtils.checkpw(password, user.getHashedPassword())) {
+	private final UserDAO userDao = new UserDAO();
+
+    public boolean existsByUsername(String username) {
+        try (Connection conn = DatabaseUtils.getConnection()) {
+            return userDao.findByUsername(username, conn).isPresent();
+        } catch (SQLException e) {
+            throw new BusinessException("Check username existence failed", e);
+        }
+    }
+
+    public boolean existsByEmail(String email) {
+        try (Connection conn = DatabaseUtils.getConnection()) {
+            return userDao.findByEmail(email, conn).isPresent();
+        } catch (SQLException e) {
+            throw new BusinessException("Check email existence failed", e);
+        }
+    }
+
+
+    public User login(String username, String password) {
+		try (Connection conn = DatabaseUtils.getConnection()) {
+
+			User user = userDao.findByUsername(username, conn)
+					.orElseThrow(() -> new BusinessException("Invalid username or password"));
+
+			if (!PasswordUtils.verify(password, user.getHashedPassword())) {
+				throw new BusinessException("Invalid username or password");
+			}
+
 			return user;
+
+		} catch (SQLException e) {
+			throw new BusinessException("Login failed", e);
 		}
-		return null;
 	}
 
-	public User findByUsername(String username) {
-		return dao.findByUsername(username);
+	public User getById(String id) {
+		try (Connection conn = DatabaseUtils.getConnection()) {
+			return userDao.findById(id, conn).orElseThrow(
+					() -> new BusinessException("User not found"));
+		} catch (SQLException e) {
+			throw new BusinessException("Get user by id failed", e);
+		}
 	}
 
-	public User findByEmail(String email) {
-		return dao.findByEmail(email);
+	public User getByUsername(String username) {
+		try (Connection conn = DatabaseUtils.getConnection()) {
+			return userDao.findByUsername(username, conn).orElseThrow(
+					() -> new BusinessException("User not found"));
+		} catch (SQLException e) {
+			throw new BusinessException("Get user by username failed", e);
+		}
 	}
 
-	@Override
-	public User findById(String id) {
-		return dao.findById(id);
+	public User getByEmail(String email) {
+		try (Connection conn = DatabaseUtils.getConnection()) {
+			return userDao.findByEmail(email, conn).orElseThrow(
+					() -> new BusinessException("User not found"));
+		} catch (SQLException e) {
+			throw new BusinessException("Get user by email failed", e);
+		}
 	}
 
-	@Override
-	public List<User> findAll() {
-		return dao.findAll();
+	public List<User> getAll() {
+		try (Connection conn = DatabaseUtils.getConnection()) {
+			return userDao.findAll(conn);
+		} catch (SQLException e) {
+			throw new BusinessException("Get all users failed", e);
+		}
 	}
 
-	@Override
-	public boolean insert(User user) {
-		return executeTransaction((conn) -> 
-		insertWithTransaction(user, conn), "Insert User failed.");
+	public User create(User user) {
+		return executeTransaction(conn -> {
+			userDao.insert(user, conn);
+			return user;
+		}, "Create user failed");
 	}
 
-	@Override
-	public boolean update(User user) {
-		return executeTransaction((conn) -> 
-		updateWithTransaction(user, conn), "Update User failed.");
+	public void update(User user) {
+		executeTransaction(conn -> {
+			userDao.update(user, conn);
+			return null;
+		}, "Update user failed");
 	}
 
-	@Override
-	public boolean delete(String id) {
-		return executeTransaction((conn) -> 
-		deleteWithTransaction(id, conn), "Delete User failed.");
+	public void delete(String id) {
+		executeTransaction(conn -> {
+			userDao.delete(id, conn);
+			return null;
+		}, "Delete user failed");
 	}
 
-	@Override
-	public boolean insertWithTransaction(User user, Connection conn) {
-		return dao.insert(user, conn);
-	}
-
-	@Override
-	public boolean updateWithTransaction(User user, Connection conn) {
-		return dao.update(user, conn);
-	}
-
-	@Override
-	public boolean deleteWithTransaction(String userId, Connection conn) {
-		return dao.delete(userId, conn);
-	}
-
-	private boolean executeTransaction(TransactionAction action, String errorMessage) {
+	private <T> T executeTransaction(TransactionCallback<T> action, String errorMessage) {
 		try (Connection conn = DatabaseUtils.getConnection()) {
 			conn.setAutoCommit(false);
 			try {
-				boolean result = action.execute(conn);
-				if (result) {
-					conn.commit();
-					return true;
-				} else {
-					conn.rollback();
-					return false;
-				}
+				T result = action.execute(conn);
+				conn.commit();
+				return result;
 			} catch (Exception e) {
 				conn.rollback();
 				throw new BusinessException(errorMessage, e);
 			}
 		} catch (SQLException e) {
-			throw new BusinessException("Error DAOs: " + e.getMessage(), e);
+			throw new BusinessException("Database error", e);
 		}
 	}
 }

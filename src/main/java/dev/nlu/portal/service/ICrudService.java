@@ -3,20 +3,15 @@ package dev.nlu.portal.service;
 import java.sql.Connection;
 import java.util.List;
 
-public interface ICrudService<T> {
-	T findById(String id);
+public interface ICrudService<T, ID> {
 
-	List<T> findAll();
+    T getById(ID id);
 
-	boolean insert(T t);
+    List<T> getAll();
 
-	boolean update(T t);
+    T create(T entity);
 
-	boolean delete(String id);
+    void update(T entity);
 
-	boolean insertWithTransaction(T t, Connection conn);
-
-	boolean updateWithTransaction(T t, Connection conn);
-
-	boolean deleteWithTransaction(String id, Connection conn);
+    void delete(ID id);
 }
