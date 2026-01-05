@@ -10,6 +10,15 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 @WebServlet("/api/i18n")
 public class I18nServlet extends HttpServlet {
 
@@ -20,8 +29,19 @@ public class I18nServlet extends HttpServlet {
         resp.setContentType("application/json;charset=UTF-8");
 
         Locale locale = (Locale) req.getAttribute("locale");
+        if (locale == null) {
+            String lang = req.getParameter("lang");
+            if (lang == null || lang.isBlank()) {
+                lang = (String) req.getSession().getAttribute("lang");
+            }
+            if (lang == null || lang.isBlank()) {
+                lang = "vi";
+            }
+            req.getSession().setAttribute("lang", lang);
+            locale = new Locale(lang);
+        }
 
-        ResourceBundle bundle = Utf8ResourceBundle.getBundle("i18n.messages", locale);
+        ResourceBundle bundle = Utf8ResourceBundle.getBundle("messages", locale);
 
         StringBuilder json = new StringBuilder("{");
 
@@ -33,7 +53,9 @@ public class I18nServlet extends HttpServlet {
                     .append("\",");
         }
 
-        json.deleteCharAt(json.length() - 1);
+        if (json.length() > 1) {
+            json.deleteCharAt(json.length() - 1);
+        }
         json.append("}");
 
         resp.getWriter().write(json.toString());

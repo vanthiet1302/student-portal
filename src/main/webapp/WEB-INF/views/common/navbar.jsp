@@ -6,31 +6,68 @@
   Time: 11:07 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<nav class="navbar navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-semibold" href="/">NLU Portal</a>
 
-<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'vi'}"/>
-<fmt:setBundle basename="i18n.messages"/>
+        <div class="d-flex align-items-center gap-3">
 
-<nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+            <!-- Language switch -->
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-light dropdown-toggle"
+                        data-bs-toggle="dropdown">
+                    <i class="bi bi-translate me-1"></i>
+                    ${sessionScope.lang != null ? sessionScope.lang : "VI"}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" href="?lang=vi">🇻🇳 Tiếng Việt</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="?lang=en">🇬🇧 English</a>
+                    </li>
+                </ul>
+            </div>
 
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="toggleSidebar" type="button">
-        <span style="font-size: 1.5rem; color: white;">&#9776;</span>
-    </button>
+            <!-- Theme switch -->
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-light dropdown-toggle"
+                        data-bs-toggle="dropdown">
+                    <i class="bi bi-circle-half"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <button class="dropdown-item" onclick="setTheme('light')">
+                            ☀ Light
+                        </button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" onclick="setTheme('dark')">
+                            🌙 Dark
+                        </button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" onclick="setTheme('auto')">
+                            ⚙ Auto
+                        </button>
+                    </li>
+                </ul>
+            </div>
 
-    <a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/">
-        <fmt:message key="page.default.title"/>
-    </a>
+            <!-- User -->
+            <div class="dropdown">
+                <a class="text-white dropdown-toggle text-decoration-none"
+                   data-bs-toggle="dropdown">
+                    <i class="bi bi-person-circle me-1"></i>
+                    ${sessionScope.user.fullName}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+                </ul>
+            </div>
 
-    <div class="ms-auto d-flex align-items-center pe-3">
-        <div class="dropdown">
-            <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                ${sessionScope.lang == 'en' ? '🇺🇸 EN' : '🇻🇳 VI'}
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
-                <li><a class="dropdown-item ${sessionScope.lang == 'vi' ? 'active' : ''}" href="${pageContext.request.contextPath}/change-language?lang=vi">🇻🇳 Tiếng Việt</a></li>
-                <li><a class="dropdown-item ${sessionScope.lang == 'en' ? 'active' : ''}" href="${pageContext.request.contextPath}/change-language?lang=en">🇺🇸 English</a></li>
-            </ul>
         </div>
     </div>
 </nav>

@@ -3,6 +3,7 @@ package dev.nlu.portal.controller;
 import dev.nlu.portal.model.Role;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.service.UserService;
+import dev.nlu.portal.utils.I18nUtils;
 import dev.nlu.portal.utils.PasswordUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -76,6 +77,7 @@ public class SignUpServlet extends HttpServlet {
 
         req.setAttribute("success", "Tạo tài khoản thành công");
         req.getRequestDispatcher("sign-in.jsp").forward(req, resp);
+        System.out.println("User: " + username + " Sign up success");
     }
 
     private void forwardError(HttpServletRequest req, HttpServletResponse resp, String message)

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 @WebFilter("/*")
-public class I18nFilter implements Filter {
+public class EncodingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -16,16 +16,17 @@ public class I18nFilter implements Filter {
 
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         HttpServletRequest req = (HttpServletRequest) request;
 
         String lang = req.getParameter("lang");
 
-        if (lang == null) {
+        if (lang == null || lang.isBlank()) {
             lang = (String) req.getSession().getAttribute("lang");
         }
 
-        if (lang == null) {
+        if (lang == null || lang.isBlank()) {
             lang = "vi";
         }
 
@@ -35,4 +36,3 @@ public class I18nFilter implements Filter {
         chain.doFilter(request, response);
     }
 }
-

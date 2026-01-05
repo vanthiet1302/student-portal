@@ -15,7 +15,7 @@
 <html>
 <head>
     <title>
-        <fmt:message key="page.signup"/>
+        <fmt:message key="page.signin"/>
     </title>
     <script>
         const contextPath = '${pageContext.request.contextPath}';
