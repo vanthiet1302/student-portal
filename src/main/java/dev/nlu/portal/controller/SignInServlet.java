@@ -18,7 +18,7 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/sign-in.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/pages/sign-in.jsp").forward(req, resp);
     }
 
     @Override
@@ -30,10 +30,10 @@ public class SignInServlet extends HttpServlet {
         try {
             User user = userService.login(username, password);
             req.getSession(true).setAttribute("user", user);
-            resp.sendRedirect(req.getContextPath() + "/dashboard");
+            resp.sendRedirect(req.getContextPath() + "admin/dashboard");
             System.out.println("User: " +   username + "Sign in success");
         } catch (BusinessException e) {
-            ForwardUtils.forwardError(req, resp, "/WEB-INF/sign-in.jsp", e.getMessage());
+            ForwardUtils.forwardError(req, resp, "/WEB-INF/views/pages/sign-in.jsp", e.getMessage());
             System.out.println("User: " +   username + "Sign in failed");
         }
     }

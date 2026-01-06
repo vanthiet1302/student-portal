@@ -81,6 +81,7 @@ public class AdminAddLecturerCommand implements Command {
         } catch (BusinessException e) {
             return error(request, e.getMessage());
         } catch (Exception e) {
+            e.printStackTrace(); // Log the error to console
             return error(request, "Lỗi hệ thống: " + e.getMessage());
         }
     }

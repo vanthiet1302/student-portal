@@ -1,49 +1,13 @@
-/* Sidebar core */
 .sidebar {
-    position: fixed;
-    top: 56px;               /* navbar height */
-    left: 0;
-    height: calc(100vh - 56px);
     width: 240px;
-    transition: width 0.25s ease;
-    z-index: 1030;
+    transition: width .3s;
+    overflow: hidden;
 }
 
-/* Collapse state */
-.sidebar.collapsed {
-    width: 72px;
+.app.collapsed .sidebar {
+    width: 64px;
 }
 
-.sidebar .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-}
-
-.sidebar .nav-link i {
-    font-size: 1.2rem;
-    min-width: 24px;
-    text-align: center;
-}
-
-.sidebar.collapsed .label {
+.app.collapsed .sidebar .text {
     display: none;
-}
-
-/* Content shift */
-.app-content {
-    margin-left: 240px;
-    padding: 24px;
-    padding-top: 80px;
-    transition: margin-left 0.25s ease;
-}
-
-.sidebar.collapsed ~ .app-content {
-    margin-left: 72px;
-}
-
-/* Active */
-.sidebar .nav-link.active {
-    background-color: #2563eb;
 }

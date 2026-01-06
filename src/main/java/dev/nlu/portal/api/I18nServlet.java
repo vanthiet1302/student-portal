@@ -10,15 +10,6 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 @WebServlet("/api/i18n")
 public class I18nServlet extends HttpServlet {
 
@@ -41,7 +32,7 @@ public class I18nServlet extends HttpServlet {
             locale = new Locale(lang);
         }
 
-        ResourceBundle bundle = Utf8ResourceBundle.getBundle("messages", locale);
+        ResourceBundle bundle = Utf8ResourceBundle.getBundle("i18n.messages", locale);
 
         StringBuilder json = new StringBuilder("{");
 

@@ -14,14 +14,17 @@ public class EncodingFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
+        // Force UTF-8 at servlet container layer to avoid mojibake
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
         HttpServletRequest req = (HttpServletRequest) request;
 
+        // Priority: explicit param > session > default
         String lang = req.getParameter("lang");
 
+        // Only use session if no explicit param provided
         if (lang == null || lang.isBlank()) {
             lang = (String) req.getSession().getAttribute("lang");
         }

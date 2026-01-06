@@ -1,5 +1,7 @@
 package dev.nlu.portal.utils;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -28,5 +30,10 @@ public class Utf8ResourceBundle {
 
     public static ResourceBundle getBundle(String baseName, Locale locale) {
         return ResourceBundle.getBundle(baseName, locale, Utf8ResourceBundle.class.getClassLoader(), UTF8_CONTROL);
+    }
+
+    public static String get(HttpServletRequest request, String key){
+        Locale locale = (Locale) request.getAttribute("locale");
+        return ResourceBundle.getBundle("messages", locale).getString(key);
     }
 }

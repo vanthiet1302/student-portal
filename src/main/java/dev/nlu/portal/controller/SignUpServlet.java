@@ -3,7 +3,6 @@ package dev.nlu.portal.controller;
 import dev.nlu.portal.model.Role;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.service.UserService;
-import dev.nlu.portal.utils.I18nUtils;
 import dev.nlu.portal.utils.PasswordUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
