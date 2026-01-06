@@ -5,9 +5,17 @@
   Time: 10:00 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
-<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
-<%--Xem thống kê, bảng chức năng thường dùng--%>
-<h1>This is Dashboard</h1>
+<h1 class="mb-4">Dashboard</h1>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6>Total Users</h6>
+                <h3>120</h3>
+            </div>
+        </div>
+    </div>
+</div>

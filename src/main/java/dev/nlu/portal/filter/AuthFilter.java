@@ -29,10 +29,9 @@ public class AuthFilter implements Filter {
         if (isLoggedIn) {
             String pathInfo = req.getPathInfo();
 
-
             chain.doFilter(request, response);
         } else {
-            resp.sendRedirect(req.getContextPath() + "/login");
+            resp.sendRedirect(req.getContextPath() + "/sign-in");
         }
     }
 }

@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Admin
+  Date: 04-Jan-26
+  Time: 4:40 PM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
@@ -7,13 +14,12 @@
 <fmt:setLocale value="${sessionScope.lang}" />
 <fmt:setBundle basename="i18n.messages"/>
 
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <fmt:message key="page.forgot.password.title"/>
+        <fmt:message key="page.login.title"/>
     </title>
     <link href="${pageContext.request.contextPath}/assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -26,7 +32,7 @@
             justify-content: center;
             background-color: #f5f5f5;
         }
-        .forgot-password-container {
+        .login-container {
             width: 100%;
             max-width: 400px;
             padding: 15px;
@@ -45,42 +51,53 @@
     </style>
 </head>
 <body>
-<div class="forgot-password-container">
+<div class="login-container">
     <div class="card shadow">
         <div class="card-body p-4">
             <h1 class="text-center mb-4">
-                <fmt:message key="page.forgot.password.title"/>
+                <fmt:message key="page.login.title"/>
             </h1>
 
             <div id="alertContainer"></div>
 
-            <form id="forgotPasswordForm" novalidate>
+            <form id="loginForm" novalidate>
                 <div class="mb-3">
-                    <label for="email" class="form-label">
-                        <fmt:message key="page.forgot.password.email"/>
+                    <label for="username" class="form-label">
+                        <fmt:message key="page.login.username"/>
                     </label>
-                    <input type="email"
-                           name="email"
+                    <input type="text"
+                           name="username"
                            class="form-control"
-                           id="email"
-                           placeholder="<fmt:message key='page.forgot.password.email.placeholder'/>">
-                    <div class="invalid-feedback" id="emailError"></div>
+                           id="username"
+                           placeholder="<fmt:message key='page.login.username.placeholder'/>">
+                    <div class="invalid-feedback" id="usernameError"></div>
                 </div>
-                <button type="submit"
-                        class="btn btn-primary w-100 mb-3"
-                        id="submitBtn">
-                    <fmt:message key="page.forgot.password.submit"/>
-                </button>
-                <div class="text-center">
-                    <a href="${pageContext.request.contextPath}/login" class="text-decoration-none">
-                        <fmt:message key="page.forgot.password.back.login"/>
+                <div class="mb-3">
+                    <label for="password" class="form-label">
+                        <fmt:message key="page.login.password"/>
+                    </label>
+                    <input type="password"
+                           name="password"
+                           class="form-control"
+                           id="password"
+                           placeholder="<fmt:message key='page.login.password.placeholder'/>">
+                    <div class="invalid-feedback" id="passwordError"></div>
+                </div>
+                <div class="mb-3 text-end">
+                    <a href="${pageContext.request.contextPath}/forgot-password" class="text-decoration-none">
+                        <fmt:message key="page.login.forgot.password"/>
                     </a>
                 </div>
+                <button type="submit"
+                        class="btn btn-primary w-100"
+                        id="submitBtn">
+                    <fmt:message key="button.login"/>
+                </button>
             </form>
 
             <div class="text-center mt-3">
-                <a href="${pageContext.request.contextPath}/change-language?lang=vi&redirect=/forgot-password" class="me-2">🇻🇳 VI</a>
-                <a href="${pageContext.request.contextPath}/change-language?lang=en&redirect=/forgot-password">🇺🇸 EN</a>
+                <a href="${pageContext.request.contextPath}/change-language?lang=vi&redirect=/login" class="me-2">🇻🇳 VI</a>
+                <a href="${pageContext.request.contextPath}/change-language?lang=en&redirect=/login">🇺🇸 EN</a>
             </div>
         </div>
     </div>
@@ -92,30 +109,33 @@
 
     // i18n messages from server
     const i18n = {
-        emailRequired: '<fmt:message key="page.forgot.password.error.email.required"/>',
-        emailInvalid: '<fmt:message key="page.forgot.password.error.email.invalid"/>',
-        sending: '<fmt:message key="page.forgot.password.sending"/>',
-        submitBtn: '<fmt:message key="page.forgot.password.submit"/>',
-        errorGeneric: '<fmt:message key="page.forgot.password.error.generic"/>'
+        usernameRequired: '<fmt:message key="page.login.error.username.required"/>',
+        passwordRequired: '<fmt:message key="page.login.error.password.required"/>',
+        loggingIn: '<fmt:message key="page.login.logging.in"/>',
+        loginBtn: '<fmt:message key="button.login"/>',
+        errorGeneric: '<fmt:message key="page.login.error.generic"/>'
     };
 
-    document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
         // Clear previous errors
         clearErrors();
 
         // Get form values
-        const email = document.getElementById('email').value.trim();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
 
         // Validate
         let isValid = true;
 
-        if (!email) {
-            showFieldError('email', i18n.emailRequired);
+        if (!username) {
+            showFieldError('username', i18n.usernameRequired);
             isValid = false;
-        } else if (!isValidEmail(email)) {
-            showFieldError('email', i18n.emailInvalid);
+        }
+
+        if (!password) {
+            showFieldError('password', i18n.passwordRequired);
             isValid = false;
         }
 
@@ -124,13 +144,14 @@
         // Disable submit button
         const submitBtn = document.getElementById('submitBtn');
         submitBtn.disabled = true;
-        submitBtn.textContent = i18n.sending;
+        submitBtn.textContent = i18n.loggingIn;
 
         // Send AJAX request
         const formData = new URLSearchParams();
-        formData.append('email', email);
+        formData.append('username', username);
+        formData.append('password', password);
 
-        fetch(contextPath + '/forgot-password', {
+        fetch(contextPath + '/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -138,34 +159,26 @@
             },
             body: formData.toString()
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Show success message
-                showAlert(data.message, 'success');
-                // Redirect to login after 3 seconds
-                setTimeout(function() {
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Redirect to appropriate dashboard
                     window.location.href = data.redirectUrl;
-                }, 3000);
-            } else {
-                // Show error message
-                showAlert(data.message, 'danger');
+                } else {
+                    // Show error message
+                    showAlert(data.error, 'danger');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = i18n.loginBtn;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAlert(i18n.errorGeneric, 'danger');
                 submitBtn.disabled = false;
-                submitBtn.textContent = i18n.submitBtn;
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showAlert(i18n.errorGeneric, 'danger');
-            submitBtn.disabled = false;
-            submitBtn.textContent = i18n.submitBtn;
-        });
+                submitBtn.textContent = i18n.loginBtn;
+            });
     });
 
-    function isValidEmail(email) {
-        const emailRegex = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/;
-        return emailRegex.test(email);
-    }
 
     function showFieldError(fieldId, message) {
         const field = document.getElementById(fieldId);
@@ -188,7 +201,11 @@
     }
 
     // Clear field error on input
-    document.getElementById('email').addEventListener('input', function() {
+    document.getElementById('username').addEventListener('input', function() {
+        this.classList.remove('is-invalid');
+    });
+
+    document.getElementById('password').addEventListener('input', function() {
         this.classList.remove('is-invalid');
     });
 </script>

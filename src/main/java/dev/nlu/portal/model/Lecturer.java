@@ -13,7 +13,6 @@ public class Lecturer {
     private String userId;
     private User user;
 
-    private String fullName;
     private Integer birthYear;
     private String gender;
     private String identityCard;

@@ -63,7 +63,7 @@ public class ForgotPasswordServlet extends HttpServlet {
         }
 
         // Check if email exists
-        User user = userService.findByEmail(email.trim());
+        User user = userService.getByEmail(email.trim());
 
         if (user != null) {
             // TODO: Generate reset token and send email

@@ -2,6 +2,7 @@ package dev.nlu.portal.model;
 
 import java.time.LocalDateTime;
 
+import dev.nlu.portal.utils.PasswordUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,16 +14,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User {
     private String id;
-    private String hashedPassword;
     private String username;
-    private String primaryEmail;
-    private String personEmail;
+    private String hashedPassword;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private Role role;
     @Builder.Default
     private boolean enabled = true;
-    private Role role;
     private String avatarUrl;
     private String avatarId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String authProvider;
+    
+    public boolean isUsername(String username) {
+    	return this.username.equals(username);
+    }
+    
+    public String displayName() {
+    	return this.lastName + this.firstName;
+    }
+    
+    public boolean isEmail(String email) {
+    	return this.email.equals(email);
+    }
 }

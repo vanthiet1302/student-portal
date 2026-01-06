@@ -6,7 +6,7 @@
 	<display-name>Student Portal</display-name>
 
 	<welcome-file-list>
-		<welcome-file>/WEB-INF/views/share/login.jsp</welcome-file>
+		<welcome-file>/WEB-INF/views/pages/sign-in.jsp</welcome-file>
 	</welcome-file-list>
 
 	<resource-ref>
@@ -16,21 +16,21 @@
 		<res-auth>Container</res-auth>
 	</resource-ref>
 
-	<!-- Filter -->
-	<filter>
-		<filter-name>AuthFilter</filter-name>
-		<filter-class>dev.nlu.portal.filter.AuthFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/admin/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/lecturer/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/student/*</url-pattern>
-	</filter-mapping>
+<!--	&lt;!&ndash; Filter &ndash;&gt;-->
+<!--	<filter>-->
+<!--		<filter-name>AuthFilter</filter-name>-->
+<!--		<filter-class>dev.nlu.portal.filter.AuthFilter</filter-class>-->
+<!--	</filter>-->
+<!--	<filter-mapping>-->
+<!--		<filter-name>AuthFilter</filter-name>-->
+<!--		<url-pattern>/admin/*</url-pattern>-->
+<!--	</filter-mapping>-->
+<!--	<filter-mapping>-->
+<!--		<filter-name>AuthFilter</filter-name>-->
+<!--		<url-pattern>/lecturer/*</url-pattern>-->
+<!--	</filter-mapping>-->
+<!--	<filter-mapping>-->
+<!--		<filter-name>AuthFilter</filter-name>-->
+<!--		<url-pattern>/student/*</url-pattern>-->
+<!--	</filter-mapping>-->
 </web-app>

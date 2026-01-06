@@ -1,13 +1,27 @@
 <Context>
-    <Resource name="sqlserver"
-              auth="Container"
-              type="javax.sql.DataSource"
-              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-              maxActive="100"
-              maxIdle="30"
-              maxWait="10000"
-              username="ef"
-              password="ef@123"
-              driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-              url="jdbc:sqlserver://localhost:1433;databaseName=TEST_PORTAL;encrypt=true;trustServerCertificate=true;"/>
+
+    <Resource
+        name="sqlserver"
+        auth="Container"
+        type="javax.sql.DataSource"
+        factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+
+        driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+        url="jdbc:sqlserver://localhost:1433;databaseName=Student Portal;encrypt=true;trustServerCertificate=true;"
+
+        username="ef"
+        password="ef@123"
+
+        maxTotal="50"
+        maxIdle="20"
+        minIdle="5"
+        maxWaitMillis="10000"
+
+        validationQuery="SELECT 1"
+        testOnBorrow="true"
+        testWhileIdle="true"
+        timeBetweenEvictionRunsMillis="30000"
+        minEvictableIdleTimeMillis="60000"
+    />
+
 </Context>

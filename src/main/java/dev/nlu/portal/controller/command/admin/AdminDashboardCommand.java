@@ -8,8 +8,7 @@ public class AdminDashboardCommand implements Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setAttribute("contentPage", "/WEB-INF/views/pages/admin/dashboard.jsp");
-        request.setAttribute("pageTitle", "Admin Dashboard");
-
+        request.setAttribute("pageTitle", "Dashboard");
         return "/WEB-INF/views/layout/layout.jsp";
     }
 }

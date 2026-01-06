@@ -12,9 +12,11 @@ public class AdminDetailLecturerCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String id = request.getParameter("id");
-        Lecturer lecturer = lecturerService.findById(id);
-        request.getSession().setAttribute("lecturer", lecturer);
+        Lecturer lecturer = lecturerService.getById(id);
+        request.setAttribute("lecturer", lecturer);
+        request.setAttribute("contentPage", "/WEB-INF/views/pages/admin/lecturer/detailLecturer.jsp");
+        request.setAttribute("pageTitle", "Lecturer Detail");
 
-        return "/WEB-INF/views/admin/detailLecturer.jsp";
+        return "/WEB-INF/views/layout/layout.jsp";
     }
 }

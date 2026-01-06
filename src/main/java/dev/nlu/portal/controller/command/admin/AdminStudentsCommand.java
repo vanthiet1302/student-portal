@@ -13,10 +13,11 @@ public class AdminStudentsCommand implements Command{
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        var sesstion = request.getSession(false);
-        List<Student> students = studentService.findAll();
-        sesstion.setAttribute("studenst", students);
+        List<Student> students = studentService.getAll();
+        request.setAttribute("students", students);
+        request.setAttribute("contentPage", "/WEB-INF/views/pages/admin/students/list.jsp");
+        request.setAttribute("pageTitle", "Students");
 
-        return "/WEB-INF/views/admin/students.jsp";
+        return "/WEB-INF/views/layout/layout.jsp";
     }
 }
