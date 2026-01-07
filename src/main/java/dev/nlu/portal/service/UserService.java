@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import dev.nlu.portal.dao.UserDAO;
-import dev.nlu.portal.exception.BusinessException;
+import dev.nlu.portal.exception.ServiceException;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.utils.DatabaseUtils;
 import dev.nlu.portal.utils.PasswordUtils;
@@ -18,7 +18,7 @@ public class UserService implements ICrudService<User, String>{
         try (Connection conn = DatabaseUtils.getConnection()) {
             return userDao.findByUsername(username, conn).isPresent();
         } catch (SQLException e) {
-            throw new BusinessException("Check username existence failed", e);
+            throw new ServiceException("Check username existence failed", e);
         }
     }
 
@@ -26,52 +26,53 @@ public class UserService implements ICrudService<User, String>{
         try (Connection conn = DatabaseUtils.getConnection()) {
             return userDao.findByEmail(email, conn).isPresent();
         } catch (SQLException e) {
-            throw new BusinessException("Check email existence failed", e);
+            throw new ServiceException("Check email existence failed", e);
         }
     }
 
 
     public User login(String username, String password) {
-		try (Connection conn = DatabaseUtils.getConnection()) {
+        try (Connection conn = DatabaseUtils.getConnection()) {
 
-			User user = userDao.findByUsername(username, conn)
-					.orElseThrow(() -> new BusinessException("Invalid username or password"));
+            User user = userDao.findByUsername(username, conn)
+                    .orElseThrow(() -> new ServiceException("Invalid username or password"));
 
-			if (!PasswordUtils.verify(password, user.getHashedPassword())) {
-				throw new BusinessException("Invalid username or password");
-			}
+            if (!PasswordUtils.verify(password, user.getHashedPassword())) {
+                throw new ServiceException("Invalid username or password");
+            }
+            user.setHashedPassword(null);
 
-			return user;
+            return user;
 
-		} catch (SQLException e) {
-			throw new BusinessException("Login failed", e);
-		}
-	}
+        } catch (SQLException e) {
+            throw new ServiceException("Login failed", e);
+        }
+    }
 
 	public User getById(String id) {
 		try (Connection conn = DatabaseUtils.getConnection()) {
 			return userDao.findById(id, conn).orElseThrow(
-					() -> new BusinessException("User not found"));
+					() -> new ServiceException("User not found"));
 		} catch (SQLException e) {
-			throw new BusinessException("Get user by id failed", e);
+			throw new ServiceException("Get user by id failed", e);
 		}
 	}
 
 	public User getByUsername(String username) {
 		try (Connection conn = DatabaseUtils.getConnection()) {
 			return userDao.findByUsername(username, conn).orElseThrow(
-					() -> new BusinessException("User not found"));
+					() -> new ServiceException("User not found"));
 		} catch (SQLException e) {
-			throw new BusinessException("Get user by username failed", e);
+			throw new ServiceException("Get user by username failed", e);
 		}
 	}
 
 	public User getByEmail(String email) {
 		try (Connection conn = DatabaseUtils.getConnection()) {
 			return userDao.findByEmail(email, conn).orElseThrow(
-					() -> new BusinessException("User not found"));
+					() -> new ServiceException("User not found"));
 		} catch (SQLException e) {
-			throw new BusinessException("Get user by email failed", e);
+			throw new ServiceException("Get user by email failed", e);
 		}
 	}
 
@@ -79,21 +80,32 @@ public class UserService implements ICrudService<User, String>{
 		try (Connection conn = DatabaseUtils.getConnection()) {
 			return userDao.findAll(conn);
 		} catch (SQLException e) {
-			throw new BusinessException("Get all users failed", e);
+			throw new ServiceException("Get all users failed", e);
 		}
 	}
 
-	public User create(User user) {
-		return executeTransaction(conn -> {
-			userDao.insert(user, conn);
-			return user;
-		}, "Create user failed");
-	}
+    public User create(User user) {
+        return executeTransaction(conn -> {
 
-	public void update(User user) {
+            if (userDao.findByUsername(user.getUsername(), conn).isPresent()) {
+                throw new ServiceException("Username already exists");
+            }
+
+            if (userDao.findByEmail(user.getEmail(), conn).isPresent()) {
+                throw new ServiceException("Email already exists");
+            }
+
+            userDao.insert(user, conn);
+            return user;
+
+        }, "Create user failed");
+    }
+
+
+    public void update(User user) {
 		executeTransaction(conn -> {
 			userDao.update(user, conn);
-			return null;
+			return git add .;
 		}, "Update user failed");
 	}
 
@@ -113,10 +125,10 @@ public class UserService implements ICrudService<User, String>{
 				return result;
 			} catch (Exception e) {
 				conn.rollback();
-				throw new BusinessException(errorMessage, e);
+				throw new ServiceException(errorMessage + ": " + e.getMessage(), e);
 			}
 		} catch (SQLException e) {
-			throw new BusinessException("Database error", e);
+			throw new ServiceException("Database error: " + e.getMessage(), e);
 		}
 	}
 }

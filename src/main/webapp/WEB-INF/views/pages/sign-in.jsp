@@ -21,34 +21,14 @@
     <title>
         <fmt:message key="page.login.title"/>
     </title>
-    <link href="${pageContext.request.contextPath}/assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        html, body {
-            height: 100%;
-        }
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f5f5f5;
-        }
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            padding: 15px;
-        }
-        .is-invalid {
-            border-color: #dc3545 !important;
-        }
-        .invalid-feedback {
-            display: none;
-            color: #dc3545;
-            font-size: 0.875em;
-        }
-        .is-invalid ~ .invalid-feedback {
-            display: block;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+
+    <link href="${pageContext.request.contextPath}/assets/css/common.css"
+          rel="stylesheet">
 </head>
 <body>
 <div class="login-container">
@@ -60,7 +40,7 @@
 
             <div id="alertContainer"></div>
 
-            <form id="loginForm" novalidate>
+            <form id="loginForm" action="${pageContext.request.contextPath}/sign-in" method="post">
                 <div class="mb-3">
                     <label for="username" class="form-label">
                         <fmt:message key="page.login.username"/>
@@ -102,113 +82,6 @@
         </div>
     </div>
 </div>
-
-<script src="${pageContext.request.contextPath}/assets/bootstrap-5.3.8-dist/js/bootstrap.bundle.js"></script>
-<script>
-    const contextPath = '${pageContext.request.contextPath}';
-
-    // i18n messages from server
-    const i18n = {
-        usernameRequired: '<fmt:message key="page.login.error.username.required"/>',
-        passwordRequired: '<fmt:message key="page.login.error.password.required"/>',
-        loggingIn: '<fmt:message key="page.login.logging.in"/>',
-        loginBtn: '<fmt:message key="button.login"/>',
-        errorGeneric: '<fmt:message key="page.login.error.generic"/>'
-    };
-
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Clear previous errors
-        clearErrors();
-
-        // Get form values
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value.trim();
-
-        // Validate
-        let isValid = true;
-
-        if (!username) {
-            showFieldError('username', i18n.usernameRequired);
-            isValid = false;
-        }
-
-        if (!password) {
-            showFieldError('password', i18n.passwordRequired);
-            isValid = false;
-        }
-
-        if (!isValid) return;
-
-        // Disable submit button
-        const submitBtn = document.getElementById('submitBtn');
-        submitBtn.disabled = true;
-        submitBtn.textContent = i18n.loggingIn;
-
-        // Send AJAX request
-        const formData = new URLSearchParams();
-        formData.append('username', username);
-        formData.append('password', password);
-
-        fetch(contextPath + '/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: formData.toString()
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Redirect to appropriate dashboard
-                    window.location.href = data.redirectUrl;
-                } else {
-                    // Show error message
-                    showAlert(data.error, 'danger');
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = i18n.loginBtn;
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showAlert(i18n.errorGeneric, 'danger');
-                submitBtn.disabled = false;
-                submitBtn.textContent = i18n.loginBtn;
-            });
-    });
-
-
-    function showFieldError(fieldId, message) {
-        const field = document.getElementById(fieldId);
-        const errorDiv = document.getElementById(fieldId + 'Error');
-        field.classList.add('is-invalid');
-        errorDiv.textContent = message;
-    }
-
-    function clearErrors() {
-        document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-        document.getElementById('alertContainer').innerHTML = '';
-    }
-
-    function showAlert(message, type) {
-        const alertContainer = document.getElementById('alertContainer');
-        alertContainer.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
-            message +
-            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-            '</div>';
-    }
-
-    // Clear field error on input
-    document.getElementById('username').addEventListener('input', function() {
-        this.classList.remove('is-invalid');
-    });
-
-    document.getElementById('password').addEventListener('input', function() {
-        this.classList.remove('is-invalid');
-    });
-</script>
 </body>
 </html>
 

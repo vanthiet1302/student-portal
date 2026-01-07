@@ -1,6 +1,6 @@
-package dev.nlu.portal.controller;
+package dev.nlu.portal.controller.page;
 
-import dev.nlu.portal.exception.BusinessException;
+import dev.nlu.portal.exception.ServiceException;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.service.UserService;
 import dev.nlu.portal.utils.ForwardUtils;
@@ -30,9 +30,9 @@ public class SignInServlet extends HttpServlet {
         try {
             User user = userService.login(username, password);
             req.getSession(true).setAttribute("user", user);
-            resp.sendRedirect(req.getContextPath() + "admin/dashboard");
-            System.out.println("User: " +   username + "Sign in success");
-        } catch (BusinessException e) {
+            resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
+            System.out.println("User: " +   username + " Sign in success");
+        } catch (ServiceException e) {
             ForwardUtils.forwardError(req, resp, "/WEB-INF/views/pages/sign-in.jsp", e.getMessage());
             System.out.println("User: " +   username + "Sign in failed");
         }

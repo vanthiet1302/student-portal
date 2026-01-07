@@ -6,7 +6,7 @@ import java.util.List;
 
 import dev.nlu.portal.dao.StudentDAO;
 import dev.nlu.portal.dao.UserDAO;
-import dev.nlu.portal.exception.BusinessException;
+import dev.nlu.portal.exception.ServiceException;
 import dev.nlu.portal.model.Role;
 import dev.nlu.portal.model.Student;
 import dev.nlu.portal.model.User;
@@ -22,64 +22,86 @@ public class StudentService implements ICrudService<Student, String> {
 		try (Connection conn = DatabaseUtils.getConnection()) {
 
 			Student student = studentDao.findById(userId, conn)
-					.orElseThrow(() -> new BusinessException("Student not found"));
+					.orElseThrow(() -> new ServiceException("Student not found"));
 
 			User user = userDao.findById(userId, conn).orElseThrow(
-					() -> new BusinessException("User not found"));
+					() -> new ServiceException("User not found"));
 
 			student.setUser(user);
 			return student;
 
 		} catch (SQLException e) {
-			throw new BusinessException("Get student failed", e);
+			throw new ServiceException("Get student failed", e);
 		}
 	}
 
-	@Override
-	public List<Student> getAll() {
-		try (Connection conn = DatabaseUtils.getConnection()) {
-			return studentDao.findAll(conn);
-		} catch (SQLException e) {
-			throw new BusinessException("Get all students failed", e);
-		}
-	}
+    @Override
+    public List<Student> getAll() {
+        try (Connection conn = DatabaseUtils.getConnection()) {
+            List<Student> students = studentDao.findAll(conn);
 
-	@Override
-	public Student create(Student student) {
-		if (student.getUser() == null) {
-			throw new BusinessException("Student must have User");
-		}
+            for (Student student : students) {
+                User user = userDao.findById(student.getUserId(), conn).orElse(null);
+                student.setUser(user);
+            }
 
-		return executeTransaction(conn -> {
+            return students;
+        } catch (SQLException e) {
+            throw new ServiceException("Get all students failed", e);
+        }
+    }
 
-			User user = student.getUser();
-			user.setRole(Role.STUDENT);
+    @Override
+    public Student create(Student student) {
+        if (student.getUser() == null) {
+            throw new ServiceException("Student must have User info");
+        }
 
-			userDao.insert(user, conn);
+        return executeTransaction(conn -> {
+            if (userDao.findByUsername(student.getUser().getUsername(), conn).isPresent()) {
+                throw new ServiceException("Username already exists");
+            }
 
-			student.setUserId(user.getId());
-			studentDao.insert(student, conn);
+            User user = student.getUser();
+            user.setRole(Role.STUDENT);
 
-			return student;
+            userDao.insert(user, conn);
+            System.out.println("Thêm User ID: " + user.getId());
 
-		}, "Create Student failed");
-	}
+            if (user.getId() == null) {
+                throw new ServiceException("Failed to generate User ID");
+            }
+
+            student.setUserId(user.getId());
+            studentDao.insert(student, conn);
+
+            return student;
+        }, "Create Student failed");
+    }
 
 	@Override
 	public void update(Student student) {
 		if (student.getUser() == null) {
-			throw new BusinessException("Student must have User");
+			throw new ServiceException("Student must have User");
 		}
 
-		executeTransaction(conn -> {
+        executeTransaction(conn -> {
 
-			userDao.update(student.getUser(), conn);
-			studentDao.update(student, conn);
+            if (studentDao.findById(student.getUserId(), conn).isEmpty()) {
+                throw new ServiceException("Student not found");
+            }
 
-			return null;
+            if (!student.getUser().getId().equals(student.getUserId())) {
+                throw new ServiceException("User ID mismatch");
+            }
 
-		}, "Update Student failed");
-	}
+            userDao.update(student.getUser(), conn);
+            studentDao.update(student, conn);
+            return null;
+
+        }, "Update Student failed");
+
+    }
 
 	@Override
 	public void delete(String userId) {
@@ -99,10 +121,10 @@ public class StudentService implements ICrudService<Student, String> {
 				return result;
 			} catch (Exception e) {
 				conn.rollback();
-				throw new BusinessException(errorMessage, e);
+				throw new ServiceException(errorMessage + ": " + e.getMessage(), e);
 			}
 		} catch (SQLException e) {
-			throw new BusinessException("Database error", e);
+			throw new ServiceException("Database error", e);
 		}
 	}
 }

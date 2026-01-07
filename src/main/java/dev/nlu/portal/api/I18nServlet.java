@@ -21,18 +21,11 @@ public class I18nServlet extends HttpServlet {
 
         Locale locale = (Locale) req.getAttribute("locale");
         if (locale == null) {
-            String lang = req.getParameter("lang");
-            if (lang == null || lang.isBlank()) {
-                lang = (String) req.getSession().getAttribute("lang");
-            }
-            if (lang == null || lang.isBlank()) {
-                lang = "vi";
-            }
-            req.getSession().setAttribute("lang", lang);
-            locale = new Locale(lang);
+            locale = Locale.forLanguageTag("vi");
         }
 
-        ResourceBundle bundle = Utf8ResourceBundle.getBundle("i18n.messages", locale);
+        ResourceBundle bundle =
+                Utf8ResourceBundle.getBundle("i18n.messages", locale);
 
         StringBuilder json = new StringBuilder("{");
 
@@ -40,7 +33,7 @@ public class I18nServlet extends HttpServlet {
             json.append("\"")
                     .append(key)
                     .append("\":\"")
-                    .append(bundle.getString(key))
+                    .append(bundle.getString(key).replace("\"", "\\\""))
                     .append("\",");
         }
 

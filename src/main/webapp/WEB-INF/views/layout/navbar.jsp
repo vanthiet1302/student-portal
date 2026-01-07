@@ -3,7 +3,7 @@
 <fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'vi'}"/>
 <fmt:setBundle basename="i18n.messages"/>
 
-<nav class="navbar navbar-expand navbar-dark bg-dark px-3">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
     <button class="btn btn-outline-light btn-sm"
             onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
 

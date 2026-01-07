@@ -13,8 +13,8 @@
     <div class="col-md-4">
         <div class="card shadow-sm">
             <div class="card-body">
-                <h6>Total Users</h6>
-                <h3>120</h3>
+                <h6>Student</h6>
+                <button type="submit" class="btn-primary"></button>
             </div>
         </div>
     </div>

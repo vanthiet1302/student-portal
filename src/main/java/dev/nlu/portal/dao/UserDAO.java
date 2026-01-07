@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import dev.nlu.portal.exception.DAOException;
 import dev.nlu.portal.model.Role;
@@ -112,31 +113,43 @@ public class UserDAO extends BaseDAO implements DAO<User> {
 
     @Override
     public void insert(User user, Connection conn) {
+
+        if (user.getId() == null) {
+            user.setId(UUID.randomUUID().toString());
+        }
+
         String sql = """
-            INSERT INTO Users (
-                username, hashedPassword, email,
-                lastName, firstName, role,
-                enabled, avatarUrl, avatarId, authProvider
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """;
+        INSERT INTO Users (
+            id, username, hashedPassword, email,
+            lastName, firstName, role,
+            enabled, avatarUrl, avatarId, authProvider
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """;
 
-        try {
-            String id = executeInsert(
-                conn, sql,
-                user.getUsername(),
-                user.getHashedPassword(),
-                user.getEmail(),
-                user.getLastName(),
-                user.getFirstName(),
-                user.getRole().name(),
-                user.isEnabled(),
-                user.getAvatarUrl(),
-                user.getAvatarId(),
-                user.getAuthProvider()
-            );
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            user.setId(id);
+            ps.setString(1, user.getId());
+            ps.setString(2, user.getUsername());
+            ps.setString(3, user.getHashedPassword());
+            ps.setString(4, user.getEmail());
+            ps.setString(5, user.getLastName());
+            ps.setString(6, user.getFirstName());
+            ps.setString(7, user.getRole().name());
+            ps.setBoolean(8, user.isEnabled());
+            ps.setString(9, user.getAvatarUrl());
+            ps.setString(10, user.getAvatarId());
+
+            if (user.getAuthProvider() != null) {
+                ps.setString(11, user.getAuthProvider());
+            } else {
+                ps.setNull(11, Types.VARCHAR);
+            }
+
+            int affected = ps.executeUpdate();
+            if (affected != 1) {
+                throw new DAOException("Insert User failed, affected rows: " + affected);
+            }
 
         } catch (SQLException e) {
             throw new DAOException("Insert User failed", e);
@@ -179,9 +192,8 @@ public class UserDAO extends BaseDAO implements DAO<User> {
             if (affected == 0) {
                 throw new DAOException("Update User failed: user not found");
             }
-
         } catch (SQLException e) {
-            throw new DAOException("Update User failed", e);
+            throw new DAOException("Update User failed: " + e.getMessage(), e);
         }
     }
     

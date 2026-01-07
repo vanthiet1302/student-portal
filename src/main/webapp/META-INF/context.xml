@@ -1,5 +1,4 @@
 <Context>
-
     <Resource
         name="sqlserver"
         auth="Container"

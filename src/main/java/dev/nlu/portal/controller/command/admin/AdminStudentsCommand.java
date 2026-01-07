@@ -14,10 +14,11 @@ public class AdminStudentsCommand implements Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Student> students = studentService.getAll();
-        request.setAttribute("students", students);
-        request.setAttribute("contentPage", "/WEB-INF/views/pages/admin/students/list.jsp");
-        request.setAttribute("pageTitle", "Students");
 
-        return "/WEB-INF/views/layout/layout.jsp";
+        request.setAttribute("students", students);
+        request.setAttribute("content", "/WEB-INF/views/pages/admin/student/list.jsp");
+        request.setAttribute("title", "admin.title.student");
+
+        return "/WEB-INF/views/layout/admin/main.jsp";
     }
 }

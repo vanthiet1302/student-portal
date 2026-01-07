@@ -1,7 +1,7 @@
 package dev.nlu.portal.controller.command.admin;
 
 import dev.nlu.portal.controller.command.Command;
-import dev.nlu.portal.exception.BusinessException;
+import dev.nlu.portal.exception.ServiceException;
 import dev.nlu.portal.model.Lecturer;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.service.LecturerService;
@@ -38,12 +38,12 @@ public class AdminAddLecturerCommand implements Command {
             try {
                 userService.getByUsername(username);
                 return error(request, "Username đã tồn tại.");
-            } catch (BusinessException ignored) {}
+            } catch (ServiceException ignored) {}
 
             try {
                 userService.getByEmail(email);
                 return error(request, "Email đã được sử dụng.");
-            } catch (BusinessException ignored) {}
+            } catch (ServiceException ignored) {}
 
             User user = User.builder()
                 .username(username)
@@ -78,7 +78,7 @@ public class AdminAddLecturerCommand implements Command {
 
             return "redirect:/admin/lecturers?msg=success";
 
-        } catch (BusinessException e) {
+        } catch (ServiceException e) {
             return error(request, e.getMessage());
         } catch (Exception e) {
             e.printStackTrace(); // Log the error to console

@@ -1,4 +1,4 @@
-package dev.nlu.portal.controller;
+package dev.nlu.portal.controller.page;
 
 import dev.nlu.portal.model.Role;
 import dev.nlu.portal.model.User;
@@ -20,7 +20,7 @@ public class SignUpServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/sign-up.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/pages/sign-up.jsp").forward(req, resp);
     }
 
     @Override
@@ -74,15 +74,14 @@ public class SignUpServlet extends HttpServlet {
                 .build()
         );
 
-        req.setAttribute("success", "Tạo tài khoản thành công");
-        req.getRequestDispatcher("sign-in.jsp").forward(req, resp);
-        System.out.println("User: " + username + " Sign up success");
+        resp.sendRedirect("/sign-in");
+        System.out.println("User: " + username + " created account success");
     }
 
     private void forwardError(HttpServletRequest req, HttpServletResponse resp, String message)
             throws ServletException, IOException {
         req.setAttribute("error", message);
-        req.getRequestDispatcher("/WEB-INF/sign-up.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/pages/sign-up.jsp").forward(req, resp);
     }
 
     private String trim(String value) {

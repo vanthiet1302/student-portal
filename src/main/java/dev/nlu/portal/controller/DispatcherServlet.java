@@ -1,11 +1,7 @@
 package dev.nlu.portal.controller;
 
 import dev.nlu.portal.controller.command.Command;
-import dev.nlu.portal.controller.command.admin.AdminAddLecturerCommand;
-import dev.nlu.portal.controller.command.admin.AdminDashboardCommand;
-import dev.nlu.portal.controller.command.admin.AdminDetailLecturerCommand;
-import dev.nlu.portal.controller.command.admin.AdminLecturersCommand;
-import dev.nlu.portal.controller.command.admin.AdminStudentsCommand;
+import dev.nlu.portal.controller.command.admin.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,8 +14,8 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = {"/admin/*", "/student/*", "/lecturer/*"})
 public class DispatcherServlet extends HttpServlet {
-    private Map<String, Command> getRoutes = new HashMap<>();
-    private Map<String, Command> postRoutes = new HashMap<>();
+    private final Map<String, Command> getRoutes = new HashMap<>();
+    private final Map<String, Command> postRoutes = new HashMap<>();
 
     @Override
     public void init() throws ServletException {
@@ -29,13 +25,10 @@ public class DispatcherServlet extends HttpServlet {
         getRoutes.put("/admin/lecturers/add", new AdminAddLecturerCommand());
         getRoutes.put("/admin/detailLecturer", new AdminDetailLecturerCommand());
         getRoutes.put("/admin/students", new AdminStudentsCommand());
+        getRoutes.put("/admin/students/add", new AddStudentCommand());
 
+        postRoutes.put("/admin/students/add", new AddStudentCommand());
         postRoutes.put("/admin/lecturers/add", new AdminAddLecturerCommand());
-
-
-
-        getRoutes.put("/lecturer/dashboard", new AdminDashboardCommand());
-        getRoutes.put("/student/dashboard", new AdminDashboardCommand());
     }
 
     @Override

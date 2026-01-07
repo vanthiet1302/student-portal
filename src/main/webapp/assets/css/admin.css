@@ -1,0 +1,157 @@
+/* =========================================================
+   Base Layout
+========================================================= */
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Root container */
+.app {
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* =========================================================
+   Sidebar
+========================================================= */
+
+.sidebar {
+    width: 240px;
+    min-width: 240px;
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+}
+
+/* Sidebar collapsed */
+.app.collapsed .sidebar {
+    width: 64px;
+    min-width: 64px;
+}
+
+/* Sidebar menu */
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    color: var(--bs-body-color);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar .nav-link i {
+    font-size: 1.2rem;
+}
+
+/* Active & hover */
+.sidebar .nav-link:hover {
+    background-color: var(--bs-secondary-bg);
+}
+
+.sidebar .nav-link.active {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+}
+
+/* Hide text when collapsed */
+.app.collapsed .sidebar .text {
+    display: none;
+}
+
+/* Center icon when collapsed */
+.app.collapsed .sidebar .nav-link {
+    justify-content: center;
+}
+
+/* =========================================================
+   Main Content
+========================================================= */
+
+.main {
+    min-width: 0;
+    transition: margin-left 0.3s ease;
+}
+
+/* Content area */
+.content {
+    background-color: var(--bs-body-bg);
+}
+
+/* =========================================================
+   Navbar
+========================================================= */
+
+.navbar {
+    min-height: 48px;
+}
+
+/* Navbar buttons */
+.navbar .btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* =========================================================
+   Dropdowns
+========================================================= */
+
+.dropdown-menu {
+    min-width: 180px;
+}
+
+/* =========================================================
+   Scrollbar (optional, modern look)
+========================================================= */
+
+.content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+[data-bs-theme="dark"] .content::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* =========================================================
+   Transitions
+========================================================= */
+
+.sidebar,
+.main,
+.nav-link,
+.content {
+    transition: all 0.2s ease-in-out;
+}
+
+/* =========================================================
+   Responsive
+========================================================= */
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: absolute;
+        z-index: 1040;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+
+    .app.collapsed .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .app.collapsed .main {
+        margin-left: 0;
+    }
+}

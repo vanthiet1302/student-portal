@@ -6,7 +6,7 @@ import java.util.List;
 
 import dev.nlu.portal.dao.LecturerDAO;
 import dev.nlu.portal.dao.UserDAO;
-import dev.nlu.portal.exception.BusinessException;
+import dev.nlu.portal.exception.ServiceException;
 import dev.nlu.portal.model.Lecturer;
 import dev.nlu.portal.model.Role;
 import dev.nlu.portal.model.User;
@@ -27,17 +27,17 @@ public class LecturerService implements ICrudService<Lecturer, String> {
 
             Lecturer lecturer = lecturerDao.findById(userId, conn)
                 .orElseThrow(() ->
-                    new BusinessException("Lecturer not found"));
+                    new ServiceException("Lecturer not found"));
 
             User user = userDao.findById(userId, conn)
                 .orElseThrow(() ->
-                    new BusinessException("User not found"));
+                    new ServiceException("User not found"));
 
             lecturer.setUser(user);
             return lecturer;
 
         } catch (SQLException e) {
-            throw new BusinessException("Get lecturer failed", e);
+            throw new ServiceException("Get lecturer failed", e);
         }
     }
 
@@ -46,7 +46,7 @@ public class LecturerService implements ICrudService<Lecturer, String> {
         try (Connection conn = DatabaseUtils.getConnection()) {
             return lecturerDao.findAll(conn);
         } catch (SQLException e) {
-            throw new BusinessException("Get all lecturers failed", e);
+            throw new ServiceException("Get all lecturers failed", e);
         }
     }
 
@@ -54,7 +54,7 @@ public class LecturerService implements ICrudService<Lecturer, String> {
         try (Connection conn = DatabaseUtils.getConnection()) {
             return lecturerDao.findAllPaginated(page, pageSize, conn);
         } catch (SQLException e) {
-            throw new BusinessException("Get lecturers paginated failed", e);
+            throw new ServiceException("Get lecturers paginated failed", e);
         }
     }
 
@@ -62,14 +62,14 @@ public class LecturerService implements ICrudService<Lecturer, String> {
         try (Connection conn = DatabaseUtils.getConnection()) {
             return lecturerDao.countAll(conn);
         } catch (SQLException e) {
-            throw new BusinessException("Count lecturers failed", e);
+            throw new ServiceException("Count lecturers failed", e);
         }
     }
 
     @Override
     public Lecturer create(Lecturer lecturer) {
         if (lecturer.getUser() == null) {
-            throw new BusinessException("Lecturer must have User");
+            throw new ServiceException("Lecturer must have User");
         }
 
         return executeTransaction(conn -> {
@@ -90,7 +90,7 @@ public class LecturerService implements ICrudService<Lecturer, String> {
     @Override
     public void update(Lecturer lecturer) {
         if (lecturer.getUser() == null) {
-            throw new BusinessException("Lecturer must have User");
+            throw new ServiceException("Lecturer must have User");
         }
 
         executeTransaction(conn -> {
@@ -123,10 +123,10 @@ public class LecturerService implements ICrudService<Lecturer, String> {
                 return result;
             } catch (Exception e) {
                 conn.rollback();
-                throw new BusinessException(errorMessage, e);
+                throw new ServiceException(errorMessage, e);
             }
         } catch (SQLException e) {
-            throw new BusinessException("Database error", e);
+            throw new ServiceException("Database error", e);
         }
     }
 }
