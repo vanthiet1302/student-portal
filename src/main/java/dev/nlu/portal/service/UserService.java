@@ -105,7 +105,7 @@ public class UserService implements ICrudService<User, String>{
     public void update(User user) {
 		executeTransaction(conn -> {
 			userDao.update(user, conn);
-			return git add .;
+			return null;
 		}, "Update user failed");
 	}
 
