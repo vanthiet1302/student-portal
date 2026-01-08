@@ -9,6 +9,7 @@ import dev.nlu.portal.dao.UserDAO;
 import dev.nlu.portal.exception.ServiceException;
 import dev.nlu.portal.model.Lecturer;
 import dev.nlu.portal.model.Role;
+import dev.nlu.portal.model.Student;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.utils.DatabaseUtils;
 
@@ -44,7 +45,14 @@ public class LecturerService implements ICrudService<Lecturer, String> {
     @Override
     public List<Lecturer> getAll() {
         try (Connection conn = DatabaseUtils.getConnection()) {
-            return lecturerDao.findAll(conn);
+            List<Lecturer> lecturers = lecturerDao.findAll(conn);
+
+            for (Lecturer lecturer : lecturers){
+                User user = userDao.findById(lecturer.getUserId(), conn).orElse(null);
+                lecturer.setUser(user);
+            }
+
+            return lecturers;
         } catch (SQLException e) {
             throw new ServiceException("Get all lecturers failed", e);
         }

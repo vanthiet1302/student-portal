@@ -14,7 +14,12 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <h6>Student</h6>
-                <button type="submit" class="btn-primary"></button>
+                <button type="submit"
+                        class="btn btn-primary btn-sm"
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                        >
+                        Student
+                        </button>
             </div>
         </div>
     </div>
