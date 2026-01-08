@@ -12,23 +12,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/admin/*", "/student/*", "/lecturer/*"})
+//@WebServlet(urlPatterns = {"/admin/*", "/student/*", "/lecturer/*"})
 public class DispatcherServlet extends HttpServlet {
     private final Map<String, Command> getRoutes = new HashMap<>();
     private final Map<String, Command> postRoutes = new HashMap<>();
 
     @Override
     public void init() throws ServletException {
-    	getRoutes.put("/admin/dashboard", new AdminDashboardCommand());
-        // Admin
-        getRoutes.put("/admin/lecturers", new AdminLecturersCommand());
-        getRoutes.put("/admin/lecturers/add", new AdminAddLecturerCommand());
-        getRoutes.put("/admin/detailLecturer", new AdminDetailLecturerCommand());
-        getRoutes.put("/admin/students", new AdminStudentsCommand());
-        getRoutes.put("/admin/students/add", new AddStudentCommand());
-
-        postRoutes.put("/admin/students/add", new AddStudentCommand());
-        postRoutes.put("/admin/lecturers/add", new AdminAddLecturerCommand());
     }
 
     @Override

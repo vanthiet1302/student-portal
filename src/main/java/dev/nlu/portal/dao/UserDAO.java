@@ -169,7 +169,8 @@ public class UserDAO extends BaseDAO implements DAO<User> {
                 enabled = ?,
                 avatarUrl = ?,
                 avatarId = ?,
-                authProvider = ?
+                authProvider = ?,
+                updatedAt = CURRENT_TIMESTAMP
             WHERE id = ?
         """;
 

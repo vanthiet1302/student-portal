@@ -19,9 +19,17 @@ public class I18nServlet extends HttpServlet {
 
         resp.setContentType("application/json;charset=UTF-8");
 
-        Locale locale = (Locale) req.getAttribute("locale");
-        if (locale == null) {
-            locale = Locale.forLanguageTag("vi");
+        // Get language from parameter or from request attribute set by filter
+        String lang = req.getParameter("lang");
+        Locale locale;
+
+        if (lang != null && !lang.isBlank()) {
+            locale = new Locale(lang);
+        } else {
+            locale = (Locale) req.getAttribute("locale");
+            if (locale == null) {
+                locale = Locale.forLanguageTag("vi");
+            }
         }
 
         ResourceBundle bundle =

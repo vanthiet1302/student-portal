@@ -31,5 +31,14 @@
                 </span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2"
+               href="${pageContext.request.contextPath}/admin/lecturers">
+                <i class="bi bi-person-rolodex"></i>
+                <span class="text" data-i18n="menu.lecturer">
+                    <fmt:message key="menu.lecturer"/>
+                </span>
+            </a>
+        </li>
     </ul>
 </aside>
