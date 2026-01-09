@@ -9,7 +9,6 @@ import dev.nlu.portal.dao.UserDAO;
 import dev.nlu.portal.exception.ServiceException;
 import dev.nlu.portal.model.Lecturer;
 import dev.nlu.portal.model.Role;
-import dev.nlu.portal.model.Student;
 import dev.nlu.portal.model.User;
 import dev.nlu.portal.utils.DatabaseUtils;
 
@@ -17,10 +16,6 @@ public class LecturerService implements ICrudService<Lecturer, String> {
 
     private final LecturerDAO lecturerDao = new LecturerDAO();
     private final UserDAO userDao = new UserDAO();
-
-    /* =========================
-       READ
-       ========================= */
 
     @Override
     public Lecturer getById(String userId) {

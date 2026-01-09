@@ -40,5 +40,32 @@
                 </span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2"
+               href="${pageContext.request.contextPath}/admin/courses">
+                <i class="bi bi-book"></i>
+                <span class="text" data-i18n="menu.course">
+                    <fmt:message key="menu.course"/>
+                </span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2"
+               href="${pageContext.request.contextPath}/admin/faculties">
+                <i class="bi bi-building"></i>
+                <span class="text" data-i18n="menu.faculty">
+                    <fmt:message key="menu.faculty"/>
+                </span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2"
+               href="${pageContext.request.contextPath}/admin/academic-classes">
+                <i class="bi bi-diagram-3"></i>
+                <span class="text" data-i18n="menu.academicClass">
+                    <fmt:message key="menu.academicClass"/>
+                </span>
+            </a>
+        </li>
     </ul>
 </aside>

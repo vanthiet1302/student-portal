@@ -18,7 +18,7 @@ public class Course {
     int soTinChi;
     int lyThuyet;
     int thucHanh;
-    String url; // Chuongw trinh dao tap
+    String url;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
 }
