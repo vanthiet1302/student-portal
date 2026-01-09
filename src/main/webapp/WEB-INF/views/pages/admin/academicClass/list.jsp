@@ -48,6 +48,10 @@
                     <td>${clazz.advisorId}</td>
                     <td>${clazz.nienKhoa}</td>
                     <td>
+                        <a href="${pageContext.request.contextPath}/admin/academic-classes/students?classId=${clazz.id}"
+                           class="btn btn-sm btn-info" title="<fmt:message key='admin.academicClass.list.viewStudents'/>" data-i18n="admin.academicClass.list.viewStudents">
+                            <i class="fa fa-users"></i> <fmt:message key="admin.academicClass.list.viewStudents"/>
+                        </a>
                         <a href="${pageContext.request.contextPath}/admin/academic-classes/edit?classId=${clazz.id}"
                            class="btn btn-sm btn-warning" title="<fmt:message key='admin.academicClass.list.edit'/>" data-i18n="admin.academicClass.list.edit">
                             <i class="fa fa-edit"></i> <fmt:message key="admin.academicClass.list.edit"/>

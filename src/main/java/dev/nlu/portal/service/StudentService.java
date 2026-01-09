@@ -51,6 +51,21 @@ public class StudentService implements ICrudService<Student, String> {
         }
     }
 
+    public List<Student> getByClassId(String classId) {
+        try (Connection conn = DatabaseUtils.getConnection()) {
+            List<Student> students = studentDao.findByClassId(classId, conn);
+
+            for (Student student : students) {
+                User user = userDao.findById(student.getUserId(), conn).orElse(null);
+                student.setUser(user);
+            }
+
+            return students;
+        } catch (SQLException e) {
+            throw new ServiceException("Get students by classId failed", e);
+        }
+    }
+
     @Override
     public Student create(Student student) {
         if (student.getUser() == null) {

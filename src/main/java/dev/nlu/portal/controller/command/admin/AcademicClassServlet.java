@@ -7,6 +7,7 @@ import dev.nlu.portal.model.Lecturer;
 import dev.nlu.portal.service.AcademicClassService;
 import dev.nlu.portal.service.FacultyService;
 import dev.nlu.portal.service.LecturerService;
+import dev.nlu.portal.service.StudentService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,10 +23,13 @@ public class AcademicClassServlet extends HttpServlet {
     private static final String VIEW_LIST = "/WEB-INF/views/pages/admin/academicClass/list.jsp";
     private static final String VIEW_ADD = "/WEB-INF/views/pages/admin/academicClass/add.jsp";
     private static final String VIEW_EDIT = "/WEB-INF/views/pages/admin/academicClass/edit.jsp";
+    private static final String VIEW_STUDENTS = "/WEB-INF/views/pages/admin/academicClass/students.jsp";
+    private static final String VIEW_ADD_STUDENT = "/WEB-INF/views/pages/admin/academicClass/add-student.jsp";
 
     private final AcademicClassService classService = new AcademicClassService();
     private final FacultyService facultyService = new FacultyService();
     private final LecturerService lecturerService = new LecturerService();
+    private final StudentService studentService = new StudentService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,6 +48,8 @@ public class AcademicClassServlet extends HttpServlet {
                 req.getRequestDispatcher(VIEW_LAYOUT).forward(req, resp);
             }
             case "/edit" -> showEditForm(req, resp);
+            case "/students" -> showStudents(req, resp);
+            case "/add-student" -> showAddStudentForm(req, resp);
             default -> resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
@@ -62,6 +68,7 @@ public class AcademicClassServlet extends HttpServlet {
                 case "/add" -> handleAddClass(req, resp);
                 case "/edit" -> handleEditClass(req, resp);
                 case "/delete" -> handleDeleteClass(req, resp);
+                case "/add-student" -> handleAddStudentToClass(req, resp);
                 default -> resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         } catch (ServiceException e) {
@@ -94,6 +101,61 @@ public class AcademicClassServlet extends HttpServlet {
 
             req.setAttribute("content", VIEW_EDIT);
             req.setAttribute("title", "admin.title.academicClass.edit");
+            req.getRequestDispatcher(VIEW_LAYOUT).forward(req, resp);
+        } catch (ServiceException e) {
+            resp.sendRedirect(req.getContextPath() + "/admin/academic-classes");
+        }
+    }
+
+    private void showStudents(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String classId = req.getParameter("classId");
+
+        if (classId == null || classId.isEmpty()) {
+            resp.sendRedirect(req.getContextPath() + "/admin/academic-classes");
+            return;
+        }
+
+        try {
+            AcademicClass clazz = classService.getById(classId);
+            // Use classCode instead of classId to find students
+            var students = studentService.getByClassId(clazz.getCode());
+
+            req.setAttribute("academicClass", clazz);
+            req.setAttribute("students", students);
+            req.setAttribute("content", VIEW_STUDENTS);
+            req.setAttribute("title", "admin.title.academicClass.students");
+            req.getRequestDispatcher(VIEW_LAYOUT).forward(req, resp);
+        } catch (ServiceException e) {
+            resp.sendRedirect(req.getContextPath() + "/admin/academic-classes");
+        }
+    }
+
+    private void showAddStudentForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String classId = req.getParameter("classId");
+
+        if (classId == null || classId.isEmpty()) {
+            resp.sendRedirect(req.getContextPath() + "/admin/academic-classes");
+            return;
+        }
+
+        try {
+            AcademicClass clazz = classService.getById(classId);
+            // Get all students not in this class
+            var allStudents = studentService.getAll();
+            // Use classCode instead of classId to find students
+            var classStudents = studentService.getByClassId(clazz.getCode());
+            var classStudentIds = classStudents.stream()
+                    .map(s -> s.getUserId())
+                    .collect(java.util.stream.Collectors.toSet());
+
+            var availableStudents = allStudents.stream()
+                    .filter(s -> !classStudentIds.contains(s.getUserId()))
+                    .collect(java.util.stream.Collectors.toList());
+
+            req.setAttribute("academicClass", clazz);
+            req.setAttribute("students", availableStudents);
+            req.setAttribute("content", VIEW_ADD_STUDENT);
+            req.setAttribute("title", "admin.title.academicClass.addStudent");
             req.getRequestDispatcher(VIEW_LAYOUT).forward(req, resp);
         } catch (ServiceException e) {
             resp.sendRedirect(req.getContextPath() + "/admin/academic-classes");
@@ -211,6 +273,38 @@ public class AcademicClassServlet extends HttpServlet {
         } catch (ServiceException e) {
             req.setAttribute("error", "Delete failed: " + e.getMessage());
             list(req, resp);
+        }
+    }
+
+    private void handleAddStudentToClass(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String classId = req.getParameter("classId");
+        String studentIds = req.getParameter("studentIds");
+
+        if (classId == null || classId.isEmpty() || studentIds == null || studentIds.isEmpty()) {
+            resp.sendRedirect(req.getContextPath() + "/admin/academic-classes/add-student?classId=" + classId);
+            return;
+        }
+
+        try {
+            AcademicClass clazz = classService.getById(classId);
+            String[] ids = studentIds.split(",");
+
+            for (String studentId : ids) {
+                if (!studentId.isEmpty()) {
+                    var student = studentService.getById(studentId);
+                    student.setClassId(clazz.getCode());
+                    studentService.update(student);
+                }
+            }
+
+            resp.sendRedirect(req.getContextPath() + "/admin/academic-classes/students?classId=" + classId);
+        } catch (ServiceException e) {
+            try {
+                String classId2 = classId;
+                resp.sendRedirect(req.getContextPath() + "/admin/academic-classes/add-student?classId=" + classId2 + "&error=" + e.getMessage());
+            } catch (Exception ex) {
+                resp.sendRedirect(req.getContextPath() + "/admin/academic-classes");
+            }
         }
     }
 

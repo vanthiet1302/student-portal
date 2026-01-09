@@ -58,6 +58,29 @@ public class StudentDAO extends BaseDAO implements DAO<Student>{
         }
     }
 
+    public List<Student> findByClassId(String classId, Connection conn) {
+        List<Student> students = new ArrayList<>();
+        String sql = """
+            SELECT userId, dob, pob, gender, status,
+                   phoneNumber, citizenId, nation,
+                   religion, nationality, address, classId
+            FROM Students
+            WHERE classId = ?
+        """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, classId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    students.add(mapResultSetToStudent(rs));
+                }
+            }
+            return students;
+        } catch (SQLException e) {
+            throw new DAOException("Find Students by classId failed", e);
+        }
+    }
+
     public void insert(Student student, Connection conn) {
         String sql = """
             INSERT INTO Students (
