@@ -30,37 +30,58 @@
     <link href="${pageContext.request.contextPath}/assets/css/common.css"
           rel="stylesheet">
 </head>
-<body>
-<div class="login-container">
-    <div class="card shadow">
+<body class="d-flex flex-column min-vh-100 overflow-hidden">
+<div   class="page-wrapper flex-grow-1 d-flex flex-column">
+      <div class="page-frame flex-grow-1 d-flex flex-column">
+<div class="login-container flex-grow-1 position-relative d-flex align-items-center justify-content-center p-3">
+ <img
+      src="${pageContext.request.contextPath}/assets/images/AQ1.png"
+      class="bg-image d-none d-md-block"
+       alt="Ảnh Thiên Lý"
+          />
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
         <div class="card-body p-4">
             <h1 class="text-center mb-4">
+                  <div class="text-center">
+                      <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="Logo" width="100" height="100" />
+                      </div>
                 <fmt:message key="page.login.title"/>
             </h1>
 
             <div id="alertContainer"></div>
 
             <form id="loginForm" action="${pageContext.request.contextPath}/sign-in" method="post">
+                <!-- UserName -->
                 <div class="mb-3">
-                    <label for="username" class="form-label">
+                <label for="username" class="form-label">
                         <fmt:message key="page.login.username"/>
                     </label>
-                    <input type="text"
-                           name="username"
-                           class="form-control"
-                           id="username"
-                           placeholder="<fmt:message key='page.login.username.placeholder'/>">
+                            <div class="position-relative">
+                                <input type="text"
+                                       name="username"
+                                       class="form-control form-control-lg ps-5"
+                                       id="username"
+                                       placeholder="<fmt:message key='page.login.username.placeholder'/>"
+                                       required>
+                                <i class="bi bi-person-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted fs-4"></i>
+                                </div>
                     <div class="invalid-feedback" id="usernameError"></div>
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">
-                        <fmt:message key="page.login.password"/>
-                    </label>
-                    <input type="password"
-                           name="password"
-                           class="form-control"
-                           id="password"
-                           placeholder="<fmt:message key='page.login.password.placeholder'/>">
+                <!-- Password -->
+   <div class="mb-3">
+       <label for="password" class="form-label">
+           <fmt:message key="page.login.password"/>
+       </label>
+
+       <div class="position-relative">
+           <input type="password"
+                  name="password"
+                  class="form-control form-control-lg ps-5"
+                  id="password"
+                  placeholder="<fmt:message key='page.login.password.placeholder'/>"
+                  required>
+           <i class="bi bi-lock-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted fs-4"></i>
+       </div>
                     <div class="invalid-feedback" id="passwordError"></div>
                 </div>
                 <div class="mb-3 text-end">
@@ -82,6 +103,15 @@
         </div>
     </div>
 </div>
-</body>
+<footer class="footer d-none d-md-flex">
+  <div class="marquee text-white fs-2 d-flex align-items-center justify-content-center text-nowrap position-relative">
+            <span>
+              <b><fmt:message key="footer.text" /></b>
+            </span>
+          </div>
+        </footer>
+      </div>
+    </div>
+    </body>
 </html>
 

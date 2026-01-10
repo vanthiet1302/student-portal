@@ -1,17 +1,3 @@
-html, body {
-    height: 100%;
-}
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f5f5f5;
-}
-.login-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 15px;
-}
 .is-invalid {
     border-color: #dc3545 !important;
 }
@@ -22,4 +8,118 @@ body {
 }
 .is-invalid ~ .invalid-feedback {
     display: block;
+}
+
+/* Reset và full screen */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* Ảnh nền full màn hình */
+.bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75) saturate(1.05);
+  z-index: -1;
+  pointer-events: none; /* Không ảnh hưởng tương tác */
+}
+
+/* Card glassmorphism */
+.card {
+  background: #ffffff !important;           /* Nền trắng tinh */
+  backdrop-filter: none !important;          /* Bỏ kính mờ */
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid #e0e0e0 !important;     /* Viền xám nhẹ cho nổi khối */
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important; /* Bóng nhẹ */
+  max-width: 420px;
+  width: 100%;
+  color: #333 !important;                    /* Chữ đen dễ đọc */
+  z-index: 2;
+}
+
+/* Mobile: nền trắng, không kính mờ, chữ đen */
+@media (max-width: 767.98px) {
+  .card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: none !important;
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+    margin: 0 1rem;
+  }
+
+  .form-control {
+    background: #fff !important;
+    color: #333 !important;
+    border: 1px solid #ccc !important;
+  }
+
+  .form-control::placeholder {
+    color: #999 !important;
+  }
+
+  .card h1 {
+    font-size: 1.8rem !important;
+    color: #19d45c !important;
+  }
+
+  /* Ẩn ảnh nền + footer trên mobile */
+  .bg-image,
+  .footer {
+    display: none !important;
+  }
+
+  /* Nền trắng full khi mobile */
+  .login-container {
+    background: #ffffff !important;
+  }
+}
+
+/* Form input chung */
+.form-control {
+  border-radius: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.btn-primary {
+  background: #19d45c;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 0.75rem;
+}
+
+/* Footer marquee */
+.footer {
+  height: 50px;
+  background: #19d45c; /* xanh lá đậm hơn cho nổi */
+  font-size: 1.1rem; /* to hơn tí cho dễ đọc */
+  overflow: hidden;
+  z-index: 10;
+}
+
+.marquee {
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }

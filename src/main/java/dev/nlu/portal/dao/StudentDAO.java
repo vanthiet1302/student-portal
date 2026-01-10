@@ -70,19 +70,19 @@ public class StudentDAO extends BaseDAO implements DAO<Student>{
 
         try {
             int affected = executeUpdate(
-                conn, sql,
-                student.getUserId(),
-                student.getDob(),
-                student.getPob(),
-                student.getGender(),
-                student.getStatus().name(),
-                student.getPhoneNumber(),
-                student.getCitizenId(),
-                student.getNation(),
-                student.getReligion(),
-                student.getNationality(),
-                student.getAddress(),
-                student.getClassId()
+                    conn, sql,
+                    student.getUserId(),
+                    student.getDob(),
+                    student.getPob(),
+                    student.getGender(),
+                    student.getStatus().name(),
+                    student.getPhoneNumber(),
+                    student.getCitizenId(),
+                    student.getNation(),
+                    student.getReligion(),
+                    student.getNationality(),
+                    student.getAddress(),
+                    student.getClassId()
             );
 
             if (affected == 0) {
@@ -113,19 +113,19 @@ public class StudentDAO extends BaseDAO implements DAO<Student>{
 
         try {
             int affected = executeUpdate(
-                conn, sql,
-                student.getDob(),
-                student.getPob(),
-                student.getGender(),
-                student.getStatus().name(),
-                student.getPhoneNumber(),
-                student.getCitizenId(),
-                student.getNation(),
-                student.getReligion(),
-                student.getNationality(),
-                student.getAddress(),
-                student.getClassId(),
-                student.getUserId()
+                    conn, sql,
+                    student.getDob(),
+                    student.getPob(),
+                    student.getGender(),
+                    student.getStatus().name(),
+                    student.getPhoneNumber(),
+                    student.getCitizenId(),
+                    student.getNation(),
+                    student.getReligion(),
+                    student.getNationality(),
+                    student.getAddress(),
+                    student.getClassId(),
+                    student.getUserId()
             );
 
             if (affected == 0) {
@@ -158,18 +158,18 @@ public class StudentDAO extends BaseDAO implements DAO<Student>{
         LocalDate dob = dobDate != null ? dobDate.toLocalDate() : null;
 
         return Student.builder()
-            .userId(rs.getString("userId"))
-            .dob(dob)
-            .pob(rs.getString("pob"))
-            .gender(rs.getString("gender"))
-            .status(Status.valueOf(rs.getString("status")))
-            .phoneNumber(rs.getString("phoneNumber"))
-            .citizenId(rs.getString("citizenId"))
-            .nation(rs.getString("nation"))
-            .religion(rs.getString("religion"))
-            .nationality(rs.getString("nationality"))
-            .address(rs.getString("address"))
-            .classId(rs.getString("classId"))
-            .build();
+                .userId(rs.getString("userId"))
+                .dob(dob)
+                .pob(rs.getString("pob"))
+                .gender(rs.getString("gender"))
+                .status(Status.valueOf(rs.getString("status")))
+                .phoneNumber(rs.getString("phoneNumber"))
+                .citizenId(rs.getString("citizenId"))
+                .nation(rs.getString("nation"))
+                .religion(rs.getString("religion"))
+                .nationality(rs.getString("nationality"))
+                .address(rs.getString("address"))
+                .classId(rs.getString("classId"))
+                .build();
     }
 }
