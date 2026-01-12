@@ -21,8 +21,8 @@
         const contextPath = '${pageContext.request.contextPath}';
         const defaultLang = '${sessionScope.lang != null ? sessionScope.lang : "vi"}';
     </script>
-    <script src="${pageContext.request.contextPath}/assets/js/i18n.js"></script>
-    <link href="${pageContext.request.contextPath}/assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/assets/images/js/i18n.js"></script>
+    <link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <h1><fmt:message key="page.signup"/></h1>
@@ -120,7 +120,7 @@
     </div>
 
 </form>
-<script src="${pageContext.request.contextPath}/assets/js/common.js"></script>
-<script src="${pageContext.request.contextPath}/assets/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/images/js/common.js"></script>
+<script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
