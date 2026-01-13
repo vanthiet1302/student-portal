@@ -38,11 +38,4 @@
     --bs-navbar-bg: transparent;
     background-image: linear-gradient(90deg, #98d7c2 0%, #b4d5e3 100%);
 }
-.menu-icon {
-    transition: transform .3s ease;
-}
-
-.app.collapsed .menu-icon {
-    transform: rotate(90deg);
-}
 </style>

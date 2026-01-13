@@ -4,18 +4,17 @@
 <fmt:setBundle basename="i18n.messages"/>
 
 <nav class="navbar navbar-expand px-3">
-          <button
-            class="btn btn-success d-flex align-items-center justify-content-center p-2 rounded-3"
-            style="width: 48px; height: 48px"
-            onclick="toggleSidebar()"
-          >
-            <i class="bi bi-list fs-4 text-white"></i>
-          </button>
+
+    <button class="btn btn-outline-secondary btn-sm"
+            type="button"
+            onclick="toggleSidebar()">
+        <i class="bi bi-list"></i>
+    </button>
 
     <div class="ms-auto d-flex gap-2">
 
         <div class="dropdown">
-            <button class="btn btn-sm btn-outline-light dropdown-toggle"
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
                     data-bs-toggle="dropdown"
                     id="themeDropdown">
                 <i class="bi bi-sun-fill" id="themeIcon"></i>
@@ -59,7 +58,7 @@
         </div>
 
         <div class="dropdown">
-            <button class="btn btn-sm btn-outline-light dropdown-toggle"
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
                     data-bs-toggle="dropdown"
                     id="langDropdown">
                 <i class="bi bi-translate me-1"></i>
