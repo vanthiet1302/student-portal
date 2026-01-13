@@ -5,6 +5,7 @@
 
 <nav class="navbar navbar-expand-lg px-3 ">
     <button class="btn btn-outline-secondary btn-sm"
+    type="button"
             onclick="toggleSidebar()">
             <i class="bi bi-list menu-icon "></i>
             </button>

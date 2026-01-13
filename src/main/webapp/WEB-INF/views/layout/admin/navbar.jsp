@@ -5,11 +5,11 @@
 
 <nav class="navbar navbar-expand px-3">
 
-    <button class="btn btn-outline-secondary btn-sm"
-            type="button"
-            onclick="toggleSidebar()">
-        <i class="bi bi-list"></i>
-    </button>
+<button class="btn btn-outline-secondary btn-sm menu-toggle-btn"
+        type="button"
+        onclick="toggleSidebar()">
+    <i class="bi bi-list menu-icon" id="theMenuIcon"></i>
+</button>
 
     <div class="ms-auto d-flex gap-2">
 
