@@ -34,8 +34,15 @@
     .app.collapsed .sidebar .text {
         display: none;
     }
-.navbar {
+    .navbar {
     --bs-navbar-bg: transparent;
     background-image: linear-gradient(90deg, #98d7c2 0%, #b4d5e3 100%);
-}
+    }
+    #theMenuIcon {
+    transition: transform 0.4s ease;
+    }
+
+    .menu-toggle-btn.active #theMenuIcon {
+    transform: rotate(90deg) !important;
+    }
 </style>

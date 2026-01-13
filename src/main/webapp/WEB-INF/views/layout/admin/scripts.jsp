@@ -3,6 +3,15 @@
 <script>
     function toggleSidebar() {
         document.querySelector('.app').classList.toggle('collapsed');
+       const icon = document.getElementById('theMenuIcon');
+           if (icon) {
+               const btn = document.querySelector('.menu-toggle-btn');
+               if (btn.classList.toggle('active')) {
+                   icon.style.transform = 'rotate(90deg)';
+               } else {
+                   icon.style.transform = '';
+               }
+           }
     }
 
     const contextPath = '${pageContext.request.contextPath}';
