@@ -3,13 +3,15 @@
 <fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'vi'}"/>
 <fmt:setBundle basename="i18n.messages"/>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <button class="btn btn-outline-light btn-sm"
-            onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+<nav class="navbar navbar-expand-lg px-3 ">
+    <button class="btn btn-outline-secondary btn-sm"
+            onclick="toggleSidebar()">
+            <i class="bi bi-list "></i>
+            </button>
 
     <div class="ms-auto d-flex gap-2">
         <div class="dropdown">
-            <button class="btn btn-sm btn-outline-light dropdown-toggle"
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
                     data-bs-toggle="dropdown" id="themeDropdown">
                 <i class="bi bi-sun-fill" id="themeIcon"></i>
                 <span data-i18n="theme.current" id="themeLabel"><fmt:message key="theme.current"/></span>
@@ -34,10 +36,12 @@
         </div>
 
         <div class="dropdown">
-            <button class="btn btn-sm btn-outline-light dropdown-toggle"
+            <button class="btn btn-sm btn-outline-secondary  dropdown-toggle"
                     data-bs-toggle="dropdown" id="langDropdown">
                 <i class="bi bi-translate me-1"></i>
-                <span data-i18n="lang.current"><fmt:message key="lang.current"/></span>
+                <span data-i18n="lang.current">
+                <fmt:message key="lang.current"/>
+                    </span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
                 <li>

@@ -24,4 +24,7 @@
         </li>
 
     </ul>
+    <div class="nav-item">
+            <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="Bootstrap" width="100" height="100" />
+    </div>
 </aside>

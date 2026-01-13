@@ -89,6 +89,7 @@ body {
 
 .navbar {
     min-height: 48px;
+    background: linear-gradient(90deg, #98d7c2 0%, #b4d5e3 100%);
 }
 
 /* Navbar buttons */

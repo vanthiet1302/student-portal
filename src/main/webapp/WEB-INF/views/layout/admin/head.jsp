@@ -32,3 +32,4 @@
 
 <link href="${pageContext.request.contextPath}/assets/css/admin.css"
       rel="stylesheet">
+ <link rel="icon" href="${pageContext.request.contextPath}/assets/images/logo.png">
