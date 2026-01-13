@@ -29,7 +29,6 @@
             <jsp:include page="${requestScope.content}"/>
         </main>
     </div>
-
 </div>
 
 <jsp:include page="scripts.jsp"/>
