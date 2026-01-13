@@ -14,8 +14,7 @@
 <title data-i18n="app.title"><fmt:message key="app.title"/></title>
 
 <!-- Bootstrap 5 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
@@ -35,4 +34,8 @@
     .app.collapsed .sidebar .text {
         display: none;
     }
+.navbar {
+    --bs-navbar-bg: transparent;
+    background-image: linear-gradient(90deg, #98d7c2 0%, #b4d5e3 100%);
+}
 </style>
