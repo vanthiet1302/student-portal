@@ -6,13 +6,12 @@
 <nav class="navbar navbar-expand-lg px-3 ">
     <button class="btn btn-outline-secondary btn-sm"
             onclick="toggleSidebar()">
-            <i class="bi bi-list "></i>
+            <i class="bi bi-list menu-icon "></i>
             </button>
 
     <div class="ms-auto d-flex gap-2">
         <div class="dropdown">
-            <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
-                    data-bs-toggle="dropdown" id="themeDropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" id="themeDropdown">
                 <i class="bi bi-sun-fill" id="themeIcon"></i>
                 <span data-i18n="theme.current" id="themeLabel"><fmt:message key="theme.current"/></span>
             </button>
@@ -36,8 +35,8 @@
         </div>
 
         <div class="dropdown">
-            <button class="btn btn-sm btn-outline-secondary  dropdown-toggle"
-                    data-bs-toggle="dropdown" id="langDropdown">
+<button class="btn btn-sm btn-outline-secondary dropdown-toggle"
+        data-bs-toggle="dropdown" id="themeDropdown">
                 <i class="bi bi-translate me-1"></i>
                 <span data-i18n="lang.current">
                 <fmt:message key="lang.current"/>
