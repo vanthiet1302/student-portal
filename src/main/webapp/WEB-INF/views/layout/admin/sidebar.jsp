@@ -10,14 +10,14 @@
 <fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'vi'}"/>
 <fmt:setBundle basename="i18n.messages"/>
 
-<aside class="sidebar bg-body-tertiary border-end">
+<aside class="sidebar bg-body-white border-end">
     <ul class="nav flex-column p-2 gap-1">
 
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center gap-2"
                href="${pageContext.request.contextPath}/admin/dashboard">
                 <i class="bi bi-house"></i>
-                <span class="text" data-i18n="menu.home">
+                <span class="text fs-5 text-success fw-medium" data-i18n="menu.home">
                         <fmt:message key="menu.home"/>
                 </span>
             </a>
@@ -26,7 +26,7 @@
             <a class="nav-link d-flex align-items-center gap-2"
                href="${pageContext.request.contextPath}/admin/students">
                 <i class="bi bi-person-video3"></i>
-                <span class="text" data-i18n="menu.student">
+                <span class="text fs-5 text-success fw-medium" data-i18n="menu.student">
                     <fmt:message key="menu.student"/>
                 </span>
             </a>
@@ -35,10 +35,37 @@
             <a class="nav-link d-flex align-items-center gap-2"
                href="${pageContext.request.contextPath}/admin/lecturers">
                 <i class="bi bi-person-rolodex"></i>
-                <span class="text" data-i18n="menu.lecturer">
+                <span class="text fs-5 text-success fw-medium" data-i18n="menu.lecturer">
                     <fmt:message key="menu.lecturer"/>
                 </span>
             </a>
         </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       href="${pageContext.request.contextPath}/admin/courses">
+                        <i class="bi bi-book"></i>
+                        <span class="text fs-5 text-success fw-medium" data-i18n="menu.course">
+                            <fmt:message key="menu.course"/>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       href="${pageContext.request.contextPath}/admin/faculties">
+                        <i class="bi bi-building"></i>
+                        <span class="text fs-5 text-success fw-medium" data-i18n="menu.faculty">
+                            <fmt:message key="menu.faculty"/>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       href="${pageContext.request.contextPath}/admin/academic-classes">
+                        <i class="bi bi-diagram-3"></i>
+                        <span class="text fs-5 text-success fw-medium" data-i18n="menu.academicClass">
+                            <fmt:message key="menu.academicClass"/>
+                        </span>
+                    </a>
+                </li>
     </ul>
 </aside>

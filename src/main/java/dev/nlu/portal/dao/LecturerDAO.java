@@ -129,24 +129,24 @@ public class LecturerDAO extends BaseDAO implements DAO<Lecturer> {
 
         try {
             int affected = executeUpdate(
-                conn, sql,
-                lecturer.getUserId(),
-                lecturer.getBirthYear(),
-                lecturer.getGender(),
-                lecturer.getIdentityCard(),
-                lecturer.getAcademicRank(),
-                lecturer.getDegree(),
-                lecturer.getSpecialization(),
-                lecturer.getPosition(),
-                lecturer.getDepartment(),
-                lecturer.getWorkAgency(),
-                lecturer.getAgencyAddress(),
-                lecturer.getPhoneFixed(),
-                lecturer.getFax(),
-                lecturer.getPhoneMobile(),
-                lecturer.getBankAccountNumber(),
-                lecturer.getBankName(),
-                lecturer.getBankBranch()
+                    conn, sql,
+                    lecturer.getUserId(),
+                    lecturer.getBirthYear(),
+                    lecturer.getGender(),
+                    lecturer.getIdentityCard(),
+                    lecturer.getAcademicRank(),
+                    lecturer.getDegree(),
+                    lecturer.getSpecialization(),
+                    lecturer.getPosition(),
+                    lecturer.getDepartment(),
+                    lecturer.getWorkAgency(),
+                    lecturer.getAgencyAddress(),
+                    lecturer.getPhoneFixed(),
+                    lecturer.getFax(),
+                    lecturer.getPhoneMobile(),
+                    lecturer.getBankAccountNumber(),
+                    lecturer.getBankName(),
+                    lecturer.getBankBranch()
             );
 
             if (affected == 0) {
@@ -182,24 +182,24 @@ public class LecturerDAO extends BaseDAO implements DAO<Lecturer> {
 
         try {
             int affected = executeUpdate(
-                conn, sql,
-                lecturer.getBirthYear(),
-                lecturer.getGender(),
-                lecturer.getIdentityCard(),
-                lecturer.getAcademicRank(),
-                lecturer.getDegree(),
-                lecturer.getSpecialization(),
-                lecturer.getPosition(),
-                lecturer.getDepartment(),
-                lecturer.getWorkAgency(),
-                lecturer.getAgencyAddress(),
-                lecturer.getPhoneFixed(),
-                lecturer.getFax(),
-                lecturer.getPhoneMobile(),
-                lecturer.getBankAccountNumber(),
-                lecturer.getBankName(),
-                lecturer.getBankBranch(),
-                lecturer.getUserId()
+                    conn, sql,
+                    lecturer.getBirthYear(),
+                    lecturer.getGender(),
+                    lecturer.getIdentityCard(),
+                    lecturer.getAcademicRank(),
+                    lecturer.getDegree(),
+                    lecturer.getSpecialization(),
+                    lecturer.getPosition(),
+                    lecturer.getDepartment(),
+                    lecturer.getWorkAgency(),
+                    lecturer.getAgencyAddress(),
+                    lecturer.getPhoneFixed(),
+                    lecturer.getFax(),
+                    lecturer.getPhoneMobile(),
+                    lecturer.getBankAccountNumber(),
+                    lecturer.getBankName(),
+                    lecturer.getBankBranch(),
+                    lecturer.getUserId()
             );
 
             if (affected == 0) {
@@ -228,23 +228,23 @@ public class LecturerDAO extends BaseDAO implements DAO<Lecturer> {
 
     private Lecturer mapResultSetToLecturer(ResultSet rs) throws SQLException {
         return Lecturer.builder()
-            .userId(rs.getString("userId"))
-            .birthYear(rs.getInt("birthYear"))
-            .gender(rs.getString("gender"))
-            .identityCard(rs.getString("identityCard"))
-            .academicRank(rs.getString("academicRank"))
-            .degree(rs.getString("degree"))
-            .specialization(rs.getString("specialization"))
-            .position(rs.getString("position"))
-            .department(rs.getString("department"))
-            .workAgency(rs.getString("workAgency"))
-            .agencyAddress(rs.getString("agencyAddress"))
-            .phoneFixed(rs.getString("phoneFixed"))
-            .fax(rs.getString("fax"))
-            .phoneMobile(rs.getString("phoneMobile"))
-            .bankAccountNumber(rs.getString("bankAccountNumber"))
-            .bankName(rs.getString("bankName"))
-            .bankBranch(rs.getString("bankBranch"))
-            .build();
+                .userId(rs.getString("userId"))
+                .birthYear(rs.getInt("birthYear"))
+                .gender(rs.getString("gender"))
+                .identityCard(rs.getString("identityCard"))
+                .academicRank(rs.getString("academicRank"))
+                .degree(rs.getString("degree"))
+                .specialization(rs.getString("specialization"))
+                .position(rs.getString("position"))
+                .department(rs.getString("department"))
+                .workAgency(rs.getString("workAgency"))
+                .agencyAddress(rs.getString("agencyAddress"))
+                .phoneFixed(rs.getString("phoneFixed"))
+                .fax(rs.getString("fax"))
+                .phoneMobile(rs.getString("phoneMobile"))
+                .bankAccountNumber(rs.getString("bankAccountNumber"))
+                .bankName(rs.getString("bankName"))
+                .bankBranch(rs.getString("bankBranch"))
+                .build();
     }
 }

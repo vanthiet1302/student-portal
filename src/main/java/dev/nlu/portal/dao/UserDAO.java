@@ -176,18 +176,18 @@ public class UserDAO extends BaseDAO implements DAO<User> {
 
         try {
             int affected = executeUpdate(
-                conn, sql,
-                user.getUsername(),
-                user.getHashedPassword(),
-                user.getEmail(),
-                user.getLastName(),
-                user.getFirstName(),
-                user.getRole().name(),
-                user.isEnabled(),
-                user.getAvatarUrl(),
-                user.getAvatarId(),
-                user.getAuthProvider(),
-                user.getId()
+                    conn, sql,
+                    user.getUsername(),
+                    user.getHashedPassword(),
+                    user.getEmail(),
+                    user.getLastName(),
+                    user.getFirstName(),
+                    user.getRole().name(),
+                    user.isEnabled(),
+                    user.getAvatarUrl(),
+                    user.getAvatarId(),
+                    user.getAuthProvider(),
+                    user.getId()
             );
 
             if (affected == 0) {
@@ -197,7 +197,7 @@ public class UserDAO extends BaseDAO implements DAO<User> {
             throw new DAOException("Update User failed: " + e.getMessage(), e);
         }
     }
-    
+
     @Override
     public void delete(String id, Connection conn) {
         String sql = "DELETE FROM Users WHERE id = ?";
@@ -214,24 +214,24 @@ public class UserDAO extends BaseDAO implements DAO<User> {
         }
     }
 
-	private User mapResultSetToUser(ResultSet rs) throws SQLException {
-		var createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
-		var updatedAt = rs.getTimestamp("updatedAt").toLocalDateTime();
+    private User mapResultSetToUser(ResultSet rs) throws SQLException {
+        var createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
+        var updatedAt = rs.getTimestamp("updatedAt").toLocalDateTime();
 
         return User.builder()
-            .id(rs.getString("id"))
-            .username(rs.getString("username"))
-            .hashedPassword(rs.getString("hashedPassword"))
-            .email(rs.getString("email"))
-            .lastName(rs.getString("lastName"))
-            .firstName(rs.getString("firstName"))
-            .role(Role.valueOf(rs.getString("role").toUpperCase()))
-            .enabled(rs.getBoolean("enabled"))
-            .avatarUrl(rs.getString("avatarUrl"))
-            .avatarId(rs.getString("avatarId"))
-            .authProvider(rs.getString("authProvider"))
-            .createdAt(createdAt)
-            .updatedAt(updatedAt)
-            .build();
+                .id(rs.getString("id"))
+                .username(rs.getString("username"))
+                .hashedPassword(rs.getString("hashedPassword"))
+                .email(rs.getString("email"))
+                .lastName(rs.getString("lastName"))
+                .firstName(rs.getString("firstName"))
+                .role(Role.valueOf(rs.getString("role").toUpperCase()))
+                .enabled(rs.getBoolean("enabled"))
+                .avatarUrl(rs.getString("avatarUrl"))
+                .avatarId(rs.getString("avatarId"))
+                .authProvider(rs.getString("authProvider"))
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .build();
     }
 }

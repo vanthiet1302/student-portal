@@ -1,3 +1,4 @@
+
 package dev.nlu.portal.service;
 
 import java.sql.Connection;
@@ -14,26 +15,26 @@ import dev.nlu.portal.utils.DatabaseUtils;
 
 public class StudentService implements ICrudService<Student, String> {
 
-	private final StudentDAO studentDao = new StudentDAO();
-	private final UserDAO userDao = new UserDAO();
+    private final StudentDAO studentDao = new StudentDAO();
+    private final UserDAO userDao = new UserDAO();
 
-	@Override
-	public Student getById(String userId) {
-		try (Connection conn = DatabaseUtils.getConnection()) {
+    @Override
+    public Student getById(String userId) {
+        try (Connection conn = DatabaseUtils.getConnection()) {
 
-			Student student = studentDao.findById(userId, conn)
-					.orElseThrow(() -> new ServiceException("Student not found"));
+            Student student = studentDao.findById(userId, conn)
+                    .orElseThrow(() -> new ServiceException("Student not found"));
 
-			User user = userDao.findById(userId, conn).orElseThrow(
-					() -> new ServiceException("User not found"));
+            User user = userDao.findById(userId, conn).orElseThrow(
+                    () -> new ServiceException("User not found"));
 
-			student.setUser(user);
-			return student;
+            student.setUser(user);
+            return student;
 
-		} catch (SQLException e) {
-			throw new ServiceException("Get student failed", e);
-		}
-	}
+        } catch (SQLException e) {
+            throw new ServiceException("Get student failed", e);
+        }
+    }
 
     @Override
     public List<Student> getAll() {
@@ -48,6 +49,21 @@ public class StudentService implements ICrudService<Student, String> {
             return students;
         } catch (SQLException e) {
             throw new ServiceException("Get all students failed", e);
+        }
+    }
+
+    public List<Student> getByClassId(String classId) {
+        try (Connection conn = DatabaseUtils.getConnection()) {
+            List<Student> students = studentDao.findByClassId(classId, conn);
+
+            for (Student student : students) {
+                User user = userDao.findById(student.getUserId(), conn).orElse(null);
+                student.setUser(user);
+            }
+
+            return students;
+        } catch (SQLException e) {
+            throw new ServiceException("Get students by classId failed", e);
         }
     }
 
@@ -79,11 +95,11 @@ public class StudentService implements ICrudService<Student, String> {
         }, "Create Student failed");
     }
 
-	@Override
-	public void update(Student student) {
-		if (student.getUser() == null) {
-			throw new ServiceException("Student must have User");
-		}
+    @Override
+    public void update(Student student) {
+        if (student.getUser() == null) {
+            throw new ServiceException("Student must have User");
+        }
 
         executeTransaction(conn -> {
 
@@ -103,28 +119,28 @@ public class StudentService implements ICrudService<Student, String> {
 
     }
 
-	@Override
-	public void delete(String userId) {
-		executeTransaction(conn -> {
-			userDao.delete(userId, conn);
-			return null;
+    @Override
+    public void delete(String userId) {
+        executeTransaction(conn -> {
+            userDao.delete(userId, conn);
+            return null;
 
-		}, "Delete Student failed");
-	}
+        }, "Delete Student failed");
+    }
 
-	private <T> T executeTransaction(TransactionCallback<T> action, String errorMessage) {
-		try (Connection conn = DatabaseUtils.getConnection()) {
-			conn.setAutoCommit(false);
-			try {
-				T result = action.execute(conn);
-				conn.commit();
-				return result;
-			} catch (Exception e) {
-				conn.rollback();
-				throw new ServiceException(errorMessage + ": " + e.getMessage(), e);
-			}
-		} catch (SQLException e) {
-			throw new ServiceException("Database error", e);
-		}
-	}
+    private <T> T executeTransaction(TransactionCallback<T> action, String errorMessage) {
+        try (Connection conn = DatabaseUtils.getConnection()) {
+            conn.setAutoCommit(false);
+            try {
+                T result = action.execute(conn);
+                conn.commit();
+                return result;
+            } catch (Exception e) {
+                conn.rollback();
+                throw new ServiceException(errorMessage + ": " + e.getMessage(), e);
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("Database error", e);
+        }
+    }
 }

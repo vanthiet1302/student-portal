@@ -89,11 +89,11 @@
                         <fmt:message key="page.login.forgot.password"/>
                     </a>
                 </div>
-                <button type="submit"
-                        class="btn btn-primary w-100"
-                        id="submitBtn">
-                    <fmt:message key="button.login"/>
-                </button>
+                               <button type="submit"
+                                       class="btn btn-primary w-100"
+                                       id="submitBtn">
+                                   <fmt:message key="button.login"/>
+                               </button>
             </form>
 
             <div class="text-center mt-3">

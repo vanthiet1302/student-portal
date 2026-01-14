@@ -3,15 +3,16 @@
 <fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'vi'}"/>
 <fmt:setBundle basename="i18n.messages"/>
 
-<nav class="navbar navbar-expand px-3">
+<nav class="navbar navbar-expand fixed-top">
 
-<button class="btn btn-outline-secondary btn-sm menu-toggle-btn"
+<button class="btn btn-outline-secondary btn-sm menu-toggle-btn ms-3"
         type="button"
-        onclick="toggleSidebar()">
+        onclick="toggleSidebar()"
+        style="background-color: #4CAF50; border-color: #4CAF50; color: white;">
     <i class="bi bi-list menu-icon" id="theMenuIcon"></i>
 </button>
 
-    <div class="ms-auto d-flex gap-2">
+    <div class="ms-auto d-flex gap-2 pe-3">
 
         <div class="dropdown">
             <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
@@ -23,7 +24,7 @@
                 </span>
             </button>
 
-            <ul class="dropdown-menu dropdown-menu-end">
+            <ul class="dropdown-menu dropdown-menu-end ms-3">
                 <li>
                     <button class="dropdown-item"
                             type="button"

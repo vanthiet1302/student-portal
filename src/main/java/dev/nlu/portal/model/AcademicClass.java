@@ -12,6 +12,7 @@ public class AcademicClass {
     String id;
     String code;
     String name;
-    String facultyId;
-    String advisorId;
+    String facultyId; // faculty.id
+    String advisorId; // lecturer.userId
+    String nienKhoa; // 2025-2029
 }

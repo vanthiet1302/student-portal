@@ -10,7 +10,7 @@
 <fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'vi'}"/>
 <fmt:setBundle basename="i18n.messages"/>
 
-<h1 data-i18n="home.title">
+<h1 data-i18n="page.home.title">
     <fmt:message key="i18n.home.title"/>
 </h1>
 <p data-i18n="home.welcome">

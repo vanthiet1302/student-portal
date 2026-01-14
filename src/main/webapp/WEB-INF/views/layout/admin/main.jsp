@@ -19,13 +19,13 @@
 </head>
 
 <body>
-<div class="app d-flex vh-100">
+<div class="app d-flex vh-100 pt-5">
     <jsp:include page="sidebar.jsp"/>
 
     <div class="main flex-grow-1 d-flex flex-column">
         <jsp:include page="navbar.jsp"/>
 
-        <main class="content flex-grow-1 p-3 overflow-auto">
+        <main class="content flex-grow-1 p-3 overflow-auto pt-3">
             <jsp:include page="${requestScope.content}"/>
         </main>
     </div>
